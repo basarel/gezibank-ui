@@ -2,6 +2,7 @@
   "name": "gezibank",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@10.13.1",
   "scripts": {
     "dev": "next dev --turbopack",
     "dev-https": "next dev --experimental-https",
