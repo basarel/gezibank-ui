@@ -1,5 +1,4 @@
 import { NextConfig } from 'next'
-import { withPayload } from '@payloadcms/next/withPayload'
 
 const NEXT_PUBLIC_SERVER_URL =
   process.env.NEXT_PUBLIC_SERVER_URL ||
@@ -23,19 +22,6 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
     remotePatterns: [
-      // Payload CMS media için
-      ...(NEXT_PUBLIC_SERVER_URL
-        ? [
-            {
-              hostname: new URL(NEXT_PUBLIC_SERVER_URL).hostname,
-              protocol: new URL(NEXT_PUBLIC_SERVER_URL).protocol.replace(
-                ':',
-                ''
-              ) as 'http' | 'https',
-              pathname: '/**', // Allow all paths including /api/media/
-            },
-          ]
-        : []),
       // Mevcut remote pattern'ler
       {
         protocol: 'https' as const,
@@ -140,4 +126,4 @@ const nextConfig: NextConfig = {
   },
 }
 
-export default withPayload(nextConfig, { devBundleServerPackages: false })
+export default nextConfig

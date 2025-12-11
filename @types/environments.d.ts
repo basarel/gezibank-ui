@@ -45,9 +45,6 @@ namespace NodeJS {
     AUTH_GOOGLE_ID: string
     AUTH_FACEBOOK_APPID: string
     AUTH_FACEBOOK_SECRET: string
-    // Payload CMS
-    DATABASE_URI: string
-    PAYLOAD_SECRET: string
   }
 }
 
