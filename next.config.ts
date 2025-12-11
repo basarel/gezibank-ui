@@ -28,7 +28,10 @@ const nextConfig: NextConfig = {
         ? [
             {
               hostname: new URL(NEXT_PUBLIC_SERVER_URL).hostname,
-              protocol: new URL(NEXT_PUBLIC_SERVER_URL).protocol.replace(':', ''),
+              protocol: new URL(NEXT_PUBLIC_SERVER_URL).protocol.replace(
+                ':',
+                ''
+              ),
               pathname: '/**', // Allow all paths including /api/media/
             },
           ]

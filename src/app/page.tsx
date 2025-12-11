@@ -112,7 +112,7 @@ export default async function Home() {
           fill
           alt='GeziBank'
           priority
-          className='absolute top-0 left-0 -z-50 hidden h-full w-full md:block object-cover'
+          className='absolute top-0 left-0 -z-50 hidden h-full w-full object-cover md:block'
           style={{
             clipPath: 'ellipse(90% 90% at 50% 00%)',
           }}
