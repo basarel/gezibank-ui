@@ -31,26 +31,26 @@ const nextConfig: NextConfig = {
               protocol: new URL(NEXT_PUBLIC_SERVER_URL).protocol.replace(
                 ':',
                 ''
-              ),
+              ) as 'http' | 'https',
               pathname: '/**', // Allow all paths including /api/media/
             },
           ]
         : []),
       // Mevcut remote pattern'ler
       {
-        protocol: 'https',
+        protocol: 'https' as const,
         hostname: 'fulltripstatic.mncdn.com',
       },
       {
-        protocol: 'https',
+        protocol: 'https' as const,
         hostname: 'ykmturizm.mncdn.com',
       },
       {
-        protocol: 'https',
+        protocol: 'https' as const,
         hostname: 'imgkit.otelz.com',
       },
       {
-        protocol: 'https',
+        protocol: 'https' as const,
         hostname: 'images.unsplash.com',
       },
     ],

@@ -1,6 +1,5 @@
 import { buildConfig } from 'payload/config'
 import { postgresAdapter } from '@payloadcms/db-postgres'
-import { nextjsPlugin } from '@payloadcms/next'
 import path from 'path'
 
 export default buildConfig({
@@ -34,7 +33,6 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI || '',
     },
   }),
-  plugins: [nextjsPlugin()],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
