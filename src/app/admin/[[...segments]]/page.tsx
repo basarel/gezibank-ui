@@ -1,30 +1,27 @@
-import { RootPage, generatePageMetadata } from '@payloadcms/next/views'
+import { getPayload } from 'payload'
 import config from '../../../../payload.config'
-import path from 'path'
+import { AdminLayout, generateMetadata } from '@payloadcms/next/views'
+
+const payload = await getPayload({ config })
 
 export default async function AdminPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ segments?: string[] }>
-  searchParams: Promise<{ [key: string]: string | string[] }>
 }) {
-  const resolvedParams = await params
-  const segments = resolvedParams?.segments || []
+  const { segments } = await params
+  const segmentsArray = segments || []
 
   return (
-    <RootPage
-      config={Promise.resolve(config)}
-      importMap={{
-        baseDir: path.resolve(process.cwd()),
+    <AdminLayout
+      config={config}
+      payload={payload}
+      params={{
+        segments: segmentsArray,
       }}
-      params={Promise.resolve({
-        segments: Array.isArray(segments) ? segments : [segments].filter(Boolean),
-      })}
-      searchParams={searchParams}
     />
   )
 }
 
-export const generateMetadata = generatePageMetadata
+export { generateMetadata }
 
