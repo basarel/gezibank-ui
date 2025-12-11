@@ -1,0 +1,81 @@
+/* @layer theme, base, mantine, components, utilities;
+
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities); */
+
+@import 'tailwind-preset-mantine';
+
+/* @import '@mantine/core/styles.layer.css'; */
+@import '@mantine/dates/styles.layer.css';
+@import '@mantine/notifications/styles.layer.css';
+@import '@mantine/carousel/styles.layer.css';
+
+@import './Fonts.css';
+@import './general-site.css';
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--mantine-color-gray-3, currentColor);
+  }
+}
+
+html,
+body {
+  @apply h-full;
+}
+
+.iti__selected-dial-code {
+  @apply text-sm;
+}
+
+/* @utility container {
+  @apply mx-auto;
+} */
+
+@theme {
+  --color-dark-50: var(--mantine-color-dark-0);
+  --color-dark-100: var(--mantine-color-dark-1);
+  --color-dark-200: var(--mantine-color-dark-2);
+  --color-dark-300: var(--mantine-color-dark-3);
+  --color-dark-400: var(--mantine-color-dark-4);
+  --color-dark-500: var(--mantine-color-dark-5);
+  --color-dark-600: var(--mantine-color-dark-6);
+  --color-dark-700: var(--mantine-color-dark-7);
+  --color-dark-800: var(--mantine-color-dark-8);
+  --color-dark-900: var(--mantine-color-dark-9);
+
+  --breakpoint-2xl: 96em;
+}
+
+:root {
+  --mantine-color-text: var(--mantine-color-dark-7);
+}
+[name='honeypot'] {
+  display: none;
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none !important; /* IE and Edge */
+    scrollbar-width: none !important; /* Firefox */
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none !important; /* Chrome, Safari and Opera */
+    width: 0 !important;
+    height: 0 !important;
+  }
+}
+
+/* Scrollbar hide for overflow-x-auto elements */
+.overflow-x-auto {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.overflow-x-auto::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+  width: 0;
+  height: 0;
+}

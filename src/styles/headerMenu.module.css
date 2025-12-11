@@ -1,0 +1,95 @@
+.target {
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.target:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+}
+
+.dropdown {
+  border-radius: 8px;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
+  padding: 0;
+  overflow: visible;
+}
+
+.megaMenu {
+  padding: 24px !important;
+}
+
+.columnsContainer {
+  display: grid;
+  grid-template-columns: 250px repeat(2, 1fr);
+  gap: 12px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.columnTitle {
+  font-weight: 700;
+  font-size: 16px;
+  color: #1f2937;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.columnItems {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.menuLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #4b5563;
+  transition: all 0.15s ease;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+
+.menuLink:hover {
+  background-color: #f3f4f6;
+  color: #2563eb;
+}
+
+.menuLink.active {
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.arrowIcon {
+  font-size: 20px;
+  color: orange;
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+
+.menuLink:hover .arrowIcon {
+  color: #2563eb;
+}
+
+/* İlk kolon için özel stil (ok işaretli) */
+.column:first-child .menuLink {
+  padding: 10px 12px;
+}
+
+.column:first-child .menuLink:hover {
+  background-color: #eff6ff;
+}

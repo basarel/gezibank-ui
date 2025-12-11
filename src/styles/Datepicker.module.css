@@ -1,0 +1,67 @@
+.monthCell {
+  position: relative;
+  z-index: 1;
+}
+.month {
+  margin: auto;
+}
+
+.levelsGroup {
+  /* flex-direction: row; */
+  padding-top: 12px;
+  justify-content: center;
+  /* align-items: center; */
+  /* @media (min-width: $mantine-breakpoint-md) {
+    flex-direction: row;
+  } */
+}
+
+.day {
+  position: relative;
+  width: 46px;
+  height: 46px;
+  font-size: var(--mantine-font-size-md);
+  border-radius: 50%;
+  &[data-in-range] {
+    background-color: var(--mantine-color-blue-1);
+    border-radius: 0;
+  }
+
+  &[data-first-in-range],
+  &[data-last-in-range] {
+    background-color: var(--mantine-color-blue-8);
+    border-radius: 50%;
+
+    &::after {
+      background-color: var(--mantine-color-blue-1);
+      width: 50%;
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      z-index: -1;
+    }
+  }
+
+  &[data-first-in-range]::after {
+    right: 0;
+  }
+  &[data-last-in-range]::after {
+    left: 0;
+  }
+}
+.calendarHeaderControl {
+  border: 1px solid black;
+  border-radius: 50%;
+  /* display: none;
+
+  @media (min-width: $mantine-breakpoint-sm) {
+    display: flex;
+  } */
+}
+.calendarHeader {
+  padding-bottom: 12px;
+
+  margin: auto;
+}

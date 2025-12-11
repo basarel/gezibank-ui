@@ -1,0 +1,68 @@
+.root {
+  display: flex;
+  flex-direction: row;
+  padding: 0 5px;
+  gap: 35px;
+  pointer-events: auto;
+  position: relative;
+  z-index: 21;
+}
+
+.control {
+  font-size: 17px;
+  padding: 12px;
+  position: relative;
+  font-weight: 500;
+  color: white !important;
+  background-color: transparent !important;
+  transition: all 0.2s ease;
+  pointer-events: auto;
+  cursor: pointer;
+  z-index: 21;
+
+  &:hover {
+    background-color: transparent !important;
+    color: white !important;
+    opacity: 0.8;
+  }
+
+  &[data-active] {
+    background-color: transparent !important;
+    color: white !important;
+    font-weight: 700;
+
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      height: 8px;
+      border-radius: 8px;
+      background-color: orange;
+      width: 100%;
+      bottom: 0;
+      left: 0;
+    }
+  }
+}
+@media (max-width: 768px) {
+  .root {
+    padding: 8px 10px;
+    gap: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .root::-webkit-scrollbar {
+    display: none;
+  }
+
+  .control {
+    font-size: 12px;
+    padding: 8px 6px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+}

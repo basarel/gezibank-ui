@@ -1,0 +1,38 @@
+.tab {
+  z-index: 1;
+  font-weight: 500;
+  transition: color 100ms ease;
+  justify-content: start;
+  font-size: 16px;
+  border-bottom-width: 4px;
+  border-bottom-color: transparent;
+  border-bottom-style: solid;
+  padding: var(--mantine-spacing-md);
+
+  &[data-active] {
+    color: var(--mantine-color-blue-filled);
+    border-bottom-color: var(--mantine-color-blue-filled);
+  }
+  @mixin hover {
+    background-color: light-dark(
+      var(--mantine-color-gray-0),
+      var(--mantine-color-dark-5)
+    );
+    border-bottom-color: var(--mantine-color-dark-1);
+  }
+}
+
+.tabLabel {
+  flex: none;
+}
+
+.tabSection {
+  display: none;
+
+  @mixin larger-than $mantine-breakpoint-sm {
+    display: flex;
+  }
+}
+.list {
+  flex-wrap: nowrap;
+}

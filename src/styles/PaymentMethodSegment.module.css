@@ -1,0 +1,23 @@
+.root {
+  /* @apply bg-blue-100; */
+  background-color: var(--mantine-color-blue-1);
+  padding: 4px;
+  display: flex;
+  @media (min-width: $mantine-breakpoint-md) {
+    /* padding: 5px; */
+  }
+}
+
+.label {
+  font-size: var(--mantine-font-size-sm);
+  padding: 8px;
+  color: var(--mantine-color-dark-7);
+
+  @media (min-width: $mantine-breakpoint-md) {
+    padding: 12px 44px 12px 22px;
+  }
+}
+
+.indicator {
+  background-color: var(--mantine-color-gray-4);
+}
