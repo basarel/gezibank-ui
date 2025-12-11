@@ -1,8 +1,20 @@
-import { getPayload } from 'payload'
+import { NextAdmin } from '@payloadcms/next/admin'
 import config from '../../../../payload.config'
-import { AdminLayout, generateMetadata } from '@payloadcms/next/views'
+import { generatePageMetadata } from '@payloadcms/next/views'
 
-const payload = await getPayload({ config })
+export const generateMetadata = async ({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ segments?: string[] }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) => {
+  return generatePageMetadata({
+    config,
+    params: await params,
+    searchParams: await searchParams,
+  })
+}
 
 export default async function AdminPage({
   params,
@@ -12,15 +24,5 @@ export default async function AdminPage({
   const { segments } = await params
   const segmentsArray = segments || []
 
-  return (
-    <AdminLayout
-      config={config}
-      payload={payload}
-      params={{
-        segments: segmentsArray,
-      }}
-    />
-  )
+  return <NextAdmin config={config} segments={segmentsArray} />
 }
-
-export { generateMetadata }

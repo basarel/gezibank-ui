@@ -1,7 +1,10 @@
-import { getPayload } from 'payload'
 import config from '../../../../payload.config'
-import { REST } from '@payloadcms/next'
+import { payloadRestRoute } from '@payloadcms/next/routes'
 
-const payload = await getPayload({ config })
+const route = payloadRestRoute(config)
 
-export const { GET, POST, PUT, PATCH, DELETE } = REST({ config, payload })
+export const GET = route
+export const POST = route
+export const PUT = route
+export const PATCH = route
+export const DELETE = route
