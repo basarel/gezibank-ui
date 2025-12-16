@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import {
   CarSummaryResponse,
   OperationResultType,
-} from '@/app/reservation/types'
+} from '@/app/(frontend)/reservation/types'
 import { EmailBody } from '../../_components/body'
 import { EmailCard } from '@/components/order-components/email-card'
 import { SuccessCard } from '@/components/order-components/success-card'

@@ -1,4 +1,4 @@
-import { OperationResultType } from '@/app/reservation/types'
+import { OperationResultType } from '@/app/(frontend)/reservation/types'
 
 import EmailHotelOrderResult from './hotel/hotel'
 

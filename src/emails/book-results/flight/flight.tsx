@@ -2,7 +2,7 @@ import { Column, Heading, Img, Link, Row } from '@react-email/components'
 import {
   FlightSummaryResponse,
   OperationResultType,
-} from '@/app/reservation/types'
+} from '@/app/(frontend)/reservation/types'
 import dayjs from 'dayjs'
 
 import { Fragment } from 'react'

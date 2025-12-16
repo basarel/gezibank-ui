@@ -6,7 +6,7 @@ import { EmailBody } from '../../_components/body'
 import {
   CyprusPackageSummaryResponse,
   OperationResultType,
-} from '@/app/reservation/types'
+} from '@/app/(frontend)/reservation/types'
 
 import { __dummy__cyprusPackageResult } from '../_dummy-response/cyprus'
 import { EmailCard } from '@/components/order-components/email-card'

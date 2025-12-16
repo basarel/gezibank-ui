@@ -2,7 +2,7 @@ import {
   BusSummaryResponse,
   CarSummaryResponse,
   TransferSummaryResponseViewDataResponser,
-} from '@/app/reservation/types'
+} from '@/app/(frontend)/reservation/types'
 
 export type ModuleName =
   | 'Flight'

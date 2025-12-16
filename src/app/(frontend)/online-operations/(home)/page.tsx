@@ -17,7 +17,7 @@ import { useTransitionRouter } from 'next-view-transitions'
 import {
   HotelBookingDetailApiResponse,
   OperationResultWithBookingCodeResponse,
-} from '@/app/online-operations/types'
+} from '@/app/(frontend)/online-operations/types'
 import { serviceRequest } from '@/network'
 import { Route } from 'next'
 import { notifications } from '@mantine/notifications'

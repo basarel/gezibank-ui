@@ -1,4 +1,4 @@
-import { HotelDetailRoomItem } from '@/app/hotel/types'
+import { HotelDetailRoomItem } from '@/app/(frontend)/hotel/types'
 import { PriceNumberFlow } from '@/components/price-numberflow'
 import { formatCurrency } from '@/libs/util'
 import { Button, Title } from '@mantine/core'

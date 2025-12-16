@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import { Image, Table, Accordion } from '@mantine/core'
 
-import { HotelDetailInstallmentData } from '@/app/hotel/types'
+import { HotelDetailInstallmentData } from '@/app/(frontend)/hotel/types'
 import { formatCurrency } from '@/libs/util'
 import { InstallmentBankDescription } from './installment-description'
 import { CiCircleInfo } from 'react-icons/ci'

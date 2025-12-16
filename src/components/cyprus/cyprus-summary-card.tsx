@@ -17,7 +17,7 @@ import {
   RiCarLine,
 } from 'react-icons/ri'
 import { calculateFlightDuration } from '@/libs/cyprus-utils'
-import { CyprusSummaryProps } from '@/app/cyprus/types'
+import { CyprusSummaryProps } from '@/app/(frontend)/cyprus/types'
 
 type IProps = {
   data: CyprusSummaryProps

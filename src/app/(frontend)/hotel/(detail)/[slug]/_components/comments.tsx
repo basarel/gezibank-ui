@@ -1,4 +1,4 @@
-import { HotelCommentInfo } from '@/app/hotel/types'
+import { HotelCommentInfo } from '@/app/(frontend)/hotel/types'
 import { Carousel } from '@mantine/carousel'
 import { Card, Badge, Text, Group, Divider } from '@mantine/core'
 import dayjs from 'dayjs'

@@ -1,4 +1,4 @@
-import { AirportCodeServiceResponse } from '@/app/flight/type'
+import { AirportCodeServiceResponse } from '@/app/(frontend)/flight/type'
 import { request } from '@/network'
 import { useQuery } from '@tanstack/react-query'
 

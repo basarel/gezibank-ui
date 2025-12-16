@@ -6,7 +6,7 @@ import { HotelSummaryResponse } from '@/app/(frontend)/reservation/types'
 import { EmailCard } from '@/components/order-components/email-card'
 import { CheckoutCard } from '@/components/card'
 import { formatCurrency } from '@/libs/util'
-import { SummaryPassengerData } from '@/app/account/reservations/types'
+import { SummaryPassengerData } from '@/app/(frontend)/account/reservations/types'
 import { Img, Link } from '@react-email/components'
 
 type IProps = {

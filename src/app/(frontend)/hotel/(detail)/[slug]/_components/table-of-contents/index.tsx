@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Button, TableOfContents } from '@mantine/core'
 import classes from './Toc.module.css'
-import { HotelDetailResponseHotelInfo } from '@/app/hotel/types'
+import { HotelDetailResponseHotelInfo } from '@/app/(frontend)/hotel/types'
 import { RiMapPin2Line } from 'react-icons/ri'
 
 type IProps = {

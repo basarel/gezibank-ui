@@ -22,11 +22,12 @@ import { range } from '@mantine/hooks'
 import clsx from 'clsx'
 
 import { GenderEnums } from '@/types/passengerViewModel'
-import { PassengerValidationType } from '@/app/reservation/types'
-import { PassengerSchemaType } from '@/app/reservation/validations'
+import { PassengerValidationType } from '@/app/(frontend)/reservation/types'
+import { PassengerSchemaType } from '@/app/(frontend)/reservation/validations'
 
 type IProps = {
-  fieldProps: FieldArrayWithId<PassengerSchemaType, 'passengers', 'id'>
+  fieldProps: FieldArrayWithId<PassengerSchemaType, 'passengers', 'id'> &
+    PassengerSchemaType['passengers'][number]
   error: Merge<FieldError, FieldErrorsImpl<PassengerValidationType>> | undefined
   index: number
   moduleName: string

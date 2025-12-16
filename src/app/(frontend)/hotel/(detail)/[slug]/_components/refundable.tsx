@@ -1,4 +1,4 @@
-import { HotelDetailRoomItem } from '@/app/hotel/types'
+import { HotelDetailRoomItem } from '@/app/(frontend)/hotel/types'
 import { Tooltip } from '@mantine/core'
 import dayjs from 'dayjs'
 import { FaCheck, FaCheckCircle, FaTimes } from 'react-icons/fa'

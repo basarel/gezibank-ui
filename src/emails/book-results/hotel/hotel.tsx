@@ -1,7 +1,7 @@
 import {
   HotelSummaryResponse,
   OperationResultType,
-} from '@/app/reservation/types'
+} from '@/app/(frontend)/reservation/types'
 import { Column, Img, Row } from '@react-email/components'
 
 import { hotelDummyOrderResultResponse } from '../_dummy-response/hotel'

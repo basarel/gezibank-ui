@@ -1,4 +1,4 @@
-import { HotelCommentInfo } from '@/app/hotel/types'
+import { HotelCommentInfo } from '@/app/(frontend)/hotel/types'
 import { Card, Badge, Text, Group, Divider, Button } from '@mantine/core'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'

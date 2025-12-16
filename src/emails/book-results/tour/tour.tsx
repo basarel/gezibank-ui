@@ -1,5 +1,5 @@
 import { Column, Img, Row, Link } from '@react-email/components'
-import { OperationResultType } from '@/app/reservation/types'
+import { OperationResultType } from '@/app/(frontend)/reservation/types'
 import { EmailBody } from '../../_components/body'
 import { EmailCard } from '../../../components/order-components/email-card'
 import { SuccessCard } from '@/components/order-components/success-card'

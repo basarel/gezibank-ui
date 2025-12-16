@@ -24,11 +24,12 @@ import 'dayjs/locale/tr'
 import { BsInfoCircle } from 'react-icons/bs'
 
 import { GenderEnums } from '@/types/passengerViewModel'
-import { type PassengerValidationType } from '@/app/reservation/types'
-import { type PassengerSchemaType } from '@/app/reservation/validations'
+import { type PassengerValidationType } from '@/app/(frontend)/reservation/types'
+import { type PassengerSchemaType } from '@/app/(frontend)/reservation/validations'
 
 type IProps = {
-  fieldProps: FieldArrayWithId<PassengerSchemaType, 'passengers', 'id'>
+  fieldProps: FieldArrayWithId<PassengerSchemaType, 'passengers', 'id'> &
+    PassengerSchemaType['passengers'][number]
   moduleName: string
   error: Merge<FieldError, FieldErrorsImpl<PassengerValidationType>> | undefined
   index: string | number

@@ -4,8 +4,8 @@ import { Checkbox, Group, Text, Title } from '@mantine/core'
 import { CheckoutCard } from '@/components/card'
 import { formatCurrency } from '@/libs/util'
 import { ProductPassengerApiResponseModel } from '@/types/passengerViewModel'
-import { useCheckoutMethods } from '@/app/reservation/checkout-query'
-import { useCheckoutContext } from '@/app/reservation/store'
+import { useCheckoutMethods } from '@/app/(frontend)/reservation/checkout-query'
+import { useCheckoutContext } from '@/app/(frontend)/reservation/store'
 
 type IProps = {
   data: ProductPassengerApiResponseModel['viewBag']['HotelCancelWarrantyPriceStatusModel']

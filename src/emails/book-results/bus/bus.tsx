@@ -2,7 +2,7 @@ import { Column, Row, Link } from '@react-email/components'
 import {
   BusSummaryResponse,
   OperationResultType,
-} from '@/app/reservation/types'
+} from '@/app/(frontend)/reservation/types'
 import { busDummyResponse } from '../_dummy-response/bus'
 import { EmailCard } from '../../../components/order-components/email-card'
 import { EmailBody } from '../../_components/body'

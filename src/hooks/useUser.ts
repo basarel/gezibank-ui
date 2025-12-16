@@ -1,4 +1,4 @@
-import { Account } from '@/app/account/type'
+import { Account } from '@/app/(frontend)/account/type'
 import { serviceRequest } from '@/network'
 import { useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'

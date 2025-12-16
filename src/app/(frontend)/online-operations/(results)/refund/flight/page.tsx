@@ -1,6 +1,6 @@
 'use client'
 
-import { FlightRefundApiResponse } from '@/app/online-operations/types'
+import { FlightRefundApiResponse } from '@/app/(frontend)/online-operations/types'
 import { flightRefundParams } from '@/libs/onlineOperations/searchParams'
 import { serviceRequest, ServiceResponse } from '@/network'
 import {

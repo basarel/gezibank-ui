@@ -1,4 +1,4 @@
-import { HotelDetailResponseHotelInfo } from '@/app/hotel/types'
+import { HotelDetailResponseHotelInfo } from '@/app/(frontend)/hotel/types'
 import { Carousel, CarouselSlide } from '@mantine/carousel'
 
 import {
