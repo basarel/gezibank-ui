@@ -373,30 +373,48 @@ export const Header: React.FC<HeaderProps> = ({ headerContent }) => {
           </div>
           <div className='items-center justify-between gap-5 hidden md:grid'>
             <div className='absolute top-0 right-50 flex flex-col items-center gap-2'>
-              <Box className='flex items-center gap-4 rounded-b-3xl bg-orange-900 px-4 py-3 text-white shadow-md'>
-                <button className='flex items-center text-sm font-medium cursor-pointer'
+             
+              <div className='relative w-full'>
+            <Image
+              src='/container-header.png'
+              alt='Header Container'
+              width={295}
+              height={285}
+              className='object-cover h-full'
+              priority
+            />
+            <div className='absolute right-10 top-2 flex items-center gap-5'>
+              <button
+                className='flex cursor-pointer items-center font-medium text-white'
                 onClick={() => {
                   modals.open({
                     title: (
-                      <Title order={3} className='text-center'>
+                      <Title order={2} className='text-center'>
                         Üye Girişi
                       </Title>
                     ),
                     children: <LoginForm />,
                   })
-                }}>
-                  <span className='flex h-8 w-8 items-center justify-center'>
-                    <FaRegUserCircle size={20} className='text-blue-600' />
-                  </span>
-                  Üye Girişi
-                </button>
-                <Link href='/auth/register' className='text-md flex items-center gap-1 rounded-md border border-blue-600 p-2 text-sm font-medium'>
-                  <span className='flex h-5 w-5 items-center justify-center'>
-                    <FaUserPlus size={17} className='text-blue-600' />
-                  </span>
-                  Kayıt Ol
-                </Link>
-              </Box>
+                }}
+              >
+                <span className='flex gap-1 items-center justify-center'>
+                 
+                 <span  className='flex h-5 w-5 items-center justify-center'> <FaRegUserCircle size={19} className='text-blue-600' /> </span> 
+               <span> Üye Girişi</span>
+                </span>
+              </button>
+              <Link
+                href='/auth/register'
+                className='flex text-sm items-center gap-1 rounded-md border border-blue-600 px-2 py-1 font-medium text-white'
+              >
+                <span className='flex h-5 w-5 items-center justify-center'>
+                  <FaUserPlus size={19} className='text-blue-600' />
+                </span>
+                Kayıt Ol
+              </Link>
+            </div>
+          </div>
+               
               <Link href='/iletisim' className='text-sm flex items-center gap-1 text-gray-600 font-medium'>
               <CiCircleInfo size={16} />Yardım</Link>
             </div>

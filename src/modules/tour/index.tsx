@@ -118,65 +118,64 @@ const TourSearchEngine: React.FC<Partial<TourSearchEngineSchemaType>> = ({
 
   return (
     <>
-    <form onSubmit={formActions.handleSubmit(handleSubmit)}>
-      <div className='grid grid-cols-16 gap-3 md:gap-3'>
-        <div className='relative col-span-16 grid gap-3 md:col-span-7'>
-          <RiMapPin2Line
-            size={20}
-            className='absolute top-1/2 left-0 z-10 mx-2 -translate-y-1/2'
-          />
-          <TourLocations
-            label='Şehir, Ülke veya Tur Adı?'
-            isLoading={destinationLocationLoading}
-            data={destinationLocation?.Result}
-            onChange={(value) => {
-              setDestinationLocationInputValue(value)
-            }}
-            inputProps={{
-              error: formActions.formState.errors.destination?.name?.message,
-            }}
-            onSelect={(data) => {
-              formActions.setValue('destination', {
-                name: data.Name,
-                slug: data.Slug,
-              })
-              formActions.trigger('destination')
-            }}
-            defaultValue={
-              formActions.formState.defaultValues?.destination?.name
-            }
-          />
-        </div>
-        <div className='col-span-16 md:col-span-7'>
-          <TourCalendar
-            defaultDates={[
-              new Date(formActions.getValues('checkinDate')),
-              new Date(formActions.getValues('checkoutDate')),
-            ]}
-            onDateSelect={(dates) => {
-              const checkinDate = dates[0]
-              const checkoutDate = dates[1]
-
-              if (checkinDate && dayjs(checkinDate).isValid()) {
-                formActions.setValue('checkinDate', new Date(checkinDate))
-                formActions.trigger('checkinDate')
+      <form onSubmit={formActions.handleSubmit(handleSubmit)}>
+        <div className='grid grid-cols-16 gap-3 md:gap-3'>
+          <div className='relative col-span-16 grid gap-3 md:col-span-7'>
+            <RiMapPin2Line
+              size={20}
+              className='absolute top-1/2 left-0 z-10 mx-2 -translate-y-1/2'
+            />
+            <TourLocations
+              label='Şehir, Ülke veya Tur Adı?'
+              isLoading={destinationLocationLoading}
+              data={destinationLocation?.Result}
+              onChange={(value) => {
+                setDestinationLocationInputValue(value)
+              }}
+              inputProps={{
+                error: formActions.formState.errors.destination?.name?.message,
+              }}
+              onSelect={(data) => {
+                formActions.setValue('destination', {
+                  name: data.Name,
+                  slug: data.Slug,
+                })
+                formActions.trigger('destination')
+              }}
+              defaultValue={
+                formActions.formState.defaultValues?.destination?.name
               }
+            />
+          </div>
+          <div className='col-span-16 md:col-span-7'>
+            <TourCalendar
+              defaultDates={[
+                new Date(formActions.getValues('checkinDate')),
+                new Date(formActions.getValues('checkoutDate')),
+              ]}
+              onDateSelect={(dates) => {
+                const checkinDate = dates[0]
+                const checkoutDate = dates[1]
 
-              if (checkoutDate && dayjs(checkoutDate).isValid()) {
-                formActions.setValue('checkoutDate', new Date(checkoutDate))
-                formActions.trigger('checkoutDate')
-              }
-            }}
-          />
-        </div>
-        <div className='col-span-16 grid gap-3 md:col-span-2'>
-          <SearchEngineButton />
-        </div>
-      </div>
-    </form>
-          {pathname === '/' && <PopularSearchesTour />}
-          </>
+                if (checkinDate && dayjs(checkinDate).isValid()) {
+                  formActions.setValue('checkinDate', new Date(checkinDate))
+                  formActions.trigger('checkinDate')
+                }
 
+                if (checkoutDate && dayjs(checkoutDate).isValid()) {
+                  formActions.setValue('checkoutDate', new Date(checkoutDate))
+                  formActions.trigger('checkoutDate')
+                }
+              }}
+            />
+          </div>
+          <div className='col-span-16 grid gap-3 md:col-span-2'>
+            <SearchEngineButton />
+          </div>
+        </div>
+      </form>
+      {pathname === '/' && <PopularSearchesTour />}
+    </>
   )
 }
 

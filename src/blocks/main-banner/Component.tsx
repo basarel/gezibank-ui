@@ -83,7 +83,6 @@ export const MainBannerBlock: React.FC<MainBannerBlockProps> = ({
     }
   }, [emblaApi, slides.length])
 
-  // Debug: slides kontrolü
   if (!slides || slides.length === 0) {
     if (typeof window !== 'undefined') {
       console.warn('MainBannerBlock: Slides boş veya yok', {
@@ -136,8 +135,6 @@ export const MainBannerBlock: React.FC<MainBannerBlockProps> = ({
         >
           {slides.map((slide, index) => {
             const isActive = activeSlides.has(index)
-
-            // Resim URL'ini al - ThemeCardsBlock gibi direkt kullan
             const imageUrl =
               slide.image && typeof slide.image === 'object'
                 ? slide.image.url

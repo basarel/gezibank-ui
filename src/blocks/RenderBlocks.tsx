@@ -8,7 +8,6 @@ import { HolidayThemesBlock } from './content-block/Component'
 import { TrendRegionsBlock } from './trend-regions/Component'
 import { MainBannerBlock } from './main-banner/Component'
 import { PopulerLinksBlock } from './populer-links/Component'
- 
 type Block = {
   blockType: string
   [key: string]: any
@@ -25,7 +24,7 @@ const blockComponents: Record<string, React.ComponentType<any>> = {
   trendRegions: TrendRegionsBlock,
   mainBanner: MainBannerBlock,
   populerlinks: PopulerLinksBlock,
- }
+}
 
 export const RenderBlocks: React.FC<RenderBlocksProps> = ({ blocks }) => {
   if (!blocks || !Array.isArray(blocks) || blocks.length === 0) {

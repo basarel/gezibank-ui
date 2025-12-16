@@ -34,11 +34,11 @@ export default async function RootLayout({
         <MantineProvider theme={mantineTheme} forceColorScheme='light'>
           <Providers>
             <Notifications />
-            
+
             <div className='shrink-0 grow-0'>
               <Header headerContent={globalHeader} />
             </div>
-             <main className='grow'>{children}</main>
+            <main className='grow'>{children}</main>
             <Suspense fallback={null}>
               <div className='shrink-0 grow-0 pt-4 md:pt-10'>
                 <Footer />

@@ -2,7 +2,6 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import type { Payload } from 'payload'
 
-// Header Global için tip tanımı
 export type HeaderMenuLink = {
   label: string
   url?: string | null
@@ -10,7 +9,7 @@ export type HeaderMenuLink = {
 }
 
 export type HeaderMenuColumn = {
-  image?: string | { id: string; url?: string; } | null
+  image?: string | { id: string; url?: string } | null
   columnTitle?: string | null
   links: HeaderMenuLink[]
 }
@@ -41,7 +40,7 @@ export async function getPageBySlug(slug: string) {
         },
       },
       limit: 1,
-      depth: 2, // Relation'ları da getir (media için)
+      depth: 2,
     })
 
     return result.docs[0] || null
@@ -70,8 +69,6 @@ export async function getGlobalHeader(): Promise<GlobalHeader | null> {
   try {
     const payload = await getPayloadInstance()
 
-    // Payload'ın findGlobal metodunu tip güvenli şekilde kullanmak için
-    // metod imzasını doğru şekilde cast ediyoruz
     type FindGlobalMethod = <T = GlobalHeader>(args: {
       slug: string
       depth?: number
@@ -80,7 +77,7 @@ export async function getGlobalHeader(): Promise<GlobalHeader | null> {
 
     const result = await findGlobalMethod<GlobalHeader>({
       slug: 'header',
-      depth: 2, // Media relation'larını da getir
+      depth: 2,
     })
 
     if (!result) return null

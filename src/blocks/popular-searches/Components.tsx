@@ -5,7 +5,7 @@ import { Link } from 'next-view-transitions'
 import { FaArrowRightLong } from 'react-icons/fa6'
 import { motion } from 'framer-motion'
 
-type PopularSearchItem= {
+type PopularSearchItem = {
   id: string
   title: string
   link: string
@@ -13,9 +13,11 @@ type PopularSearchItem= {
 type PopularSearchesBlockProps = {
   items: PopularSearchItem[]
 }
-export default function PopularSearchesBlock({ items }: PopularSearchesBlockProps) {
+export default function PopularSearchesBlock({
+  items,
+}: PopularSearchesBlockProps) {
   console.log('PopularSearchesBlock rendered with items:', items)
-  
+
   if (!items || items.length === 0) {
     console.log('PopularSearchesBlock: No items, returning null')
     return null
@@ -33,12 +35,15 @@ export default function PopularSearchesBlock({ items }: PopularSearchesBlockProp
         <div className='grid grid-cols-2 items-center gap-3 md:flex md:gap-8'>
           {items?.map((item, index) => (
             <div key={index}>
-              <Link href={item.link as Route} className='flex items-center gap-2 text-blue-800 hover:text-blue-900'>
+              <Link
+                href={item.link as Route}
+                className='flex items-center gap-2 text-blue-800 hover:text-blue-900'
+              >
                 <span className='truncate text-sm font-medium'>
                   {item.title}
                 </span>
                 <FaArrowRightLong className='text-blue-800' size={15} />
-              </Link>  
+              </Link>
             </div>
           ))}
         </div>

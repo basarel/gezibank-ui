@@ -56,7 +56,7 @@ export const HeaderMenu: React.FC<HeaderMenuProps> = ({ menuItems = [] }) => {
           >
             <Menu.Target>
               <UnstyledButton
-                className={`flex items-center gap-1 text-sm font-medium ${classes.target}`}
+                className={`flex items-center gap-3 text-sm font-medium ${classes.target}`}
               >
                 <span className='text-sm font-medium'>{item.title}</span>
                 <span className='text-sm font-medium'>
