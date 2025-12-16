@@ -1,8 +1,8 @@
-import { HotelDetailResponseHotelInfo } from '@/app/hotel/types'
+import { HotelDetailResponseHotelInfo } from '@/app/(frontend)/hotel/types'
 import { FaBellConcierge } from 'react-icons/fa6'
 
 import { Button, Title, Typography } from '@mantine/core'
-import { HotelDetailDescription } from '@/app/hotel/types'
+import { HotelDetailDescription } from '@/app/(frontend)/hotel/types'
 import { useElementSize } from '@mantine/hooks'
 import { MdKeyboardArrowRight, MdOutlineBed } from 'react-icons/md'
 import { FaDoorOpen, FaGlassMartiniAlt, FaRegBuilding } from 'react-icons/fa'

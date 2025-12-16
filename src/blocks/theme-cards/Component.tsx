@@ -116,7 +116,7 @@ export const ThemeCardsBlock: React.FC<ThemeCardsBlockProps> = ({
                         <Badge
                           size='lg'
                           radius={'md'}
-                          className='absolute top-2 left-3 bg-orange-500'
+                          className='absolute top-2 left-3 bg-blue-600'
                         >
                           %{discedPrice.toFixed(0)} indirim
                         </Badge>
@@ -125,7 +125,7 @@ export const ThemeCardsBlock: React.FC<ThemeCardsBlockProps> = ({
                       <Badge
                         size='lg'
                         radius={'md'}
-                        className={`absolute left-3 bg-blue-700 font-normal ${
+                        className={`absolute left-3 bg-orange-900 font-normal ${
                           item.discountPrice &&
                           item.price &&
                           mainPrice > 0 &&

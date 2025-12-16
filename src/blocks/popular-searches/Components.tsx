@@ -16,10 +16,8 @@ type PopularSearchesBlockProps = {
 export default function PopularSearchesBlock({
   items,
 }: PopularSearchesBlockProps) {
-  console.log('PopularSearchesBlock rendered with items:', items)
 
   if (!items || items.length === 0) {
-    console.log('PopularSearchesBlock: No items, returning null')
     return null
   }
 

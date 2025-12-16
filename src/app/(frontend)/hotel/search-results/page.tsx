@@ -27,6 +27,7 @@ const HotelSearchResultsPage: React.FC<PageProps> = async ({
 }
 
 export default HotelSearchResultsPage
+
 const LoadingComponent = () => {
   return (
     <div style={{ height: '100vh' }}>
@@ -34,5 +35,3 @@ const LoadingComponent = () => {
     </div>
   )
 }
-
-export { LoadingComponent }

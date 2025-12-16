@@ -8,6 +8,7 @@ import { HolidayThemesBlock } from './content-block/Component'
 import { TrendRegionsBlock } from './trend-regions/Component'
 import { MainBannerBlock } from './main-banner/Component'
 import { PopulerLinksBlock } from './populer-links/Component'
+import { VideoPromoBlock } from './video-promo/Component'
 type Block = {
   blockType: string
   [key: string]: any
@@ -23,7 +24,8 @@ const blockComponents: Record<string, React.ComponentType<any>> = {
   holidayThemes: HolidayThemesBlock,
   trendRegions: TrendRegionsBlock,
   mainBanner: MainBannerBlock,
-  populerlinks: PopulerLinksBlock,
+  popularLinks: PopulerLinksBlock,
+  videoPromo: VideoPromoBlock,
 }
 
 export const RenderBlocks: React.FC<RenderBlocksProps> = ({ blocks }) => {
@@ -31,7 +33,8 @@ export const RenderBlocks: React.FC<RenderBlocksProps> = ({ blocks }) => {
     return null
   }
   const fullWidthBlocks = ['mainBanner', 'storySlider']
-
+console.log( 'blocks', blocks)
+console.log( 'blockComponents', blockComponents)
   return (
     <Fragment>
       {blocks.map((block, index) => {

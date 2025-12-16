@@ -1,5 +1,5 @@
 import React, { JSX } from 'react'
-import { HotelDetailResponseHotelInfo } from '@/app/hotel/types'
+import { HotelDetailResponseHotelInfo } from '@/app/(frontend)/hotel/types'
 import {
   FaBed,
   FaCircle,
@@ -28,7 +28,7 @@ import {
 } from 'react-icons/md'
 import { PiConfettiBold } from 'react-icons/pi'
 import { Drawer, Tabs, Accordion, Spoiler, Title } from '@mantine/core'
-import { HotelDetailDescription } from '@/app/hotel/types'
+import { HotelDetailDescription } from '@/app/(frontend)/hotel/types'
 import { CommentsDrawer } from './comments-drawer'
 import { IoClose } from 'react-icons/io5'
 import { BsCheck } from 'react-icons/bs'

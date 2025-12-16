@@ -138,8 +138,7 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
                         onMouseEnter={() => !isTouchDevice && setHoveredIndex(index)}
                         
                       >
-                        <Link
-                          href={linkUrl as Route}
+                        <div
                           className='block absolute top-4 left-20 h-[156px] min-w-[200px] md:min-w-[400px] rounded-r-xl bg-orange-50 py-3 px-1 shadow-lg justify-center items-center text-center'
                           onMouseEnter={() => !isTouchDevice && setHoveredIndex(index)}
                         >
@@ -167,7 +166,7 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
                               </Link>
                             )}
                           </div>
-                        </Link>
+                        </div>
                       </div>
                     </div>
                    

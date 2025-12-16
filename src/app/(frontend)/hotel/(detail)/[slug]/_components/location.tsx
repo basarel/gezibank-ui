@@ -1,6 +1,6 @@
 import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps'
 import { AspectRatio } from '@mantine/core'
-import { HotelDetailResponseHotelInfo } from '@/app/hotel/types'
+import { HotelDetailResponseHotelInfo } from '@/app/(frontend)/hotel/types'
 
 interface LocationProps {
   location: [number, number]

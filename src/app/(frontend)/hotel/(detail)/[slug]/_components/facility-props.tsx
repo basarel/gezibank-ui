@@ -1,5 +1,5 @@
-import { HotelDetailDescription } from '@/app/hotel/types'
-import { HotelDetailResponseHotelInfo } from '@/app/hotel/types'
+import { HotelDetailDescription } from '@/app/(frontend)/hotel/types'
+import { HotelDetailResponseHotelInfo } from '@/app/(frontend)/hotel/types'
 import { Accordion } from '@mantine/core'
 import React, { JSX } from 'react'
 import { GeneralDrawer } from './general-drawer'

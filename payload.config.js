@@ -504,13 +504,53 @@ const Pages = {
             },
           ],
         },
+        {
+          slug: 'videoPromo',
+          labels: {
+            singular: 'Video Promo Block',
+            plural: 'Video Promo Blocks',
+          },
+          fields: [
+            {
+              name: 'title',
+              type: 'text',
+              label: 'Title',
+              required: false,
+              admin: {
+                description: 'Video promo title text',
+              },
+            },
+            {
+              name: 'text',
+              type: 'textarea',
+              label: 'Text',
+              required: false,
+              admin: {
+                description: 'Additional text content',
+              },
+            },
+            {
+              name: 'backgroundImage',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Background Image',
+              required: false,
+              admin: {
+                description: 'Background image for the video promo section',
+              },
+            },
+            {
+              name: 'videoUrl',
+              type: 'text',
+              label: 'Video URL',
+              required: false,
+              admin: {
+                description: 'YouTube or other video embed URL (e.g., https://www.youtube.com/embed/VIDEO_ID)',
+              },
+            },
+          ],
+        },
       ],
-    },
-    {
-      name: 'content',
-      type: 'richText',
-      label: 'Content',
-      editor: lexicalEditor({}),
     },
     {
       name: 'metaTitle',

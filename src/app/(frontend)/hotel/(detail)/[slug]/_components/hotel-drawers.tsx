@@ -7,7 +7,7 @@ import {
   Accordion,
   UnstyledButton,
 } from '@mantine/core'
-import { HotelDetailDescription } from '@/app/hotel/types'
+import { HotelDetailDescription } from '@/app/(frontend)/hotel/types'
 import { useQuery } from '@tanstack/react-query'
 import { serviceRequest } from '@/network'
 import { BiChevronRight } from 'react-icons/bi'

@@ -1,8 +1,8 @@
 import { Accordion } from '@mantine/core'
 import { useState } from 'react'
-import { HotelDetailResponseHotelInfo } from '@/app/hotel/types'
+import { HotelDetailResponseHotelInfo } from '@/app/(frontend)/hotel/types'
 
-import { HotelDetailDescription } from '@/app/hotel/types'
+import { HotelDetailDescription } from '@/app/(frontend)/hotel/types'
 
 type IProps = {
   description: HotelDetailDescription

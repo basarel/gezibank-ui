@@ -3,7 +3,7 @@ import type { SearchParams } from 'nuqs/server'
 import { carDetailSearchParamsCache } from '../searchParams'
 import { Suspense } from 'react'
 import { DetailClient } from './client'
-import { Container } from '@mantine/core'
+import { Container, Loader } from '@mantine/core'
 import { CarDetailLoader } from './loader'
 
 type PageProps = {
