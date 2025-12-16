@@ -1,7 +1,7 @@
 'use client'
 
 import { ScrollArea, Skeleton, Tabs, TabsTab } from '@mantine/core'
-import { useLocalStorage, useMounted } from '@mantine/hooks'
+import { useMounted } from '@mantine/hooks'
 
 import { RiSuitcaseLine } from 'react-icons/ri'
 import { TourSearchEngine } from '@/modules/tour'
@@ -9,7 +9,7 @@ import { TourSearchEngine } from '@/modules/tour'
 import classes from '@/components/search-engine/Search.module.css'
 
 const searchModules = {
-  tour: { value: 'tour', title: 'Tur' },
+  tour: { value: 'tour', title: 'Tur', icon: RiSuitcaseLine },
 }
 
 export const SearchEngine = () => {
@@ -40,12 +40,18 @@ export const SearchEngine = () => {
             minWidth: 'max-content',
           }}
         >
-          <TabsTab
-            value={searchModules.tour.value}
-            leftSection={<RiSuitcaseLine size={24} />}
-          >
-            {searchModules.tour.title}
-          </TabsTab>
+          {Object.values(searchModules).map((module) => {
+            const IconComponent = module.icon
+            return (
+              <TabsTab
+                key={module.value}
+                value={module.value}
+                leftSection={<IconComponent size={24} />}
+              >
+                {module.title}
+              </TabsTab>
+            )
+          })}
         </Tabs.List>
       </ScrollArea>
 

@@ -2,7 +2,7 @@ import type { AxiosRequestConfig, AxiosError } from 'axios'
 
 import axios from 'axios'
 import https from 'https'
-import { ResponseStatus } from './app/reservation/types'
+import { ResponseStatus } from '@/app/(frontend)/reservation/types'
 import { GetSecurityTokenResponse } from './types/global'
 import md5 from 'md5'
 

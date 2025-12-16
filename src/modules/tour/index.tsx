@@ -4,13 +4,14 @@ import { Skeleton } from '@mantine/core'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import dayjs from 'dayjs'
+import PopularSearchesTour from './components/popular-searches-tour'
+import { usePathname } from 'next/navigation'
 
 import { useTransitionRouter } from 'next-view-transitions'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useLocalStorage, useMounted } from '@mantine/hooks'
-
 import { TourCalendar } from '@/components/search-engine/calendar/tour'
 import { TourLocations } from '@/components/search-engine/locations/tour/locations'
 import { LocationResults } from '@/components/search-engine/locations/type'
@@ -39,7 +40,7 @@ const TourSearchEngine: React.FC<Partial<TourSearchEngineSchemaType>> = ({
 }) => {
   const mounted = useMounted()
   const router = useTransitionRouter()
-
+  const pathname = usePathname()
   const [localParams, setLocalParams] =
     useLocalStorage<TourSearchEngineSchemaType>({
       key: 'tour-search',
@@ -116,6 +117,7 @@ const TourSearchEngine: React.FC<Partial<TourSearchEngineSchemaType>> = ({
   }
 
   return (
+    <>
     <form onSubmit={formActions.handleSubmit(handleSubmit)}>
       <div className='grid grid-cols-16 gap-3 md:gap-3'>
         <div className='relative col-span-16 grid gap-3 md:col-span-7'>
@@ -172,6 +174,9 @@ const TourSearchEngine: React.FC<Partial<TourSearchEngineSchemaType>> = ({
         </div>
       </div>
     </form>
+          {pathname === '/' && <PopularSearchesTour />}
+          </>
+
   )
 }
 

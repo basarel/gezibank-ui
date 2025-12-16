@@ -1,4 +1,5 @@
 import { NextConfig } from 'next'
+import { withPayload } from '@payloadcms/next/withPayload'
 
 const NEXT_PUBLIC_SERVER_URL =
   process.env.NEXT_PUBLIC_SERVER_URL ||
@@ -38,6 +39,10 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https' as const,
         hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https' as const,
+        hostname: 'gezibank.sm.mncdn.com',
       },
     ],
   },
@@ -126,4 +131,6 @@ const nextConfig: NextConfig = {
   },
 }
 
-export default nextConfig
+export default withPayload(nextConfig, {
+  devBundleServerPackages: false,
+})

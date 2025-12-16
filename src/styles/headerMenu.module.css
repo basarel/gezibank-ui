@@ -57,7 +57,8 @@
   padding: 8px 12px;
   border-radius: 6px;
   font-size: 14px;
-  color: #4b5563;
+  font-weight: normal;
+  color: #000000;
   transition: all 0.15s ease;
   cursor: pointer;
   text-decoration: none;
@@ -66,12 +67,12 @@
 
 .menuLink:hover {
   background-color: #f3f4f6;
-  color: #2563eb;
+  color: #000000;
 }
 
 .menuLink.active {
-  color: #2563eb;
-  font-weight: 700;
+  color: #000000;
+  font-weight: normal;
 }
 
 .arrowIcon {
@@ -92,4 +93,57 @@
 
 .column:first-child .menuLink:hover {
   background-color: #eff6ff;
+}
+
+.leftSideLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 200px;
+  border-right: 1px solid #e5e7eb;
+  padding-right: 24px;
+  margin-right: 24px;
+}
+
+.leftSideLink {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 14px;
+  font-weight: normal;
+  color: #000000;
+  transition: all 0.15s ease;
+  cursor: pointer;
+  text-decoration: none;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.leftSideLink:hover {
+  color: #000000;
+}
+
+.leftSideLink.active {
+  color: #000000;
+  font-weight: normal;
+}
+
+.rightSideColumns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  flex: 1;
+}
+
+.rightSideColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.columnImage {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 8px;
 }

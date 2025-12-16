@@ -1,118 +1,22 @@
 'use client'
 
-import { Menu, UnstyledButton } from '@mantine/core'
+import { Menu, UnstyledButton, Accordion, Image, Skeleton } from '@mantine/core'
 import { useMounted } from '@mantine/hooks'
+import { Link } from 'next-view-transitions'
+import { Route } from 'next'
 import classes from '../styles/headerMenu.module.css'
 import { BiChevronDown } from 'react-icons/bi'
-
-type MenuColumn = {
-  title?: string
-  items: {
-    label: string
-    isActive?: boolean
-  }[]
+import type { HeaderMenuItem } from '@/libs/payload'
+ type HeaderMenuProps = {
+  menuItems?: HeaderMenuItem[]
 }
 
-type MenuData = {
-  title: string
-  columns: MenuColumn[]
-}
-
-const headerMenuData: MenuData[] = [
-  {
-    title: 'Yurt İçi Turlar',
-    columns: [
-      {
-        title: 'Öne Çıkanlar',
-        items: [
-          { label: 'Erken Rezervasyon Kültür Turları' },
-          { label: 'Yılbaşı Turları' },
-          { label: 'Sömestr Turları' },
-          { label: 'Kayak Turları' },
-          { label: 'Turistik Doğu Ekspresi Turları' },
-        ],
-      },
-      {
-        title: 'En Çok Satılan Turlar',
-        items: [
-          { label: 'Haftanın Fırsatları' },
-          { label: 'Hafta Sonu Turları' },
-          { label: 'Mardin Turları' },
-          { label: 'Kapadokya Turları' },
-          { label: 'Turistik Doğu Ekspresi Turları' },
-          { label: 'Uçaklı Gap Turları' },
-          { label: 'Pamukkale Turları' },
-          { label: 'Kasım Ara Tatil Turları' },
-        ],
-      },
-    ],
-  },
-  {
-    title: 'Yurt Dışı Turlar',
-    columns: [
-      {
-        title: 'Öne Çıkanlar',
-        items: [
-          { label: 'Erken Rezervasyon Avrupa Turları' },
-          { label: 'Yılbaşı Yurt Dışı Turları' },
-          { label: 'Sömestr Yurt Dışı Turları' },
-          { label: 'Dubai Turları' },
-          { label: 'Paris Turları' },
-        ],
-      },
-      {
-        title: 'Popüler Bölgeler',
-        items: [
-          { label: 'Dubai Turları' },
-          { label: 'Paris Turları' },
-          { label: 'Roma Turları' },
-          { label: 'Barcelona Turları' },
-          { label: 'Atina Turları' },
-          { label: 'Kiev Turları' },
-          { label: 'Tiflis Turları' },
-          { label: 'Kahire Turları' },
-          { label: 'Viyana Turları' },
-          { label: 'Prag Turları' },
-          { label: 'Budapeşte Turları' },
-          { label: 'Amsterdam Turları' },
-        ],
-      },
-    ],
-  },
-  {
-    title: 'Tur Takvimi',
-    columns: [
-      {
-        title: 'Sezon Turları',
-        items: [
-          { label: 'Kış Turları' },
-          { label: 'Yaz Turları' },
-          { label: 'İlkbahar Turları' },
-          { label: 'Sonbahar Turları' },
-          { label: 'Yazlık Bölgeler' },
-        ],
-      },
-      {
-        title: 'Erken Rezervasyon',
-        items: [
-          { label: 'Erken Rezervasyon 2025' },
-          { label: 'Yaz Erken Rezervasyon' },
-          { label: 'Kış Erken Rezervasyon' },
-          { label: 'Sezon Başı Fırsatları' },
-          { label: 'Ön Ödeme Avantajlı Turlar' },
-        ],
-      },
-    ],
-  },
-]
-
-export const HeaderMenu: React.FC = () => {
+export const HeaderMenu: React.FC<HeaderMenuProps> = ({ menuItems = [] }) => {
   const isMounted = useMounted()
-
-  if (!isMounted) {
+  if (!isMounted || !menuItems || menuItems.length === 0) {
     return (
       <div className='flex items-center px-3'>
-        {headerMenuData.map((item, index) => (
+        {menuItems?.map((item, index) => (
           <UnstyledButton key={index} className='text-sm font-medium'>
             {item.title}
           </UnstyledButton>
@@ -120,53 +24,140 @@ export const HeaderMenu: React.FC = () => {
       </div>
     )
   }
-
   return (
+    
     <div className='flex items-center px-3'>
-      {headerMenuData.map((item, index) => (
-        <Menu
-          key={index}
-          width={500}
-          position='bottom-start'
-          classNames={{
-            dropdown: classes.dropdown,
-            item: classes.menuItem,
-          }}
-        >
-          <Menu.Target>
+      {menuItems.map((item, index) => {
+        const hasContent =
+          item.columns &&
+          item.columns.length > 0 &&
+          item.columns.some((col) => col.links && col.links.length > 0)
+
+        if (!hasContent) {
+          return (
             <UnstyledButton
+              key={index}
               className={`flex items-center gap-1 text-sm font-medium ${classes.target}`}
             >
               <span className='text-sm font-medium'>{item.title}</span>
-              <span className='text-sm font-medium'>
-                <BiChevronDown className={classes.arrowIcon} />
-              </span>
             </UnstyledButton>
-          </Menu.Target>
+          )
+        }
 
-          <Menu.Dropdown className={classes.megaMenu}>
-            <div className='grid grid-cols-2 gap-4'>
-              {item.columns.map((column, colIndex) => (
-                <div key={colIndex} className={classes.column}>
-                  {column.title && (
-                    <div className={classes.columnTitle}>{column.title}</div>
-                  )}
-                  <div className={classes.columnItems}>
-                    {column.items.map((columnItem, itemIndex) => (
-                      <div
-                        key={itemIndex}
-                        className={`${classes.menuLink} ${columnItem.isActive ? classes.active : ''}`}
-                      >
-                        <span>{columnItem.label}</span>
-                      </div>
-                    ))}
-                  </div>
+        return (
+           <Menu
+            key={index}
+            width={900}
+            position='bottom-start'
+            classNames={{
+              dropdown: classes.dropdown,
+              item: classes.menuItem,
+            }}
+          >
+            <Menu.Target>
+              <UnstyledButton
+                className={`flex items-center gap-1 text-sm font-medium ${classes.target}`}
+              >
+                <span className='text-sm font-medium'>{item.title}</span>
+                <span className='text-sm font-medium'>
+                  <BiChevronDown className={classes.arrowIcon} />
+                </span>
+              </UnstyledButton>
+            </Menu.Target>
+
+            <Menu.Dropdown className={classes.megaMenu}>
+              {item.showContent && item.content && item.content.trim() && (
+                <div className='mb-4 rounded-md bg-gray-50 p-3 text-sm text-gray-700'>
+                  {item.content}
                 </div>
-              ))}
-            </div>
-          </Menu.Dropdown>
-        </Menu>
-      ))}
+              )}
+              <div className='flex'>
+                {item.columns &&
+                  item.columns.length > 0 &&
+                  item.columns[0]?.links &&
+                  item.columns[0].links.length > 0 && (
+                    <div className={classes.leftSideLinks}>
+                      {item.columns[0].links.map((link, linkIndex) => {
+                        const content = link.url ? (
+                          <Link
+                            href={link.url as Route}
+                            className={`${classes.leftSideLink} ${link.isActive ? classes.active : ''}`}
+                          >
+                            {link.label}
+                          </Link>
+                        ) : (
+                          <div
+                            className={`${classes.leftSideLink} ${link.isActive ? classes.active : ''}`}
+                          >
+                            {link.label}
+                          </div>
+                        )
+                        return <div key={linkIndex}>{content}</div>
+                      })}
+                    </div>
+                  )}
+
+                {item.columns && item.columns.length > 1 && (
+                  <div className={classes.rightSideColumns}>
+                    {item.columns
+                      .slice(1) // İlk kolonu atla
+                      .filter((col) => col.links && col.links.length > 0)
+                      .map((column, colIndex) => {
+                        const imageUrl =
+                          column.image && typeof column.image === 'object'
+                            ? column.image.url
+                            : null
+
+                        return (
+                          <div
+                            key={colIndex}
+                            className={classes.rightSideColumn}
+                          >
+                            {imageUrl && (
+                              <div className='h-[150px] w-full overflow-hidden rounded-lg'>
+                                <Image
+                                  src={imageUrl}
+                                  alt={column.columnTitle || 'Menu image'}
+                                  className='h-full w-full object-cover'
+                                />
+                              </div>
+                            )}
+
+                            {column.columnTitle && (
+                              <div className={classes.columnTitle}>
+                                {column.columnTitle}
+                              </div>
+                            )}
+
+                            <div className={classes.columnItems}>
+                              {column.links.map((link, linkIndex) => {
+                                const content = link.url ? (
+                                  <Link
+                                    href={link.url as Route}
+                                    className={`${classes.menuLink} ${link.isActive ? classes.active : ''}`}
+                                  >
+                                    <span>{link.label}</span>
+                                  </Link>
+                                ) : (
+                                  <div
+                                    className={`${classes.menuLink} ${link.isActive ? classes.active : ''}`}
+                                  >
+                                    <span>{link.label}</span>
+                                  </div>
+                                )
+                                return <div key={linkIndex}>{content}</div>
+                              })}
+                            </div>
+                          </div>
+                        )
+                      })}
+                  </div>
+                )}
+              </div>
+            </Menu.Dropdown>
+          </Menu>
+        )        
+      })}
     </div>
   )
 }

@@ -17,10 +17,15 @@ import {
   Grid,
   Title,
 } from '@mantine/core'
-import { FaRegUserCircle, FaUser } from 'react-icons/fa'
+import {
+  FaRegUserCircle,
+  FaUser,
+  FaInfoCircle,
+  FaUserPlus,
+} from 'react-icons/fa'
 import { IoIosLogOut } from 'react-icons/io'
-import PersonLetters from '@/app/account/_components/person-letters'
-import AccountSideNav from '@/app/account/_components/side-nav'
+import PersonLetters from '@/app/(frontend)/account/_components/person-letters'
+import AccountSideNav from '@/app/(frontend)/account/_components/side-nav'
 import { useDisclosure } from '@mantine/hooks'
 import { HeaderMenu } from './header-menu'
 import { FaBed } from 'react-icons/fa'
@@ -30,11 +35,25 @@ import { FaBusSimple } from 'react-icons/fa6'
 import { BsLuggageFill } from 'react-icons/bs'
 import { TbArrowsRightLeft } from 'react-icons/tb'
 import { modals } from '@mantine/modals'
-import { LoginForm } from '@/app/auth/login/_components/login-form'
+import { LoginForm } from '@/app/(frontend)/auth/login/_components/login-form'
 import { Route } from 'next'
 import { FiPhone } from 'react-icons/fi'
+import { RiWhatsappFill } from 'react-icons/ri'
+import { MdPhone } from 'react-icons/md'
 import { useGetWidgetsByCollectionSlug } from '@/hooks/useCsmQuery'
-export const Header = () => {
+import type { GlobalHeader } from '@/libs/payload'
+import { CallFormDrawer } from '@/components/call-form/CallFormDrawer'
+import NextImage from 'next/image'
+import { SlEarphonesAlt } from 'react-icons/sl'
+import { CiCircleInfo } from 'react-icons/ci'
+import { CallForm } from './call-form'
+import { Img } from '@react-email/components'
+
+type HeaderProps = {
+  headerContent?: GlobalHeader | null
+}
+
+export const Header: React.FC<HeaderProps> = ({ headerContent }) => {
   const [drawerOpened, setDrawerOpened] = useState(false)
   const toggleDrawer = () => setDrawerOpened((prev) => !prev)
   const session = useSession()
@@ -57,59 +76,88 @@ export const Header = () => {
     <>
       <header className='border-b bg-white'>
         <Container>
-          <Box className='flex items-center py-2'>
-            <Link href='/'>
-              <Image
-                src='/logo.png'
-                width={188}
-                height={41}
-                alt='GeziBank'
-                priority
-              />
-            </Link>
-            <div className='hidden md:block'>
-              <HeaderMenu />
-            </div>
-            <Drawer opened={opened} onClose={close} className='md:hidden'>
-              <div className='flex flex-col gap-2'>
-                <div>
-                  <PersonLetters />
+          <div className='grid items-center justify-between'>
+            <div className='ms-auto mt-2 items-center gap-5 text-sm font-medium hidden md:flex'>
+              <Link
+                href='https://www.whatsapp.com/channel/0029Vau83EmCRs1qIYPnNO0a'
+                className='flex items-center gap-1'
+              >
+                <div className='relative size-[36px]'>
+                  <Img src={'/whatsapp-icon.jpg'} />
                 </div>
-                <div className='rounded-md border p-2 shadow'>
-                  <AccountSideNav insideClose={close} />
-                </div>
+                <div className='leading-sm text-xs text-black'>WhatsApp</div>
+              </Link>
+              <div className='flex items-center gap-2 text-black cursor-pointer'
+              onClick={() => {
+                modals.open({
+                  title: (
+                    <Title order={3} className='text-center'>
+                      Sizi Arayalım
+                    </Title>
+                  ),
+                  children: <CallForm />,
+                })
+              }}>
+                <SlEarphonesAlt size={18} />
+                Sizi Arayalım
               </div>
-            </Drawer>
-            <div className='ml-auto flex items-center gap-1 md:hidden'>
-              {session.status === 'authenticated' ? (
-                <Button
-                  onClick={open}
-                  className='rounded-full bg-blue-800 text-start text-xs font-medium text-white'
-                >
-                  {session?.data.user.name ? `${session.data.user.name}` : ''}
-                </Button>
-              ) : (
-                <Button
-                  variant='outline'
-                  size='xs'
-                  className='p-2'
-                  radius={'xl'}
-                  component={Link}
-                  href={'/auth/login' as Route}
-                >
-                  <FaUser />
-                </Button>
-              )}
-
-              <Burger
-                opened={drawerOpened}
-                onClick={toggleDrawer}
-                size='sm'
-                title='Menü Aç/Kapat'
-              />
             </div>
+            <div className='flex items-center gap-2'>
+              <Box className='flex items-center pb-4'>
+                <Link href='/'>
+                  <Image
+                    src='/logo.png'
+                    width={188}
+                    height={41}
+                    alt='GeziBank'
+                    priority
+                  />
+                </Link>
+                <div className='hidden md:block'>
+                  <HeaderMenu menuItems={headerContent?.menuItems} />
+                </div>
+                <Drawer opened={opened} onClose={close} className='md:hidden'>
+                  <div className='flex flex-col gap-2'>
+                    <div>
+                      <PersonLetters />
+                    </div>
+                    <div className='rounded-md border p-2 shadow'>
+                      <AccountSideNav insideClose={close} />
+                    </div>
+                  </div>
+                </Drawer>
+                <div className='ml-auto flex items-center gap-1 md:hidden'>
+                  {session.status === 'authenticated' ? (
+                    <Button
+                      onClick={open}
+                      className='rounded-full bg-blue-800 text-start text-xs font-medium text-white'
+                    >
+                      {session?.data.user.name
+                        ? `${session.data.user.name}`
+                        : ''}
+                    </Button>
+                  ) : (
+                    <Button
+                      variant='outline'
+                      size='xs'
+                      className='p-2'
+                      radius={'xl'}
+                      component={Link}
+                      href={'/auth/login' as Route}
+                    >
+                      <FaUser />
+                    </Button>
+                  )}
 
-            <Box className='hidden flex-1 items-center md:flex'>
+                  <Burger
+                    opened={drawerOpened}
+                    onClick={toggleDrawer}
+                    size='sm'
+                    title='Menü Aç/Kapat'
+                  />
+                </div>
+
+                {/* <Box className='hidden flex-1 items-center md:flex'>
               <div className='ms-auto flex items-center gap-7 font-medium'>
                 {widgets.isLoading ? (
                   <div className='flex gap-2'>
@@ -137,7 +185,7 @@ export const Header = () => {
                           leftSection={<FaUser />}
                           className='truncate rounded-lg bg-blue-800 text-start text-xs font-medium text-white'
                         >
-                          {/* <Avatar src={session.data.user.image} /> */}
+                          {/* <Avatar src={session.data.user.image} />  
                           <div>{session?.data.user.name}</div>
                         </Button>
                       </div>
@@ -194,101 +242,101 @@ export const Header = () => {
                   </div>
                 )}
               </div>
-            </Box>
+            </Box> */}
 
-            <Drawer
-              opened={drawerOpened}
-              onClose={toggleDrawer}
-              padding='md'
-              styles={{
-                header: {
-                  boxShadow: '0 0 2px 0 gray',
-                },
-              }}
-              title={
-                <div className='gap-lg flex items-center justify-end'>
-                  <Link onClick={toggleDrawer} href='/'>
-                    <Image
-                      src='/logo.png'
-                      width={118}
-                      height={41}
-                      alt='GeziBank'
-                      priority
-                    />
-                  </Link>
+                <Drawer
+                  opened={drawerOpened}
+                  onClose={toggleDrawer}
+                  padding='md'
+                  styles={{
+                    header: {
+                      boxShadow: '0 0 2px 0 gray',
+                    },
+                  }}
+                  title={
+                    <div className='gap-lg flex items-center justify-end'>
+                      <Link onClick={toggleDrawer} href='/'>
+                        <Image
+                          src='/logo.png'
+                          width={118}
+                          height={41}
+                          alt='GeziBank'
+                          priority
+                        />
+                      </Link>
 
-                  <div>
-                    {session.status === 'authenticated' ? (
-                      <Button
-                        variant='outline'
-                        radius='xl'
-                        onClick={toggleDrawer}
-                        leftSection={<FaRegUserCircle />}
-                        component={Link}
-                        href={'/account' as Route}
-                      >
-                        <span className='block truncate text-xs font-medium'>
-                          {session.data?.user.name}
-                        </span>
-                      </Button>
-                    ) : (
-                      <Button
-                        variant='outline'
-                        radius='xl'
-                        leftSection={<FaRegUserCircle />}
-                        component={Link}
-                        onClick={toggleDrawer}
-                        href={'/auth/login' as Route}
-                        loading={session.status === 'loading'}
-                      >
-                        Giriş Yap
-                      </Button>
-                    )}
+                      <div>
+                        {session.status === 'authenticated' ? (
+                          <Button
+                            variant='outline'
+                            radius='xl'
+                            onClick={toggleDrawer}
+                            leftSection={<FaRegUserCircle />}
+                            component={Link}
+                            href={'/account' as Route}
+                          >
+                            <span className='block truncate text-xs font-medium'>
+                              {session.data?.user.name}
+                            </span>
+                          </Button>
+                        ) : (
+                          <Button
+                            variant='outline'
+                            radius='xl'
+                            leftSection={<FaRegUserCircle />}
+                            component={Link}
+                            onClick={toggleDrawer}
+                            href={'/auth/login' as Route}
+                            loading={session.status === 'loading'}
+                          >
+                            Giriş Yap
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  }
+                  size='sm'
+                >
+                  <div className='mt-4 flex flex-col gap-4'>
+                    {headerData &&
+                      headerData.params.main_menu.menus.map((item) => {
+                        const IconComponent = iconMap[item.title as IconKey]
+                        return (
+                          <Anchor
+                            className={
+                              item.title == 'Kampanyalar'
+                                ? 'border-t border-gray-400 pt-4'
+                                : ''
+                            }
+                            onClick={toggleDrawer}
+                            component={Link}
+                            href={item.url as Route}
+                            key={item.id}
+                            c={'dark'}
+                          >
+                            {IconComponent && (
+                              <IconComponent
+                                size={18}
+                                className='me-3 inline-block'
+                              />
+                            )}
+                            {item.title}
+                          </Anchor>
+                        )
+                      })}
                   </div>
-                </div>
-              }
-              size='sm'
-            >
-              <div className='mt-4 flex flex-col gap-4'>
-                {headerData &&
-                  headerData.params.main_menu.menus.map((item) => {
-                    const IconComponent = iconMap[item.title as IconKey]
-                    return (
+                  <Grid gutter={'md'} className='mt-4'>
+                    <Grid.Col span={12}>
                       <Anchor
-                        className={
-                          item.title == 'Kampanyalar'
-                            ? 'border-t border-gray-400 pt-4'
-                            : ''
-                        }
-                        onClick={toggleDrawer}
                         component={Link}
-                        href={item.url as Route}
-                        key={item.id}
+                        onClick={toggleDrawer}
+                        href='/online-operations'
                         c={'dark'}
                       >
-                        {IconComponent && (
-                          <IconComponent
-                            size={18}
-                            className='me-3 inline-block'
-                          />
-                        )}
-                        {item.title}
+                        Seyahatinizi Görüntüleyin
                       </Anchor>
-                    )
-                  })}
-              </div>
-              <Grid gutter={'md'} className='mt-4'>
-                <Grid.Col span={12}>
-                  <Anchor
-                    component={Link}
-                    onClick={toggleDrawer}
-                    href='/online-operations'
-                    c={'dark'}
-                  >
-                    Seyahatinizi Görüntüleyin
-                  </Anchor>
-                </Grid.Col>
-                {/* <Grid.Col span={12}>
+                    </Grid.Col>
+                    {/* <Grid.Col span={12}>
                   <Anchor
                     onClick={toggleDrawer}
                     component={Link}
@@ -298,29 +346,61 @@ export const Header = () => {
                     Bilet İptal, İade İşlemleri
                   </Anchor>
                 </Grid.Col> */}
-                <Grid.Col span={12}>
-                  <Anchor
-                    onClick={toggleDrawer}
-                    component={Link}
-                    href='/online-operations/checkin'
-                    c={'dark'}
-                  >
-                    Online Check in
-                  </Anchor>
-                </Grid.Col>
-                <Grid.Col span={12}>
-                  <Anchor
-                    onClick={toggleDrawer}
-                    component={Link}
-                    href='/iletisim'
-                    c={'dark'}
-                  >
-                    Yardım
-                  </Anchor>
-                </Grid.Col>
-              </Grid>
-            </Drawer>
-          </Box>
+                    <Grid.Col span={12}>
+                      <Anchor
+                        onClick={toggleDrawer}
+                        component={Link}
+                        href='/online-operations/checkin'
+                        c={'dark'}
+                      >
+                        Online Check in
+                      </Anchor>
+                    </Grid.Col>
+                    <Grid.Col span={12}>
+                      <Anchor
+                        onClick={toggleDrawer}
+                        component={Link}
+                        href='/iletisim'
+                        c={'dark'}
+                      >
+                        Yardım
+                      </Anchor>
+                    </Grid.Col>
+                  </Grid>
+                </Drawer>
+              </Box>
+            </div>
+          </div>
+          <div className='items-center justify-between gap-5 hidden md:grid'>
+            <div className='absolute top-0 right-50 flex flex-col items-center gap-2'>
+              <Box className='flex items-center gap-4 rounded-b-3xl bg-orange-900 px-4 py-3 text-white shadow-md'>
+                <button className='flex items-center text-sm font-medium cursor-pointer'
+                onClick={() => {
+                  modals.open({
+                    title: (
+                      <Title order={3} className='text-center'>
+                        Üye Girişi
+                      </Title>
+                    ),
+                    children: <LoginForm />,
+                  })
+                }}>
+                  <span className='flex h-8 w-8 items-center justify-center'>
+                    <FaRegUserCircle size={20} className='text-blue-600' />
+                  </span>
+                  Üye Girişi
+                </button>
+                <Link href='/auth/register' className='text-md flex items-center gap-1 rounded-md border border-blue-600 p-2 text-sm font-medium'>
+                  <span className='flex h-5 w-5 items-center justify-center'>
+                    <FaUserPlus size={17} className='text-blue-600' />
+                  </span>
+                  Kayıt Ol
+                </Link>
+              </Box>
+              <Link href='/iletisim' className='text-sm flex items-center gap-1 text-gray-600 font-medium'>
+              <CiCircleInfo size={16} />Yardım</Link>
+            </div>
+            </div>
         </Container>
       </header>
     </>

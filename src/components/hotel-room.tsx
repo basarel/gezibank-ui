@@ -15,7 +15,7 @@ import type {
   HotelDetailRoom,
   HotelDetailRoomDetail,
   HotelDetailRoomItem,
-} from '@/app/hotel/types'
+} from '@/app/(frontend)/hotel/types'
 import { formatCurrency } from '@/libs/util'
 import { PriceNumberFlow } from '@/components/price-numberflow'
 import dayjs from 'dayjs'
@@ -23,9 +23,9 @@ import { RiUserLine } from 'react-icons/ri'
 import { PiAngle, PiBabyBold, PiCoffee } from 'react-icons/pi'
 import { HiPercentBadge } from 'react-icons/hi2'
 import { IoClose } from 'react-icons/io5'
-import { PriceDiff } from '../app/hotel/(detail)/[slug]/_components/priceDiff'
+import { PriceDiff } from '@/app/(frontend)/hotel/(detail)/[slug]/_components/priceDiff'
 import { BiChevronRight } from 'react-icons/bi'
-import { Refundable } from '../app/hotel/(detail)/[slug]/_components/refundable'
+import { Refundable } from '@/app/(frontend)/hotel/(detail)/[slug]/_components/refundable'
 import { MdLocalDining } from 'react-icons/md'
 
 type IProps = {
