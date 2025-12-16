@@ -91,7 +91,7 @@ export const HotelMediaGallery: React.FC<IProps> = ({
           slideGap={'sm'}
           emblaOptions={{ dragFree: true }}
           classNames={categoryCarouselClasses}
-          className='sticky top-10 z-20 flex justify-start bg-white py-7 md:justify-center'
+          className='sticky top-10 z-20 flex justify-start bg-white py-6 md:justify-center'
         >
           {imageCategories.map((category) => (
             <Carousel.Slide key={category.id}>
