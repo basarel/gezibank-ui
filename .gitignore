@@ -46,7 +46,7 @@ task-definition.json
 theme.css
 ecs-task-def.json
 payload-types.ts
-importMap.js
+importMap.ts
 .turbo
 
 # Payload CMS
