@@ -6,12 +6,15 @@ import { Box, Container, Text } from '@mantine/core'
 type VideoPromoBlockProps = {
   title?: string
   text?: string
-  backgroundImage?: string | {
-    id?: string
-    url?: string
-    filename?: string
-    alt?: string
-  } | null
+  backgroundImage?:
+    | string
+    | {
+        id?: string
+        url?: string
+        filename?: string
+        alt?: string
+      }
+    | null
   videoUrl?: string
 }
 export const VideoPromoBlock: React.FC<VideoPromoBlockProps> = ({
@@ -29,7 +32,9 @@ export const VideoPromoBlock: React.FC<VideoPromoBlockProps> = ({
     if (url.includes('youtube.com/embed/') || url.includes('youtu.be/embed/')) {
       return url
     }
-    const watchMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/)
+    const watchMatch = url.match(
+      /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/
+    )
     if (watchMatch && watchMatch[1]) {
       return `https://www.youtube.com/embed/${watchMatch[1]}`
     }
@@ -37,16 +42,20 @@ export const VideoPromoBlock: React.FC<VideoPromoBlockProps> = ({
   }
   const embedUrl = videoUrl ? getEmbedUrl(videoUrl) : null
 
-  const imageUrl = typeof backgroundImage === 'string' 
-    ? cdnImageUrl(backgroundImage)
-    : backgroundImage?.url || (backgroundImage?.filename ? `/media/${backgroundImage.filename}` : null)
+  const imageUrl =
+    typeof backgroundImage === 'string'
+      ? cdnImageUrl(backgroundImage)
+      : backgroundImage?.url ||
+        (backgroundImage?.filename
+          ? `/media/${backgroundImage.filename}`
+          : null)
 
   return (
     <Container className='mb-8 md:mb-12'>
       <Box className='relative overflow-hidden rounded-2xl shadow-xl'>
         {imageUrl && (
           <>
-            <div 
+            <div
               className='absolute inset-0 -z-10 bg-cover bg-center bg-no-repeat'
               style={{ backgroundImage: `url(${imageUrl})` }}
             />

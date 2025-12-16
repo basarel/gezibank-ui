@@ -79,8 +79,14 @@ const StorySlider: React.FC<IProps> = ({ data }) => {
                   className='group block h-full'
                 >
                   <div className='flex h-full w-[90px] flex-col md:w-[160px]'>
-                    <AspectRatio classNames={aspectRatioClasses} className='mt-4'>
-                      <Image src={cdnImageUrl(item.params.image.value)} alt='' />
+                    <AspectRatio
+                      classNames={aspectRatioClasses}
+                      className='mt-4'
+                    >
+                      <Image
+                        src={cdnImageUrl(item.params.image.value)}
+                        alt=''
+                      />
                     </AspectRatio>
                     <div className='leading-md py-4 text-center text-sm'>
                       <Text lineClamp={3} component='div'>
@@ -90,10 +96,10 @@ const StorySlider: React.FC<IProps> = ({ data }) => {
                     <div className='mx-auto mt-auto mb-10 h-[5px] w-[69px] rounded bg-blue-200 opacity-100 transition-opacity duration-400 group-hover:opacity-0' />
                   </div>
                 </Box>
-                
+
                 {/* Hover Panel */}
                 {hoveredIndex === index && (
-                  <div className='absolute left-full top-0 z-10 ml-4 h-full min-w-[250px] rounded-lg bg-blue-50 p-4 shadow-lg transition-all duration-300 md:min-w-[300px]'>
+                  <div className='absolute top-0 left-full z-10 ml-4 h-full min-w-[250px] rounded-lg bg-blue-50 p-4 shadow-lg transition-all duration-300 md:min-w-[300px]'>
                     <div className='flex h-full flex-col justify-center'>
                       <Text
                         component='h3'

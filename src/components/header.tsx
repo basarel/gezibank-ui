@@ -77,7 +77,7 @@ export const Header: React.FC<HeaderProps> = ({ headerContent }) => {
       <header className='border-b bg-white'>
         <Container>
           <div className='grid items-center justify-between'>
-            <div className='ms-auto mt-2 items-center gap-5 text-sm font-medium hidden md:flex'>
+            <div className='ms-auto mt-2 hidden items-center gap-5 text-sm font-medium md:flex'>
               <Link
                 href='https://www.whatsapp.com/channel/0029Vau83EmCRs1qIYPnNO0a'
                 className='flex items-center gap-1'
@@ -87,17 +87,19 @@ export const Header: React.FC<HeaderProps> = ({ headerContent }) => {
                 </div>
                 <div className='leading-sm text-xs text-black'>WhatsApp</div>
               </Link>
-              <div className='flex items-center gap-2 text-black cursor-pointer'
-              onClick={() => {
-                modals.open({
-                  title: (
-                    <Title order={3} className='text-center'>
-                      Sizi Arayalım
-                    </Title>
-                  ),
-                  children: <CallForm />,
-                })
-              }}>
+              <div
+                className='flex cursor-pointer items-center gap-2 text-black'
+                onClick={() => {
+                  modals.open({
+                    title: (
+                      <Title order={3} className='text-center'>
+                        Sizi Arayalım
+                      </Title>
+                    ),
+                    children: <CallForm />,
+                  })
+                }}
+              >
                 <SlEarphonesAlt size={18} />
                 Sizi Arayalım
               </div>
@@ -371,54 +373,63 @@ export const Header: React.FC<HeaderProps> = ({ headerContent }) => {
               </Box>
             </div>
           </div>
-          <div className='items-center justify-between gap-5 hidden md:grid'>
+          <div className='hidden items-center justify-between gap-5 md:grid'>
             <div className='absolute top-0 right-50 flex flex-col items-center gap-2'>
-             
               <div className='relative w-full'>
-            <Image
-              src='/container-header.png'
-              alt='Header Container'
-              width={295}
-              height={285}
-              className='object-cover h-full'
-              priority
-            />
-            <div className='absolute right-10 top-2 flex items-center gap-5'>
-              <button
-                className='flex cursor-pointer items-center font-medium text-white'
-                onClick={() => {
-                  modals.open({
-                    title: (
-                      <Title order={2} className='text-center'>
-                        Üye Girişi
-                      </Title>
-                    ),
-                    children: <LoginForm />,
-                  })
-                }}
-              >
-                <span className='flex gap-1 items-center justify-center'>
-                 
-                 <span  className='flex h-5 w-5 items-center justify-center'> <FaRegUserCircle size={19} className='text-blue-600' /> </span> 
-               <span> Üye Girişi</span>
-                </span>
-              </button>
+                <Image
+                  src='/container-header.png'
+                  alt='Header Container'
+                  width={295}
+                  height={285}
+                  className='h-full object-cover'
+                  priority
+                />
+                <div className='absolute top-2 right-10 flex items-center gap-5'>
+                  <button
+                    className='flex cursor-pointer items-center font-medium text-white'
+                    onClick={() => {
+                      modals.open({
+                        title: (
+                          <Title order={2} className='text-center'>
+                            Üye Girişi
+                          </Title>
+                        ),
+                        children: <LoginForm />,
+                      })
+                    }}
+                  >
+                    <span className='flex items-center justify-center gap-1'>
+                      <span className='flex h-5 w-5 items-center justify-center'>
+                        {' '}
+                        <FaRegUserCircle
+                          size={19}
+                          className='text-blue-600'
+                        />{' '}
+                      </span>
+                      <span> Üye Girişi</span>
+                    </span>
+                  </button>
+                  <Link
+                    href='/auth/register'
+                    className='flex items-center gap-1 rounded-md border border-blue-600 px-2 py-1 text-sm font-medium text-white'
+                  >
+                    <span className='flex h-5 w-5 items-center justify-center'>
+                      <FaUserPlus size={19} className='text-blue-600' />
+                    </span>
+                    Kayıt Ol
+                  </Link>
+                </div>
+              </div>
+
               <Link
-                href='/auth/register'
-                className='flex text-sm items-center gap-1 rounded-md border border-blue-600 px-2 py-1 font-medium text-white'
+                href='/iletisim'
+                className='flex items-center gap-1 text-sm font-medium text-gray-600'
               >
-                <span className='flex h-5 w-5 items-center justify-center'>
-                  <FaUserPlus size={19} className='text-blue-600' />
-                </span>
-                Kayıt Ol
+                <CiCircleInfo size={16} />
+                Yardım
               </Link>
             </div>
           </div>
-               
-              <Link href='/iletisim' className='text-sm flex items-center gap-1 text-gray-600 font-medium'>
-              <CiCircleInfo size={16} />Yardım</Link>
-            </div>
-            </div>
         </Container>
       </header>
     </>

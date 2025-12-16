@@ -33,8 +33,8 @@ export const RenderBlocks: React.FC<RenderBlocksProps> = ({ blocks }) => {
     return null
   }
   const fullWidthBlocks = ['mainBanner', 'storySlider']
-console.log( 'blocks', blocks)
-console.log( 'blockComponents', blockComponents)
+  console.log('blocks', blocks)
+  console.log('blockComponents', blockComponents)
   return (
     <Fragment>
       {blocks.map((block, index) => {

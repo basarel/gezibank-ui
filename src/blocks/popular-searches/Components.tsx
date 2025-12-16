@@ -16,7 +16,6 @@ type PopularSearchesBlockProps = {
 export default function PopularSearchesBlock({
   items,
 }: PopularSearchesBlockProps) {
-
   if (!items || items.length === 0) {
     return null
   }

@@ -7,7 +7,7 @@ import { Route } from 'next'
 import classes from '../styles/headerMenu.module.css'
 import { BiChevronDown } from 'react-icons/bi'
 import type { HeaderMenuItem } from '@/libs/payload'
- type HeaderMenuProps = {
+type HeaderMenuProps = {
   menuItems?: HeaderMenuItem[]
 }
 
@@ -25,7 +25,6 @@ export const HeaderMenu: React.FC<HeaderMenuProps> = ({ menuItems = [] }) => {
     )
   }
   return (
-    
     <div className='flex items-center px-3'>
       {menuItems.map((item, index) => {
         const hasContent =
@@ -45,7 +44,7 @@ export const HeaderMenu: React.FC<HeaderMenuProps> = ({ menuItems = [] }) => {
         }
 
         return (
-           <Menu
+          <Menu
             key={index}
             width={900}
             position='bottom-start'
@@ -156,7 +155,7 @@ export const HeaderMenu: React.FC<HeaderMenuProps> = ({ menuItems = [] }) => {
               </div>
             </Menu.Dropdown>
           </Menu>
-        )        
+        )
       })}
     </div>
   )
