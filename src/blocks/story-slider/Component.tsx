@@ -6,11 +6,15 @@ import { AspectRatio, Box, Button, Image, Skeleton, Text } from '@mantine/core'
 import { Carousel, CarouselSlide } from '@mantine/carousel'
 import Autoplay from 'embla-carousel-autoplay'
 import aspectRatioClasses from '@/components/home/storyitems.module.css'
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
+import { BiChevronRight } from 'react-icons/bi'
+import { FaArrowRightLong } from 'react-icons/fa6'
 
 type StoryItem = {
   id: string
   title: string
+  description?: string
+  buttonText?: string
   image?: {
     id: string
     url: string
@@ -48,21 +52,27 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
   allButtonText = 'Tüm Kampanyaları Gör',
   items = [],
 }) => {
-  const autoplay = useRef(Autoplay({ delay: 3000 }))
+   const autoplay = useRef(Autoplay({ delay: 3000 }))
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const [isTouchDevice, setIsTouchDevice] = useState(false)
+
+  useEffect(() => {
+    setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0)
+  }, [])
 
   if (!items || items.length === 0) {
     return null
   }
 
   return (
-    <div className='py-8'>
+    <div className='py-8 w-full overflow-x-hidden'>
       {title && (
         <h2 className='relative mx-auto my-8 border-blue-800 py-3 text-center text-2xl font-bold text-blue-600 md:text-3xl'>
           {title}
           <div className='absolute bottom-0 left-1/2 h-2 w-12 -translate-x-1/2 rounded-full bg-blue-600'></div>
         </h2>
       )}
-      <div className='relative px-4 sm:px-0'>
+      <div className='relative px-4 sm:px-0 w-full overflow-x-hidden'>
         <Carousel
           withControls={false}
           slideSize={{
@@ -72,64 +82,99 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
             lg: `${100 / 8}%`,
           }}
           slideGap='xs'
+          classNames={{
+            viewport: 'overflow-x-visible scrollbar-hide',
+            root: 'scrollbar-hide',
+          }}
           emblaOptions={{
-            dragFree: true,
+            loop: true,
           }}
-          plugins={[autoplay.current]}
-          onMouseEnter={() => {
-            if (
-              autoplay.current &&
-              typeof autoplay.current.stop === 'function'
-            ) {
-              autoplay.current.stop()
-            }
-          }}
-          onMouseLeave={() => {
-            if (
-              autoplay.current &&
-              typeof autoplay.current.play === 'function'
-            ) {
-              autoplay.current.play()
-            }
-          }}
+           plugins={[autoplay.current]}
         >
-          {items.map((item) => {
-            const linkUrl = item.link
-              ? (`/${item.link.split('/').at(-1)}?slug=${item.link.split('/').at(-1)}` as Route)
-              : undefined
+            {items.map((item, index) => {
+              const linkUrl = item.link
+                ? (`/${item.link.split('/').at(-1)}?slug=${item.link.split('/').at(-1)}` as Route)
+                : undefined
 
-            return (
-              <CarouselSlide key={item.id}>
-                <Box
-                  target='_blank'
-                  component={linkUrl ? Link : undefined}
-                  href={linkUrl as Route}
-                  className='group block h-full'
-                >
-                  <div className='flex h-full w-[90px] flex-col md:w-[160px]'>
-                    {item.image?.url && (
-                      <AspectRatio
-                        classNames={aspectRatioClasses}
-                        className='mt-4'
+              return (
+                <CarouselSlide key={item.id} className='overflow-visible'>
+                  <div
+                    className='relative flex justify-center items-center overflow-visible'
+                    onMouseEnter={() => !isTouchDevice && setHoveredIndex(index)}
+                  >
+                     
+                      <Box
+                        target='_blank'
+                        component={linkUrl ? Link : undefined}
+                        href={linkUrl as Route}
+                        className='block h-full z-10'
                       >
-                        <Image
-                          src={item.image.url}
-                          alt={item.image.alt || item.title}
-                        />
-                      </AspectRatio>
-                    )}
-                    <div className='leading-md py-4 text-center text-sm'>
-                      <Text lineClamp={3} component='div'>
-                        {item.title}
-                      </Text>
+                        <div className='flex h-full w-[90px] flex-col md:w-[160px]'>
+                          {item.image?.url && (
+                            <AspectRatio
+                              classNames={aspectRatioClasses}
+                              className='mt-4'
+                            >
+                              <Image
+                                src={item.image.url}
+                                alt={item.image.alt || item.title}
+                              />
+                            </AspectRatio>
+                          )}
+                          <div className='leading-md py-4 text-center text-sm'>
+                            <Text lineClamp={3} component='div'>
+                              {item.title}
+                            </Text>
+                          </div>
+                          <div className='mx-auto mt-auto mb-10 h-[5px] w-[69px] rounded bg-blue-200 opacity-100 transition-opacity duration-400' />
+                        </div>
+                      </Box>
+                      <div
+                        className={`overflow-hidden transition-all duration-600 ease-in-out z-0 ${
+                          !isTouchDevice && hoveredIndex === index
+                            ? 'w-[250px] md:w-[310px] opacity-100'
+                            : 'w-0 opacity-0'
+                        }`}
+                        onMouseEnter={() => !isTouchDevice && setHoveredIndex(index)}
+                        
+                      >
+                        <Link
+                          href={linkUrl as Route}
+                          className='block absolute top-4 left-20 h-[156px] min-w-[200px] md:min-w-[400px] rounded-r-xl bg-orange-50 py-3 px-1 shadow-lg justify-center items-center text-center'
+                          onMouseEnter={() => !isTouchDevice && setHoveredIndex(index)}
+                        >
+                          <div className='flex h-full flex-col justify-center items-center'>
+                            <Text
+                              component='h3'
+                              className='text-lg font-bold text-gray-800 md:text-xl'
+                            >
+                              {item.title}
+                            </Text>
+                            {item.description && (
+                              <Text
+                                component='p'
+                                className='mt-2 text-sm text-gray-600 md:text-base'
+                              >
+                                {item.description}
+                              </Text>
+                            )}
+                            {item.buttonText && item.buttonText !== '' && linkUrl && (
+                              <Link
+                                href={linkUrl}
+                                className='mt-auto inline-flex items-center text-sm text-blue-600 transition-colors hover:text-blue-800 md:text-base'
+                              >
+                                {item.buttonText} <FaArrowRightLong size={15} className='w-4 h-4 ml-2' />
+                              </Link>
+                            )}
+                          </div>
+                        </Link>
+                      </div>
                     </div>
-                    <div className='mx-auto mt-auto mb-10 h-[5px] w-[69px] rounded bg-blue-200 opacity-100 transition-opacity duration-400 group-hover:opacity-0' />
-                  </div>
-                </Box>
-              </CarouselSlide>
-            )
-          })}
-        </Carousel>
+                   
+                </CarouselSlide>
+              )
+            })}
+          </Carousel>
         {showAllButton && (
           <div className='flex justify-center'>
             <Button component={Link} href={allButtonLink as Route}>

@@ -1,6 +1,6 @@
 import { buildConfig } from 'payload'
 import { postgresAdapter } from '@payloadcms/db-postgres'
-import { lexicalEditor, BlocksFeature } from '@payloadcms/richtext-lexical'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
@@ -206,6 +206,24 @@ const Pages = {
                   required: false,
                   admin: {
                     description: 'Item detail page URL',
+                  },
+                },
+                {
+                  name: 'description',
+                  type: 'textarea',
+                  label: 'Description',
+                  required: false,
+                  admin: {
+                    description: 'On hover panel description',
+                  },
+                },
+                {
+                  name: 'buttonText',
+                  type: 'text',
+                  label: 'Button Text',
+                  required: false,
+                  admin: {
+                    description: 'On hover panel button text',
                   },
                 },
               ],
@@ -492,6 +510,7 @@ const Pages = {
       name: 'content',
       type: 'richText',
       label: 'Content',
+      editor: lexicalEditor({}),
     },
     {
       name: 'metaTitle',
@@ -622,7 +641,6 @@ export default buildConfig({
   },
   collections: [Users, Media, Pages],
   globals: [Globals.header],
-  editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || 'dev-secret',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

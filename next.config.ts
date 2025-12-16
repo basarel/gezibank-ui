@@ -44,6 +44,17 @@ const nextConfig: NextConfig = {
         protocol: 'https' as const,
         hostname: 'gezibank.sm.mncdn.com',
       },
+      // Localhost için development
+      {
+        protocol: 'http' as const,
+        hostname: 'localhost',
+        port: '3000',
+      },
+      {
+        protocol: 'http' as const,
+        hostname: 'localhost',
+        port: '3001',
+      },
     ],
   },
   async rewrites() {

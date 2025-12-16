@@ -22,6 +22,4 @@
 .root {
   transition: transform 0.4s ease-in-out;
 }
-.root:hover {
-  transform: scale(1.2);
-}
+
