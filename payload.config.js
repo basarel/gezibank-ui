@@ -396,7 +396,7 @@ const Pages = {
             {
               name: 'title',
               type: 'text',
-              label: 'Title', 
+              label: 'Title',
               required: false,
               admin: {
                 description: 'e.g.: Popular Searches Block Title',
@@ -545,7 +545,8 @@ const Pages = {
               label: 'Video URL',
               required: false,
               admin: {
-                description: 'YouTube or other video embed URL (e.g., https://www.youtube.com/embed/VIDEO_ID)',
+                description:
+                  'YouTube or other video embed URL (e.g., https://www.youtube.com/embed/VIDEO_ID)',
               },
             },
           ],
@@ -582,7 +583,7 @@ const Globals = {
           {
             name: 'title',
             type: 'text',
-              label: 'Title',
+            label: 'Title',
             required: true,
             admin: {
               description: 'e.g.: Domestic Tours, International Tours',
