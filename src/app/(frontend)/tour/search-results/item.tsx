@@ -61,7 +61,6 @@ export const TourSearchResultItem: React.FC<Props> = ({
       if (!hasTourCity) return false
     }
 
-
     if (
       filterParams.departurePoints &&
       filterParams.departurePoints.length > 0
@@ -298,7 +297,7 @@ export const TourSearchResultItem: React.FC<Props> = ({
         </div>
       </div>
 
-      <div className='col-span-1 flex flex-col justify-between border rounded-t-xl p-3  shadow-xl'>
+      <div className='col-span-1 flex flex-col justify-between rounded-t-xl border p-3 shadow-xl'>
         <div className='mb-4 flex flex-col items-center justify-center'>
           <div className='w-full text-center'>
             <div className='mb-2 text-sm font-medium text-black'>
@@ -332,7 +331,7 @@ export const TourSearchResultItem: React.FC<Props> = ({
           </div>
         </div>
         <Button
-          className='w-full rounded-tl-lg rounded-tr-lg rounded-b-lg rounded-bl-none bg-blue-600 px-0 text-lg font-extrabold  hover:bg-blue-800 md:text-3xl'
+          className='w-full rounded-tl-lg rounded-tr-lg rounded-b-lg rounded-bl-none bg-blue-600 px-0 text-lg font-extrabold hover:bg-blue-800 md:text-3xl'
           size={isMobile ? 'md' : 'lg'}
           radius={'lg'}
           component={Link}

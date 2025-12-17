@@ -145,7 +145,7 @@ const HotelSearchResults: React.FC<IProps> = ({ slug }) => {
     <>
       <div className='border-b md:py-4'>
         <Container>
-          <div className='relative py-2 text-sm md:hidden'>
+          <div className='relative py-3 text-sm md:hidden'>
             <button
               className='absolute start-0 end-0 top-0 bottom-0 z-10'
               onClick={toggleSearchEngineVisibility}

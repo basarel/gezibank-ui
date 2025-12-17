@@ -23,43 +23,52 @@ const convertBrToListItem = (html: string): string => {
   return html
 }
 
-export const TourGeneralInformation: React.FC<IPrps> = ({ data, transportTypeText }) => {
-  const transportTypeIcon = transportTypeText === 'Uçaklı Tur' ? <RiPlaneFill size={20} className='shrink-0 text-blue-700' /> : <FaBus size={20} className='shrink-0 text-blue-700' />
+export const TourGeneralInformation: React.FC<IPrps> = ({
+  data,
+  transportTypeText,
+}) => {
+  const transportTypeIcon =
+    transportTypeText === 'Uçaklı Tur' ? (
+      <RiPlaneFill size={20} className='shrink-0 text-blue-700' />
+    ) : (
+      <FaBus size={20} className='shrink-0 text-blue-700' />
+    )
   return (
     <div>
       <div className='flex flex-col gap-20'>
         <div className='grid items-center gap-3'>
           <span
             id='included-information'
-            className='text-lg font-semibold md:text-2xl text-blue-600'
+            className='text-lg font-semibold text-blue-600 md:text-2xl'
           >
             Fiyata Dahil Hizmetler
           </span>
           <div
-          dangerouslySetInnerHTML={{
-            __html: convertBrToListItem(data.detail.includedInformation || ''),
-          }}
-        />
+            dangerouslySetInnerHTML={{
+              __html: convertBrToListItem(
+                data.detail.includedInformation || ''
+              ),
+            }}
+          />
         </div>
 
-       
         <div className='grid items-center gap-3'>
           <span
             id='not-included-information'
-            className='text-lg font-semibold md:text-2xl text-blue-600'
+            className='text-lg font-semibold text-blue-600 md:text-2xl'
           >
             Fiyata Dahil Olmayan Hizmetler & Önemli Notlar
           </span>
           <div
-          className='my-5'
-          dangerouslySetInnerHTML={{
-            __html: convertBrToListItem(
-              data.detail.notIncludedInformation || ''
-            ),
-          }}
-        />
+            className='my-5'
+            dangerouslySetInnerHTML={{
+              __html: convertBrToListItem(
+                data.detail.notIncludedInformation || ''
+              ),
+            }}
+          />
         </div>
-       
+
         {data.detail.flightInformation !== null &&
           data.detail.flightInformation !== undefined &&
           data.detail.flightInformation.length > 0 && (
@@ -67,7 +76,7 @@ export const TourGeneralInformation: React.FC<IPrps> = ({ data, transportTypeTex
               <div className='flex flex-col gap-5'>
                 <span
                   id='transport'
-                  className='text-lg font-semibold md:text-2xl text-blue-600'
+                  className='text-lg font-semibold text-blue-600 md:text-2xl'
                 >
                   Ulaşım Bilgisi
                 </span>
@@ -98,13 +107,13 @@ export const TourGeneralInformation: React.FC<IPrps> = ({ data, transportTypeTex
               <div className='flex flex-col gap-5'>
                 <span
                   id='transport'
-                  className='text-lg font-semibold md:text-2xl text-blue-600'
+                  className='text-lg font-semibold text-blue-600 md:text-2xl'
                 >
                   Ulaşım Bilgisi
                 </span>
                 <div className='flex items-center gap-2'>
                   {transportTypeIcon}
-                  <span className='text-base font-semibold md:text-lg text-orange-900'>
+                  <span className='text-base font-semibold text-orange-900 md:text-lg'>
                     {transportTypeText}
                   </span>
                 </div>
@@ -116,12 +125,15 @@ export const TourGeneralInformation: React.FC<IPrps> = ({ data, transportTypeTex
           <>
             <div className='flex flex-col gap-5'>
               <div className='grid items-center gap-3'>
-                <span id='hotel' className='text-lg font-semibold md:text-2xl text-blue-600'>
+                <span
+                  id='hotel'
+                  className='text-lg font-semibold text-blue-600 md:text-2xl'
+                >
                   Otel Bilgisi
                 </span>
                 {data.package.hotelInformations.map(
                   (hotel, hotelIndex) =>
-                    hotel.name && <div  key={hotelIndex}>{hotel.name}</div>
+                    hotel.name && <div key={hotelIndex}>{hotel.name}</div>
                 )}
               </div>
             </div>
@@ -129,11 +141,15 @@ export const TourGeneralInformation: React.FC<IPrps> = ({ data, transportTypeTex
         ) : data.package.description && data.package.description.length > 0 ? (
           <>
             <div className='flex flex-col gap-5'>
-              <span id='hotel' className='text-lg font-semibold md:text-2xl text-blue-600'>
+              <span
+                id='hotel'
+                className='text-lg font-semibold text-blue-600 md:text-2xl'
+              >
                 Otel Bilgisi
               </span>
               <div>
-              <span className='text-base font-semibold md:text-lg text-orange-900'
+                <span
+                  className='text-base font-semibold text-orange-900 md:text-lg'
                   dangerouslySetInnerHTML={{
                     __html: data.package.description,
                   }}
@@ -145,18 +161,15 @@ export const TourGeneralInformation: React.FC<IPrps> = ({ data, transportTypeTex
         <Spoiler
           maxHeight={200}
           hideLabel={
-            <div className='text-sm font-medium'>
-              Daha Az Görüntüle
-            </div>
+            <div className='text-sm font-medium'>Daha Az Görüntüle</div>
           }
-          showLabel={
-            <div className='text-sm font-medium'>
-              Devamını Göster
-            </div>
-          }
+          showLabel={<div className='text-sm font-medium'>Devamını Göster</div>}
         >
           <div className='flex items-center gap-3'>
-            <span id='visa-infos' className='text-lg font-semibold md:text-2xl text-blue-600'>
+            <span
+              id='visa-infos'
+              className='text-lg font-semibold text-blue-600 md:text-2xl'
+            >
               Vize Bilgileri
             </span>
           </div>

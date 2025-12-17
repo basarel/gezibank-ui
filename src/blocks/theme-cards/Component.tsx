@@ -90,7 +90,9 @@ export const ThemeCardsBlock: React.FC<ThemeCardsBlockProps> = ({
                       <Badge
                         size='lg'
                         radius={'md'}
-                        className={'absolute left-3 bg-blue-700 font-normal top-2'}
+                        className={
+                          'absolute top-2 left-3 bg-blue-700 font-normal'
+                        }
                       >
                         {item.tag}
                       </Badge>
@@ -120,7 +122,6 @@ export const ThemeCardsBlock: React.FC<ThemeCardsBlockProps> = ({
                       </Button>
                     </div>
                   </div>
-                 
                 </Box>
               </Box>
             </CarouselSlide>

@@ -21,11 +21,14 @@ type BottomItem = {
 
 type BottomSliderBlockProps = {
   title?: string
-  video?: {
-    id: string
-    url?: string
-    filename?: string
-  } | string | null
+  video?:
+    | {
+        id: string
+        url?: string
+        filename?: string
+      }
+    | string
+    | null
   items?: BottomItem[]
 }
 
@@ -79,7 +82,10 @@ export const BottomSliderBlock: React.FC<BottomSliderBlockProps> = ({
                   : undefined
 
                 return (
-                  <CarouselSlide key={item.id} className='h-[250px] md:h-[350px]'>
+                  <CarouselSlide
+                    key={item.id}
+                    className='h-[250px] md:h-[350px]'
+                  >
                     <Box
                       component={linkUrl ? Link : undefined}
                       href={linkUrl as Route}
@@ -90,7 +96,7 @@ export const BottomSliderBlock: React.FC<BottomSliderBlockProps> = ({
                           src={item.image.url}
                           alt={item.image.alt || 'Carousel image'}
                           fill
-                          className='object-cover rounded-2xl'
+                          className='rounded-2xl object-cover'
                           sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
                         />
                       )}
@@ -103,14 +109,14 @@ export const BottomSliderBlock: React.FC<BottomSliderBlockProps> = ({
               <>
                 <button
                   onClick={() => emblaRef.current?.scrollPrev()}
-                  className='absolute left-2 top-1/2 z-10 -translate-y-1/2 cursor-pointer rounded-full border-2 border-white bg-white/90 p-2 shadow-lg transition-all hover:bg-white md:left-4'
+                  className='absolute top-1/2 left-2 z-10 -translate-y-1/2 cursor-pointer rounded-full border-2 border-white bg-white/90 p-2 shadow-lg transition-all hover:bg-white md:left-4'
                   aria-label='Önceki'
                 >
                   <RiArrowLeftLine size={24} className='text-gray-800' />
                 </button>
                 <button
                   onClick={() => emblaRef.current?.scrollNext()}
-                  className='absolute right-2 top-1/2 z-10 -translate-y-1/2 cursor-pointer rounded-full border-2 border-white bg-white/90 p-2 shadow-lg transition-all hover:bg-white md:right-4'
+                  className='absolute top-1/2 right-2 z-10 -translate-y-1/2 cursor-pointer rounded-full border-2 border-white bg-white/90 p-2 shadow-lg transition-all hover:bg-white md:right-4'
                   aria-label='Sonraki'
                 >
                   <RiArrowRightLine size={24} className='text-gray-800' />

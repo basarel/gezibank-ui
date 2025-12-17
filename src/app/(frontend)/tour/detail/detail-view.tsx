@@ -16,8 +16,7 @@ type Props = {
   data: TourDetailApiResponse
 }
 
-const TourDetail: React.FC<Props> = ({ data }) => { 
-  
+const TourDetail: React.FC<Props> = ({ data }) => {
   return (
     <div className='flex flex-col gap-6'>
       <div className='flex flex-col gap-5 p-5'>

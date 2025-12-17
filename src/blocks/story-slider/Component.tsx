@@ -10,7 +10,6 @@ import { useRef, useState, useEffect } from 'react'
 import { BiChevronRight } from 'react-icons/bi'
 import { FaArrowRightLong } from 'react-icons/fa6'
 
-
 type StoryItem = {
   id: string
   title: string
@@ -132,8 +131,8 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
                   <div
                     className={`z-0 overflow-hidden transition-all duration-600 ease-in-out ${
                       !isTouchDevice && hoveredIndex === index
-                        ? 'w-[250px] opacity-100 md:w-[310px] pointer-events-auto'
-                        : 'w-0 opacity-0 pointer-events-none'
+                        ? 'pointer-events-auto w-[250px] opacity-100 md:w-[310px]'
+                        : 'pointer-events-none w-0 opacity-0'
                     }`}
                     onMouseEnter={() =>
                       !isTouchDevice && setHoveredIndex(index)

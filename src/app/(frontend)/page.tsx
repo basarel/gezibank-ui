@@ -1,7 +1,4 @@
-import {
-  Container,
-  Title,
-} from '@mantine/core'
+import { Container, Title } from '@mantine/core'
 import Image from 'next/image'
 import { SearchEngine } from '@/components/search-engine/'
 import { CallFormDrawer } from '@/components/call-form/CallFormDrawer'

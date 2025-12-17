@@ -493,7 +493,7 @@ const TourDetailClient = () => {
                               className='shrink-0 text-blue-700'
                             />
                           )}
-                          <span className='text-sm md:text-base text-orange-900'>
+                          <span className='text-sm text-orange-900 md:text-base'>
                             {transportTypeText}
                           </span>
                         </div>
@@ -575,7 +575,7 @@ const TourDetailClient = () => {
 
                 <div className='flex flex-col gap-4 py-4 md:grid md:grid-cols-12 md:grid-rows-[auto_auto] md:py-0'>
                   <div className='order-2 rounded-lg border md:order-0 md:col-span-8 md:row-span-2'>
-                    <TourDetail data={detailQuery.data}  />
+                    <TourDetail data={detailQuery.data} />
                   </div>
                   <div className='order-1 md:col-span-4 md:col-start-9 md:row-start-1'>
                     <div className='relative flex flex-col gap-5 overflow-hidden rounded-lg border p-5 shadow-sm'>
@@ -674,7 +674,10 @@ const TourDetailClient = () => {
                     </div>
                   </div>
                   <div className='order-3 rounded-lg border p-5 shadow-sm md:col-span-4 md:col-start-9 md:row-start-2'>
-                    <TourGeneralInformation data={detailQuery.data} transportTypeText={transportTypeText} />
+                    <TourGeneralInformation
+                      data={detailQuery.data}
+                      transportTypeText={transportTypeText}
+                    />
                   </div>
                 </div>
               </Container>
