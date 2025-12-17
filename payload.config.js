@@ -596,7 +596,8 @@ const Pages = {
                   label: 'Subtitle',
                   required: false,
                   admin: {
-                    description: 'e.g.: Hemen Keşfet!, Hemen Üye Ol, İndirimi Kaçırma!',
+                    description:
+                      'e.g.: Hemen Keşfet!, Hemen Üye Ol, İndirimi Kaçırma!',
                   },
                 },
                 {
@@ -702,7 +703,8 @@ const Pages = {
               label: 'Video',
               required: false,
               admin: {
-                description: 'Video file (MP4, WebM etc.). Will be shown on the left.',
+                description:
+                  'Video file (MP4, WebM etc.). Will be shown on the left.',
               },
             },
             {
