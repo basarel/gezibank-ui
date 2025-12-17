@@ -1,6 +1,6 @@
 'use client'
 
-import { Menu, UnstyledButton, Accordion, Image, Skeleton } from '@mantine/core'
+import { Menu, UnstyledButton, Image } from '@mantine/core'
 import { useMounted } from '@mantine/hooks'
 import { Link } from 'next-view-transitions'
 import { Route } from 'next'

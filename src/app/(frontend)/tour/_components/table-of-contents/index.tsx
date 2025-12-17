@@ -8,12 +8,12 @@ const TourTableOfContents: React.FC = () => {
       style={{ pointerEvents: 'auto' }}
     >
       <div className='relative mx-auto max-w-6xl overflow-hidden'>
-        <div className='flex items-center justify-center gap-4 overflow-x-auto overflow-y-hidden md:mt-0 md:flex-row md:justify-between md:overflow-visible'>
+        <div className='flex items-center justify-center   overflow-x-auto overflow-y-hidden text-sm md:mt-0 md:flex-row md:justify-between md:overflow-visible'>
           <TableOfContents
             classNames={classes}
             variant='filled'
             color='orange'
-            size='xs'
+            size='sm'
             radius='xs'
             scrollSpyOptions={{
               selector:

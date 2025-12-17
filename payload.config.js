@@ -736,6 +736,126 @@ const Pages = {
             },
           ],
         },
+        {
+          slug: 'landingGrid',
+          labels: {
+            singular: 'Landing Grid Block',
+            plural: 'Landing Grid Blocks',
+          },
+          fields: [
+            {
+              name: 'title',
+              type: 'text',
+              label: 'Title',
+              required: false,
+            },
+           
+            {
+              name: 'items',
+              type: 'array',
+              label: 'Grid Items',
+              minRows: 1,
+              maxRows: 8,
+              admin: {
+                description: 'Maximum 8 items (2 rows x 4 columns)',
+              },
+              fields: [
+                {
+                  name: 'title',
+                  type: 'text',
+                  label: 'Item Title',
+                  required: true,
+                },
+                {
+                  name: 'description',
+                  type: 'textarea',
+                  label: 'Description',
+                  required: false,
+                },
+                {
+                  name: 'image',
+                  type: 'upload',
+                  relationTo: 'media',
+                  label: 'Background Image',
+                  required: true,
+                },
+                {
+                  name: 'link',
+                  type: 'text',
+                  label: 'URL',
+                  required: false,
+                  admin: {
+                    description: 'Link URL for the item',
+                  },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          slug: 'landingContent',
+          labels: {
+            singular: 'Landing Content Block',
+            plural: 'Landing Content Blocks',
+          },
+          fields: [
+            {
+              name: 'title',
+              type: 'text',
+              label: 'Title',
+              required: false,
+            },
+            {
+              name: 'description',
+              type: 'textarea',
+              label: 'Description',
+              required: false,
+              admin: {
+                description: 'Rich text content (supports bold, italic, etc.)',
+              },
+            },
+          ],
+        },
+        {
+          slug: 'landingFaq',
+          labels: {
+            singular: 'Landing FAQ Block',
+            plural: 'Landing FAQ Blocks',
+          },
+          fields: [
+            {
+              name: 'title',
+              type: 'text',
+              label: 'Title',
+              required: false,
+              defaultValue: 'Sıkça Sorulan Sorular',
+            },
+            
+            {
+              name: 'items',
+              type: 'array',
+              label: 'FAQ Items',
+              minRows: 1,
+              fields: [
+                {
+                  name: 'question',
+                  type: 'text',
+                  label: 'Question',
+                  required: true,
+                },
+                {
+                  name: 'answer',
+                  type: 'textarea',
+                  label: 'Answer',
+                  required: true,
+                  admin: {
+                    description: 'FAQ cevabı',
+                  },
+                },
+              ],
+            },
+          ],
+        },
       ],
     },
     {

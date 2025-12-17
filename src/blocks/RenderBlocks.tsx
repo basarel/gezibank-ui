@@ -12,6 +12,9 @@ import { VideoPromoBlock } from './video-promo/Component'
 import { HomeCampaignsBlock } from './home-campaigns/Component'
 import { VideoContentsBlock } from './video-contents/Component'
 import { BottomSliderBlock } from './bottom-slider/Component'
+import { LandingGridBlock } from './landing-grid/Component'
+import { LandingContentBlock } from './landing-content/Component'
+import { LandingFaqBlock } from './landing-faq/Component'
 type Block = {
   blockType: string
   [key: string]: any
@@ -32,6 +35,9 @@ const blockComponents: Record<string, React.ComponentType<any>> = {
   homeCampaigns: HomeCampaignsBlock,
   videoContents: VideoContentsBlock,
   bottomSlider: BottomSliderBlock,
+  landingGrid: LandingGridBlock,
+  landingContent: LandingContentBlock,
+  landingFaq: LandingFaqBlock,
 }
 
 export const RenderBlocks: React.FC<RenderBlocksProps> = ({ blocks }) => {
@@ -55,9 +61,9 @@ export const RenderBlocks: React.FC<RenderBlocksProps> = ({ blocks }) => {
 
           if (isFullWidth) {
             return <BlockComponent key={blockId} {...blockData} />
-          }
+          }          
           return (
-            <Container key={blockId} className='my-5'>
+            <Container key={blockId} className='my-5 w-full'>
               <BlockComponent {...blockData} />
             </Container>
           )

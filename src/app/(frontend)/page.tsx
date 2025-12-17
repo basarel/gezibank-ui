@@ -44,16 +44,14 @@ export default async function Home() {
       </div>
 
       {blocks && Array.isArray(blocks) && blocks.length > 0 && (
-        <>
-          <RenderBlocks blocks={blocks} />
-          <Container className='gap-7 md:gap-10'>
-            <EbultenForm />
-          </Container>
-          <Container className='gap-7 md:gap-10'>
-            <CallFormDrawer />
-          </Container>
-        </>
+        <RenderBlocks blocks={blocks} />
       )}
+      <Container className='gap-7 md:gap-10'>
+        <EbultenForm />
+      </Container>
+      <Container className='gap-7 md:gap-10'>
+        <CallFormDrawer />
+      </Container>
     </div>
   )
 }

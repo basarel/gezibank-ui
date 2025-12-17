@@ -32,20 +32,40 @@ export async function getPayloadInstance(): Promise<Payload> {
 export async function getPageBySlug(slug: string) {
   try {
     const payload = await getPayloadInstance()
+    const trimmedSlug = slug.trim()
     const result = await payload.find({
       collection: 'pages',
       where: {
         slug: {
-          equals: slug,
+          equals: trimmedSlug,
         },
       },
       limit: 1,
       depth: 2,
     })
 
+    if (!result.docs[0]) {
+      const allPages = await payload.find({
+        collection: 'pages',
+        limit: 100,
+      })
+
+      const foundPage = allPages.docs.find(
+        (page) => page.slug?.trim() === trimmedSlug
+      )
+
+      if (foundPage) {
+        const fullPage = await payload.findByID({
+          collection: 'pages',
+          id: foundPage.id,
+          depth: 2,
+        })
+        return fullPage || null
+      }
+    }
+
     return result.docs[0] || null
   } catch (error) {
-    console.warn('Sayfa getirme hatası:', error)
     return null
   }
 }
@@ -60,7 +80,6 @@ export async function getAllPages() {
 
     return result.docs || []
   } catch (error) {
-    console.warn('Sayfalar getirme hatası:', error)
     return []
   }
 }
@@ -86,7 +105,6 @@ export async function getGlobalHeader(): Promise<GlobalHeader | null> {
       menuItems: result.menuItems || [],
     }
   } catch (error) {
-    console.warn('Global header getirme hatası:', error)
     return null
   }
 }
