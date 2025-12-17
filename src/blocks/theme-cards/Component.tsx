@@ -63,29 +63,6 @@ export const ThemeCardsBlock: React.FC<ThemeCardsBlockProps> = ({
         }
       >
         {cards.map((item) => {
-          const mainPrice = item.price
-            ? Number(
-                item.price
-                  .replace('₺', '')
-                  .trim()
-                  .replace(/\./g, '')
-                  .replace(',', '.')
-              )
-            : 0
-          const discPrice = item.discountPrice
-            ? Number(
-                item.discountPrice
-                  .replace('₺', '')
-                  .trim()
-                  .replace(/\./g, '')
-                  .replace(',', '.')
-              )
-            : 0
-          const discedPrice =
-            mainPrice > 0 && discPrice > 0
-              ? ((mainPrice - discPrice) / mainPrice) * 100
-              : 0
-
           const linkUrl = item.link
             ? (`/${item.link.split('/').at(-1)}?slug=${item.link.split('/').at(-1)}` as Route)
             : undefined
@@ -109,30 +86,11 @@ export const ThemeCardsBlock: React.FC<ThemeCardsBlockProps> = ({
                         />
                       </AspectRatio>
                     )}
-                    {item.discountPrice &&
-                      item.price &&
-                      mainPrice > 0 &&
-                      discPrice > 0 && (
-                        <Badge
-                          size='lg'
-                          radius={'md'}
-                          className='absolute top-2 left-3 bg-blue-600'
-                        >
-                          %{discedPrice.toFixed(0)} indirim
-                        </Badge>
-                      )}
                     {item.tag && (
                       <Badge
                         size='lg'
                         radius={'md'}
-                        className={`absolute left-3 bg-orange-900 font-normal ${
-                          item.discountPrice &&
-                          item.price &&
-                          mainPrice > 0 &&
-                          discPrice > 0
-                            ? 'top-10'
-                            : 'top-2'
-                        }`}
+                        className={'absolute left-3 bg-blue-700 font-normal top-2'}
                       >
                         {item.tag}
                       </Badge>
@@ -162,6 +120,7 @@ export const ThemeCardsBlock: React.FC<ThemeCardsBlockProps> = ({
                       </Button>
                     </div>
                   </div>
+                 
                 </Box>
               </Box>
             </CarouselSlide>

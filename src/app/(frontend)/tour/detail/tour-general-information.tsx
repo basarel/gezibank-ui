@@ -1,8 +1,11 @@
 import { TourDetailApiResponse } from '@/modules/tour/type'
 import { Spoiler } from '@mantine/core'
+import { FaBus } from 'react-icons/fa'
+import { RiPlaneFill } from 'react-icons/ri'
 
 type IPrps = {
   data: TourDetailApiResponse
+  transportTypeText: string
 }
 
 const convertBrToListItem = (html: string): string => {
@@ -20,33 +23,34 @@ const convertBrToListItem = (html: string): string => {
   return html
 }
 
-export const TourGeneralInformation: React.FC<IPrps> = ({ data }) => {
+export const TourGeneralInformation: React.FC<IPrps> = ({ data, transportTypeText }) => {
+  const transportTypeIcon = transportTypeText === 'Uçaklı Tur' ? <RiPlaneFill size={20} className='shrink-0 text-blue-700' /> : <FaBus size={20} className='shrink-0 text-blue-700' />
   return (
     <div>
-      <div className='flex flex-col gap-3'>
-        <div className='flex items-center gap-3'>
+      <div className='flex flex-col gap-20'>
+        <div className='grid items-center gap-3'>
           <span
             id='included-information'
-            className='text-lg font-semibold md:text-2xl'
+            className='text-lg font-semibold md:text-2xl text-blue-600'
           >
             Fiyata Dahil Hizmetler
           </span>
-        </div>
-
-        <div
+          <div
           dangerouslySetInnerHTML={{
             __html: convertBrToListItem(data.detail.includedInformation || ''),
           }}
         />
-        <div className='flex items-center gap-3'>
+        </div>
+
+       
+        <div className='grid items-center gap-3'>
           <span
             id='not-included-information'
-            className='text-lg font-semibold md:text-2xl'
+            className='text-lg font-semibold md:text-2xl text-blue-600'
           >
             Fiyata Dahil Olmayan Hizmetler & Önemli Notlar
           </span>
-        </div>
-        <div
+          <div
           className='my-5'
           dangerouslySetInnerHTML={{
             __html: convertBrToListItem(
@@ -54,6 +58,8 @@ export const TourGeneralInformation: React.FC<IPrps> = ({ data }) => {
             ),
           }}
         />
+        </div>
+       
         {data.detail.flightInformation !== null &&
           data.detail.flightInformation !== undefined &&
           data.detail.flightInformation.length > 0 && (
@@ -61,7 +67,7 @@ export const TourGeneralInformation: React.FC<IPrps> = ({ data }) => {
               <div className='flex flex-col gap-5'>
                 <span
                   id='transport'
-                  className='text-lg font-semibold md:text-2xl'
+                  className='text-lg font-semibold md:text-2xl text-blue-600'
                 >
                   Ulaşım Bilgisi
                 </span>
@@ -83,17 +89,39 @@ export const TourGeneralInformation: React.FC<IPrps> = ({ data }) => {
               </div>
             </>
           )}
+        {(!data.detail.flightInformation ||
+          data.detail.flightInformation === null ||
+          data.detail.flightInformation === undefined ||
+          data.detail.flightInformation.length === 0) &&
+          transportTypeText && (
+            <>
+              <div className='flex flex-col gap-5'>
+                <span
+                  id='transport'
+                  className='text-lg font-semibold md:text-2xl text-blue-600'
+                >
+                  Ulaşım Bilgisi
+                </span>
+                <div className='flex items-center gap-2'>
+                  {transportTypeIcon}
+                  <span className='text-base font-semibold md:text-lg text-orange-900'>
+                    {transportTypeText}
+                  </span>
+                </div>
+              </div>
+            </>
+          )}
         {data.package.hotelInformations &&
         data.package.hotelInformations.length > 0 ? (
           <>
             <div className='flex flex-col gap-5'>
-              <div>
-                <span id='hotel' className='text-lg font-semibold md:text-2xl'>
+              <div className='grid items-center gap-3'>
+                <span id='hotel' className='text-lg font-semibold md:text-2xl text-blue-600'>
                   Otel Bilgisi
                 </span>
                 {data.package.hotelInformations.map(
                   (hotel, hotelIndex) =>
-                    hotel.name && <div key={hotelIndex}>{hotel.name}</div>
+                    hotel.name && <div  key={hotelIndex}>{hotel.name}</div>
                 )}
               </div>
             </div>
@@ -101,11 +129,11 @@ export const TourGeneralInformation: React.FC<IPrps> = ({ data }) => {
         ) : data.package.description && data.package.description.length > 0 ? (
           <>
             <div className='flex flex-col gap-5'>
-              <span id='hotel' className='text-lg font-semibold md:text-2xl'>
+              <span id='hotel' className='text-lg font-semibold md:text-2xl text-blue-600'>
                 Otel Bilgisi
               </span>
               <div>
-                <div
+              <span className='text-base font-semibold md:text-lg text-orange-900'
                   dangerouslySetInnerHTML={{
                     __html: data.package.description,
                   }}
@@ -117,18 +145,18 @@ export const TourGeneralInformation: React.FC<IPrps> = ({ data }) => {
         <Spoiler
           maxHeight={200}
           hideLabel={
-            <div className='text-md font-semibold md:text-lg'>
+            <div className='text-sm font-medium'>
               Daha Az Görüntüle
             </div>
           }
           showLabel={
-            <div className='text-md font-semibold md:text-lg'>
+            <div className='text-sm font-medium'>
               Devamını Göster
             </div>
           }
         >
           <div className='flex items-center gap-3'>
-            <span id='visa-infos' className='text-lg font-semibold md:text-2xl'>
+            <span id='visa-infos' className='text-lg font-semibold md:text-2xl text-blue-600'>
               Vize Bilgileri
             </span>
           </div>

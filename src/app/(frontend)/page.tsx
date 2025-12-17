@@ -1,26 +1,12 @@
 import {
   Container,
   Title,
-  ScrollArea,
-  Tabs,
-  TabsList,
-  TabsTab,
-  TabsPanel,
-  SimpleGrid,
-  Anchor,
-  Badge,
 } from '@mantine/core'
 import Image from 'next/image'
-import { Link } from 'next-view-transitions'
-import { Route } from 'next'
-
 import { SearchEngine } from '@/components/search-engine/'
 import { CallFormDrawer } from '@/components/call-form/CallFormDrawer'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { getPageBySlug } from '@/libs/payload'
-import { FaChevronRight } from 'react-icons/fa'
-import { FaMapLocationDot } from 'react-icons/fa6'
-import populerDestinationClasses from '@/styles/OutlineTabs.module.css'
 import { EbultenForm } from '@/components/home/ebulten-form'
 
 export default async function Home() {

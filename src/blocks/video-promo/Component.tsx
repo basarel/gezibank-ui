@@ -51,8 +51,7 @@ export const VideoPromoBlock: React.FC<VideoPromoBlockProps> = ({
           : null)
 
   return (
-    <Container className='mb-8 md:mb-12'>
-      <Box className='relative overflow-hidden rounded-2xl shadow-xl'>
+       <Box className='relative overflow-hidden rounded-2xl shadow-xl'>
         {imageUrl && (
           <>
             <div
@@ -93,6 +92,5 @@ export const VideoPromoBlock: React.FC<VideoPromoBlockProps> = ({
           )}
         </div>
       </Box>
-    </Container>
-  )
+   )
 }

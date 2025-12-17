@@ -43,6 +43,7 @@ import { FaInfoCircle, FaBus } from 'react-icons/fa'
 import { HiOutlineLocationMarker } from 'react-icons/hi'
 import { TourGeneralInformation } from './tour-general-information'
 import { RiPlaneFill, RiWhatsappFill } from 'react-icons/ri'
+import { TbCalendarClock } from 'react-icons/tb'
 const TourDetailClient = () => {
   const router = useTransitionRouter()
   const [
@@ -444,7 +445,7 @@ const TourDetailClient = () => {
                   </div>
                 </div>
               </div>
-              <Container className='relative z-10 mx-auto -mt-20 rounded-lg bg-white p-6 text-black shadow-[-10px_10px_20px_0px_rgba(0,0,0,0.25)] md:-mt-14'>
+              <Container className='relative z-10 mx-auto -mt-20 rounded-xl bg-white p-6 text-black shadow-[-10px_10px_20px_0px_rgba(0,0,0,0.25)] md:-mt-14'>
                 <div className='mt-6 flex flex-col items-start justify-between gap-6 md:flex-row'>
                   <div className='flex flex-1 flex-col gap-4'>
                     <div className='flex items-start gap-3'>
@@ -456,9 +457,9 @@ const TourDetailClient = () => {
 
                     <div className='flex flex-col gap-6 pt-5'>
                       {itineraryText && (
-                        <div className='flex items-center gap-2'>
+                        <div className='flex gap-2'>
                           <HiOutlineLocationMarker
-                            size={20}
+                            size={24}
                             className='shrink-0 text-blue-700'
                           />
                           <span className='text-sm md:text-base'>
@@ -468,8 +469,8 @@ const TourDetailClient = () => {
                       )}
 
                       <div className='flex items-center gap-2'>
-                        <IoCalendarClearOutline
-                          size={20}
+                        <TbCalendarClock
+                          size={24}
                           className='shrink-0 text-blue-700'
                         />
                         <span className='text-sm md:text-base'>
@@ -483,16 +484,16 @@ const TourDetailClient = () => {
                         <div className='flex items-center gap-2'>
                           {transportType === 1 ? (
                             <RiPlaneFill
-                              size={20}
+                              size={24}
                               className='shrink-0 text-blue-700'
                             />
                           ) : (
                             <FaBus
-                              size={20}
+                              size={22}
                               className='shrink-0 text-blue-700'
                             />
                           )}
-                          <span className='text-sm md:text-base'>
+                          <span className='text-sm md:text-base text-orange-900'>
                             {transportTypeText}
                           </span>
                         </div>
@@ -574,7 +575,7 @@ const TourDetailClient = () => {
 
                 <div className='flex flex-col gap-4 py-4 md:grid md:grid-cols-12 md:grid-rows-[auto_auto] md:py-0'>
                   <div className='order-2 rounded-lg border md:order-0 md:col-span-8 md:row-span-2'>
-                    <TourDetail data={detailQuery.data} />
+                    <TourDetail data={detailQuery.data}  />
                   </div>
                   <div className='order-1 md:col-span-4 md:col-start-9 md:row-start-1'>
                     <div className='relative flex flex-col gap-5 overflow-hidden rounded-lg border p-5 shadow-sm'>
@@ -673,7 +674,7 @@ const TourDetailClient = () => {
                     </div>
                   </div>
                   <div className='order-3 rounded-lg border p-5 shadow-sm md:col-span-4 md:col-start-9 md:row-start-2'>
-                    <TourGeneralInformation data={detailQuery.data} />
+                    <TourGeneralInformation data={detailQuery.data} transportTypeText={transportTypeText} />
                   </div>
                 </div>
               </Container>

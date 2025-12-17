@@ -32,6 +32,9 @@ const Media = {
   admin: {
     useAsTitle: 'filename',
   },
+  access: {
+    read: () => true,
+  },
   fields: [],
 }
 
@@ -548,6 +551,186 @@ const Pages = {
                 description:
                   'YouTube or other video embed URL (e.g., https://www.youtube.com/embed/VIDEO_ID)',
               },
+            },
+          ],
+        },
+        {
+          slug: 'homeCampaigns',
+          labels: {
+            singular: 'Home Campaigns Block',
+            plural: 'Home Campaigns Blocks',
+          },
+          fields: [
+            {
+              name: 'title',
+              type: 'text',
+              label: 'Block Title',
+              required: false,
+              admin: {
+                description: 'e.g.: Çağrı Merkezine Özel Kampanyalar',
+              },
+            },
+            {
+              name: 'campaigns',
+              type: 'array',
+              label: 'Campaigns',
+              minRows: 1,
+              maxRows: 4,
+              fields: [
+                {
+                  name: 'image',
+                  type: 'upload',
+                  relationTo: 'media',
+                  label: 'Image',
+                  required: true,
+                },
+                {
+                  name: 'title',
+                  type: 'text',
+                  label: 'Title',
+                  required: true,
+                },
+                {
+                  name: 'subtitle',
+                  type: 'text',
+                  label: 'Subtitle',
+                  required: false,
+                  admin: {
+                    description: 'e.g.: Hemen Keşfet!, Hemen Üye Ol, İndirimi Kaçırma!',
+                  },
+                },
+                {
+                  name: 'link',
+                  type: 'text',
+                  label: 'URL',
+                  required: true,
+                  admin: {
+                    description: 'e.g.: /campaigns/new-members',
+                  },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          slug: 'videoContents',
+          labels: {
+            singular: 'Video Contents Block',
+            plural: 'Video Contents Blocks',
+          },
+          fields: [
+            {
+              name: 'title',
+              type: 'text',
+              label: 'Block Title',
+              required: false,
+              admin: {
+                description: 'e.g.: Video Contents Block Title',
+              },
+            },
+            {
+              name: 'contents',
+              type: 'array',
+              label: 'Contents',
+              minRows: 1,
+              maxRows: 4,
+              fields: [
+                {
+                  name: 'title',
+                  type: 'text',
+                  label: 'Content Title',
+                  required: true,
+                },
+                {
+                  name: 'tag',
+                  type: 'text',
+                  label: 'Tag',
+                  required: true,
+                  admin: {
+                    description: 'e.g.: New, Popular, Offer',
+                  },
+                },
+                {
+                  name: 'image',
+                  type: 'upload',
+                  relationTo: 'media',
+                  label: 'Image',
+                  required: true,
+                },
+                {
+                  name: 'subtitle',
+                  type: 'text',
+                  label: 'Subtitle',
+                  required: false,
+                  admin: {
+                    description: 'e.g.: Video Contents Subtitle',
+                  },
+                },
+                {
+                  name: 'link',
+                  type: 'text',
+                  label: 'Link URL',
+                  required: true,
+                  admin: {
+                    description: 'e.g.: /video-contents/yeni-uyeler',
+                  },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          slug: 'bottomSlider',
+          labels: {
+            singular: 'Bottom Slider Block',
+            plural: 'Bottom Slider Blocks',
+          },
+          fields: [
+            {
+              name: 'title',
+              type: 'text',
+              label: 'Block Title',
+              required: false,
+              admin: {
+                description: 'Bottom slider block title (optional)',
+              },
+            },
+            {
+              name: 'video',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Video',
+              required: false,
+              admin: {
+                description: 'Video file (MP4, WebM etc.). Will be shown on the left.',
+              },
+            },
+            {
+              name: 'items',
+              type: 'array',
+              label: 'Carousel Items',
+              minRows: 1,
+              admin: {
+                description: 'for images and links in Bottom slider block ',
+              },
+              fields: [
+                {
+                  name: 'image',
+                  type: 'upload',
+                  relationTo: 'media',
+                  label: 'Image',
+                  required: true,
+                },
+                {
+                  name: 'link',
+                  type: 'text',
+                  label: 'URL',
+                  required: false,
+                  admin: {
+                    description: 'Image click to go to the page URL',
+                  },
+                },
+              ],
             },
           ],
         },

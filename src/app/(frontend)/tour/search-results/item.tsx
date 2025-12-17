@@ -35,6 +35,7 @@ import { Widgets } from '@/types/cms-types'
 import { BsMoonStars } from 'react-icons/bs'
 import { HiOutlineLocationMarker } from 'react-icons/hi'
 import { useMediaQuery } from '@mantine/hooks'
+import { TbCalendarClock } from 'react-icons/tb'
 type Props = {
   // data: TourSearchResultSearchItem
   data: TourSearchResultGroupedItem
@@ -60,7 +61,7 @@ export const TourSearchResultItem: React.FC<Props> = ({
       if (!hasTourCity) return false
     }
 
-    // Çıkış noktası filtresi
+
     if (
       filterParams.departurePoints &&
       filterParams.departurePoints.length > 0
@@ -153,7 +154,7 @@ export const TourSearchResultItem: React.FC<Props> = ({
 
   const isMobile = useMediaQuery('(max-width: 62em)')
   return (
-    <div className='grid grid-cols-1 rounded-lg bg-white p-3 shadow-2xl hover:shadow-2xl md:grid-cols-4'>
+    <div className='grid grid-cols-1 rounded-lg bg-white p-3 shadow-md hover:shadow-2xl md:grid-cols-4'>
       <div className='col-span-1 flex flex-col gap-4 md:col-span-3'>
         <div className='grid grid-cols-1 gap-5 md:grid-cols-2'>
           <Box className='relative w-full' component={Link} href={detailUrl}>
@@ -231,7 +232,7 @@ export const TourSearchResultItem: React.FC<Props> = ({
 
             {totalNights > 0 ? (
               <div className='flex items-center gap-1 text-sm'>
-                <BsMoonStars size={20} className='shrink-0 text-blue-700' />
+                <TbCalendarClock size={20} className='shrink-0 text-blue-700' />
                 <span>
                   {totalNights} Gece {totalDays} Gün - {totalNights} Gece
                   Konaklamalı
@@ -272,7 +273,7 @@ export const TourSearchResultItem: React.FC<Props> = ({
           </div>
         </div>
 
-        <div className='flex items-center gap-5 border-t border-gray-200 pt-4 text-sm'>
+        <div className='flex items-center gap-5 pt-4 text-sm'>
           {transportTypeText && (
             <div className='flex items-center gap-2'>
               {transportType === 1 && (
@@ -297,7 +298,7 @@ export const TourSearchResultItem: React.FC<Props> = ({
         </div>
       </div>
 
-      <div className='col-span-1 flex flex-col justify-between rounded-lg p-3 shadow-xl'>
+      <div className='col-span-1 flex flex-col justify-between border rounded-t-xl p-3  shadow-xl'>
         <div className='mb-4 flex flex-col items-center justify-center'>
           <div className='w-full text-center'>
             <div className='mb-2 text-sm font-medium text-black'>
@@ -331,7 +332,7 @@ export const TourSearchResultItem: React.FC<Props> = ({
           </div>
         </div>
         <Button
-          className='w-full rounded-tl-lg rounded-tr-lg rounded-b-lg rounded-bl-none bg-blue-600 px-0 text-lg font-extrabold text-white hover:bg-blue-700 md:text-3xl'
+          className='w-full rounded-tl-lg rounded-tr-lg rounded-b-lg rounded-bl-none bg-blue-600 px-0 text-lg font-extrabold  hover:bg-blue-800 md:text-3xl'
           size={isMobile ? 'md' : 'lg'}
           radius={'lg'}
           component={Link}

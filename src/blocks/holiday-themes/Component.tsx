@@ -2,16 +2,15 @@
 
 import { Route } from 'next'
 import { Link } from 'next-view-transitions'
-import { AspectRatio, Box, Image, Skeleton, Text, Title } from '@mantine/core'
-import { Carousel, CarouselSlide } from '@mantine/carousel'
+import {  Box, Image, Skeleton, Text } from '@mantine/core'
+import { Carousel } from '@mantine/carousel'
 import Autoplay from 'embla-carousel-autoplay'
 import { EmblaCarouselType } from 'embla-carousel'
 import { useMounted } from '@mantine/hooks'
 import { useRef } from 'react'
 import { RiArrowLeftLine, RiArrowRightLine } from 'react-icons/ri'
 
-// Payload CMS'ten gelen block data tipi
-type ContentItem = {
+ type ContentItem = {
   id: string
   title: string
   image?: {
@@ -65,13 +64,10 @@ export const HolidayThemesBlock: React.FC<HolidayThemesBlockProps> = ({
     <div className='py-8'>
       {title && (
         <div className='mb-4 text-center'>
-          <Title
-            order={2}
-            className='relative mx-auto mb-2 inline-block text-2xl font-bold text-blue-600 md:text-3xl'
-          >
-            {title}
-            <div className='absolute bottom-0 left-1/2 h-1 w-12 -translate-x-1/2 rounded-full bg-blue-600'></div>
-          </Title>
+          <h2 className='relative mx-auto mb-8 w-fit border-blue-800 pb-3 text-center text-2xl font-bold text-blue-600 md:text-3xl'>
+          {title}
+          <div className='absolute bottom-0 left-1/2 h-2 w-12 -translate-x-1/2 rounded-full bg-blue-600'></div>
+        </h2>
         </div>
       )}
       {description && (

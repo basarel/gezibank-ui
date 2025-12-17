@@ -10,6 +10,7 @@ import { useRef, useState, useEffect } from 'react'
 import { BiChevronRight } from 'react-icons/bi'
 import { FaArrowRightLong } from 'react-icons/fa6'
 
+
 type StoryItem = {
   id: string
   title: string
@@ -76,7 +77,7 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
         <Carousel
           withControls={false}
           slideSize={{
-            base: `${100 / 3}%`,
+            base: `${100 / 2}%`,
             xs: `${100 / 5}%`,
             sm: `${100 / 6}%`,
             lg: `${100 / 8}%`,
@@ -99,7 +100,7 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
             return (
               <CarouselSlide key={item.id} className='overflow-visible'>
                 <div
-                  className='relative flex items-center justify-center overflow-visible'
+                  className='relative flex items-center justify-start overflow-visible'
                   onMouseEnter={() => !isTouchDevice && setHoveredIndex(index)}
                 >
                   <Box
@@ -131,15 +132,15 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
                   <div
                     className={`z-0 overflow-hidden transition-all duration-600 ease-in-out ${
                       !isTouchDevice && hoveredIndex === index
-                        ? 'w-[250px] opacity-100 md:w-[310px]'
-                        : 'w-0 opacity-0'
+                        ? 'w-[250px] opacity-100 md:w-[310px] pointer-events-auto'
+                        : 'w-0 opacity-0 pointer-events-none'
                     }`}
                     onMouseEnter={() =>
                       !isTouchDevice && setHoveredIndex(index)
                     }
                   >
                     <div
-                      className='absolute top-4 left-20 block h-[156px] min-w-[200px] items-center justify-center rounded-r-xl bg-orange-50 px-1 py-3 text-center shadow-lg md:min-w-[400px]'
+                      className='absolute top-4 left-20 block h-[156px] min-w-[200px] items-center justify-center rounded-r-xl bg-orange-50 px-1 py-3 text-center shadow-lg md:min-w-[390px]'
                       onMouseEnter={() =>
                         !isTouchDevice && setHoveredIndex(index)
                       }
