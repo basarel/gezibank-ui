@@ -149,7 +149,7 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
                     </div>
                   </Box>
                   <div
-                    className={`absolute top-0 left-27 z-0 mt-7  w-[400px] overflow-visible transition-opacity duration-300 ease-in-out ${
+                    className={`absolute top-0 left-27 z-0 mt-7 w-[400px] overflow-visible transition-opacity duration-300 ease-in-out ${
                       isLargeScreen && hoveredIndex === index
                         ? 'pointer-events-auto opacity-100'
                         : 'pointer-events-none opacity-0'
@@ -165,7 +165,7 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
                     onMouseEnter={() => isLargeScreen && setHoveredIndex(index)}
                   >
                     <div
-                      className='pl-10 block h-[136px] items-center justify-center rounded-r-xl bg-orange-50 px-4 py-3 text-center shadow-lg'
+                      className='block h-[136px] items-center justify-center rounded-r-xl bg-orange-50 px-4 py-3 pl-10 text-center shadow-lg'
                       onMouseEnter={() =>
                         isLargeScreen && setHoveredIndex(index)
                       }
