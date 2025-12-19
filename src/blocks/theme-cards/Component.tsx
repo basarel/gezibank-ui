@@ -64,8 +64,6 @@ export const ThemeCardsBlock: React.FC<ThemeCardsBlockProps> = ({
       >
         {cards.map((item) => {
           const linkUrl = item.link
-            ? (`/${item.link.split('/').at(-1)}?slug=${item.link.split('/').at(-1)}` as Route)
-            : undefined
 
           return (
             <CarouselSlide key={item.id}>

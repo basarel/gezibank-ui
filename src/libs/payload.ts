@@ -5,8 +5,7 @@ import type { Payload } from 'payload'
 export type HeaderMenuLink = {
   label: string
   url?: string | null
-  isActive?: boolean
-}
+ }
 
 export type HeaderMenuColumn = {
   image?: string | { id: string; url?: string } | null
@@ -16,7 +15,6 @@ export type HeaderMenuColumn = {
 
 export type HeaderMenuItem = {
   title: string
-  showContent?: boolean
   content?: string | null
   columns: HeaderMenuColumn[]
 }

@@ -43,8 +43,7 @@ export const PopulerLinksBlock: React.FC<PopulerLinksBlockProps> = ({
   }
 
   const sortedMenus = [...menus].sort((a, b) => a.ordering - b.ordering)
-  console.log(sortedMenus)
-  return (
+   return (
     <div>
       {title && (
         <Title fz={{ base: 'h3', md: 'h2' }} mb={'md'}>

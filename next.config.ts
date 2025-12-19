@@ -11,7 +11,7 @@ const NEXT_PUBLIC_SERVER_URL =
 
 const nextConfig: NextConfig = {
   typedRoutes: true,
-  // output: 'standalone', // Commented out for Windows build compatibility
+  output: 'standalone', // Commented out for Windows build compatibility
   // Uncomment for production deployment if needed
   experimental: {
     optimizePackageImports: [
@@ -44,8 +44,19 @@ const nextConfig: NextConfig = {
         protocol: 'https' as const,
         hostname: 'gezibank.sm.mncdn.com',
       },
-      // Localhost için development
       {
+        protocol: 'https' as const,
+        hostname: '*.s3.amazonaws.com',
+      },
+      {
+        protocol: 'https' as const,
+        hostname: '*.s3.*.amazonaws.com',
+      },
+       {
+        protocol: 'https' as const,
+        hostname: '*.supabase.co',
+      },
+       {
         protocol: 'http' as const,
         hostname: 'localhost',
         port: '3000',

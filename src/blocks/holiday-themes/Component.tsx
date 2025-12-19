@@ -84,8 +84,7 @@ export const HolidayThemesBlock: React.FC<HolidayThemesBlockProps> = ({
         >
           {items.map((item) => {
             const linkUrl = item.link
-              ? (`/${item.link.split('/').at(-1)}?slug=${item.link.split('/').at(-1)}` as Route)
-              : undefined
+              
 
             return (
               <Carousel.Slide

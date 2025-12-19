@@ -62,9 +62,7 @@ export const TrendRegionsBlock: React.FC<TrendRegionsBlockProps> = ({
           }
 
           const linkUrl = item.link
-            ? (`/${item.link.split('/').at(-1)}?slug=${item.link.split('/').at(-1)}` as Route)
-            : undefined
-
+            
           const content = (
             <>
               <div className='h-full w-full overflow-hidden'>
@@ -87,7 +85,7 @@ export const TrendRegionsBlock: React.FC<TrendRegionsBlockProps> = ({
             >
               {linkUrl ? (
                 <Link
-                  href={linkUrl}
+                  href={linkUrl as Route}
                   className='relative block h-full overflow-hidden rounded-3xl shadow-xl'
                 >
                   {content}

@@ -13,6 +13,7 @@ type LandingGridItem = {
     id: string
     url: string
     alt?: string
+    filename?: string
   }
   link?: string
 }
@@ -29,7 +30,6 @@ export const LandingGridBlock: React.FC<LandingGridBlockProps> = ({
   if (!items || items.length === 0) {
     return null
   }
-
   return (
     <div className='w-full'>
       {title && (
@@ -42,17 +42,20 @@ export const LandingGridBlock: React.FC<LandingGridBlockProps> = ({
       )}
       <div className='grid grid-cols-2 md:grid-cols-4 gap-4 w-full'>
         {items.map((item) => {
-         
-
           return (
             <Link
               key={item.id}
               href={item.link as Route}
-              className='group relative block bg-black/70 aspect-[3/3] overflow-hidden rounded-2xl'
+              className='group relative block bg-black/70 aspect-square overflow-hidden rounded-2xl'
             >
-              {item.image?.url && (
+              {item.image && (
                 <Image
-                  src={item.image.url}
+                  src={
+                    item.image.url ||
+                    (item.image.filename
+                      ? `/media/${item.image.filename}`
+                      : '')
+                  }
                   alt={item.image.alt || item.title}
                   fill
                   className='object-cover transition-transform duration-300 group-hover:scale-105'

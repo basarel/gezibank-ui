@@ -65,7 +65,7 @@ export const HeaderMenu: React.FC<HeaderMenuProps> = ({ menuItems = [] }) => {
             </Menu.Target>
 
             <Menu.Dropdown className={classes.megaMenu}>
-              {item.showContent && item.content && item.content.trim() && (
+              {item.content && item.content.trim() && (
                 <div className='mb-4 rounded-md bg-gray-50 p-3 text-sm text-gray-700'>
                   {item.content}
                 </div>
@@ -80,13 +80,13 @@ export const HeaderMenu: React.FC<HeaderMenuProps> = ({ menuItems = [] }) => {
                         const content = link.url ? (
                           <Link
                             href={link.url as Route}
-                            className={`${classes.leftSideLink} ${link.isActive ? classes.active : ''}`}
+                            className={`${classes.leftSideLink}`}
                           >
                             {link.label}
                           </Link>
                         ) : (
                           <div
-                            className={`${classes.leftSideLink} ${link.isActive ? classes.active : ''}`}
+                            className={`${classes.leftSideLink}`}
                           >
                             {link.label}
                           </div>
@@ -133,13 +133,13 @@ export const HeaderMenu: React.FC<HeaderMenuProps> = ({ menuItems = [] }) => {
                                 const content = link.url ? (
                                   <Link
                                     href={link.url as Route}
-                                    className={`${classes.menuLink} ${link.isActive ? classes.active : ''}`}
+                                    className={`${classes.menuLink}`}
                                   >
                                     <span>{link.label}</span>
                                   </Link>
                                 ) : (
                                   <div
-                                    className={`${classes.menuLink} ${link.isActive ? classes.active : ''}`}
+                                    className={`${classes.menuLink}`}
                                   >
                                     <span>{link.label}</span>
                                   </div>

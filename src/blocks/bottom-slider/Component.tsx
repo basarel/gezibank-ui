@@ -48,7 +48,7 @@ export const BottomSliderBlock: React.FC<BottomSliderBlockProps> = ({
         {videoUrl && (
           <div className='relative h-[350px] w-full md:h-[350px]'>
             {videoUrl ? (
-              <div className='relative h-full w-full overflow-hidden rounded-2xl border-2'>
+              <div className='relative h-full w-full overflow-hidden rounded-2xl'>
                 <video
                   src={videoUrl}
                   className='h-full w-full'
@@ -78,8 +78,6 @@ export const BottomSliderBlock: React.FC<BottomSliderBlockProps> = ({
             >
               {items.map((item) => {
                 const linkUrl = item.link
-                  ? (`/${item.link.split('/').at(-1)}?slug=${item.link.split('/').at(-1)}` as Route)
-                  : undefined
 
                 return (
                   <CarouselSlide

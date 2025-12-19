@@ -9,7 +9,9 @@ export default async function TourLandingPage() {
 
   return (
     <div className='flex flex-col gap-4 md:gap-10'>
-      <div className='relative border-b py-4'>
+      <div className='relative border-b py-4 bg-orange-900 '
+      >
+        <div className='absolute inset-0 bg-black/50' aria-hidden />
         <Container className='relative z-10'>
           <div className='rounded-md bg-white p-3 md:p-5'>
             <TourSearchEngine />

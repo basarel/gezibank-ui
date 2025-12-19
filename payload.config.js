@@ -1,6 +1,7 @@
 import { buildConfig } from 'payload'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { s3Storage } from '@payloadcms/storage-s3'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
@@ -895,21 +896,11 @@ const Globals = {
             },
           },
           {
-            name: 'showContent',
-            type: 'checkbox',
-            label: 'Show Content',
-            defaultValue: false,
-            admin: {
-              description: 'is content show under title ?',
-            },
-          },
-          {
             name: 'content',
             type: 'textarea',
             label: 'Content',
             required: false,
             admin: {
-              condition: (data) => data.showContent === true,
               description: 'the content going to show under title',
             },
           },
@@ -959,15 +950,7 @@ const Globals = {
                       description: 'e.g.: /tours/domestic',
                     },
                   },
-                  {
-                    name: 'isActive',
-                    type: 'checkbox',
-                    label: 'Active',
-                    defaultValue: false,
-                    admin: {
-                      description: 'Mark as active link',
-                    },
-                  },
+
                 ],
               },
             ],
@@ -996,5 +979,34 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URL || '',
     },
   }),
+  plugins: [
+    s3Storage({
+      collections: {
+        media: {
+          prefix: process.env.S3_PREFIX || 'media',
+          generateFileURL: (args) => {
+            if (process.env.S3_CDN_URL) {
+              return `${process.env.S3_CDN_URL}/${process.env.S3_BUCKET}/${args.prefix}/${args.filename}`
+            }
+            return args.url || ''
+          },
+        },
+      },
+      bucket: process.env.S3_BUCKET || '',
+      config: {
+        forcePathStyle: true,
+        credentials: {
+          accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
+        },
+        region: process.env.S3_REGION || 'us-east-1',
+        ...(process.env.S3_ENDPOINT && {
+          endpoint: process.env.S3_ENDPOINT,
+          bucketEndpoint: false,
+          disableHostPrefix: true,
+        }),
+      },
+    }),
+  ],
   sharp,
 })

@@ -7,8 +7,7 @@ import { Carousel, CarouselSlide } from '@mantine/carousel'
 import Autoplay from 'embla-carousel-autoplay'
 import aspectRatioClasses from '@/components/home/storyitems.module.css'
 import { useRef, useState, useEffect } from 'react'
-import { BiChevronRight } from 'react-icons/bi'
-import { FaArrowRightLong } from 'react-icons/fa6'
+ import { FaArrowRightLong } from 'react-icons/fa6'
 
 type StoryItem = {
   id: string
@@ -55,9 +54,19 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
   const autoplay = useRef(Autoplay({ delay: 3000 }))
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [isTouchDevice, setIsTouchDevice] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
-    setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0)
+    const checkDevice = () => {
+      const touchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+      const mobileWidth = window.innerWidth < 768 
+      setIsTouchDevice(touchDevice)
+      setIsMobile(touchDevice || mobileWidth)
+    }
+    
+    checkDevice()
+    window.addEventListener('resize', checkDevice)
+    return () => window.removeEventListener('resize', checkDevice)
   }, [])
 
   if (!items || items.length === 0) {
@@ -72,11 +81,11 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
           <div className='absolute bottom-0 left-1/2 h-2 w-12 -translate-x-1/2 rounded-full bg-blue-600'></div>
         </h2>
       )}
-      <div className='relative w-full overflow-x-hidden px-4 sm:px-0'>
+      <div className='relative z-0 w-full overflow-x-visible px-4 sm:px-0'>
         <Carousel
           withControls={false}
           slideSize={{
-            base: `${100 / 2}%`,
+            base: `${100 / 3}%`,
             xs: `${100 / 5}%`,
             sm: `${100 / 6}%`,
             lg: `${100 / 8}%`,
@@ -89,30 +98,30 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
           emblaOptions={{
             loop: true,
           }}
-          plugins={[autoplay.current]}
+         plugins={[autoplay.current]}
         >
           {items.map((item, index) => {
-            const linkUrl = item.link
-              ? (`/${item.link.split('/').at(-1)}?slug=${item.link.split('/').at(-1)}` as Route)
-              : undefined
 
             return (
-              <CarouselSlide key={item.id} className='overflow-visible'>
+              <CarouselSlide key={item.id} className='flex overflow-visible'>
                 <div
-                  className='relative flex items-center justify-start overflow-visible'
-                  onMouseEnter={() => !isTouchDevice && setHoveredIndex(index)}
+                  className={`relative flex h-full items-start justify-start overflow-visible transition-all duration-400 ease-in-out ${
+                    !isMobile && hoveredIndex === index ? 'mr-[210px] md:mr-[330px]' : ''
+                  }`}
+                  onMouseEnter={() => !isMobile && setHoveredIndex(index)}
                 >
                   <Box
                     target='_blank'
-                    component={linkUrl ? Link : undefined}
-                    href={linkUrl as Route}
+                    component={item.link ? Link : undefined}
+                    href={item.link as Route}
                     className='z-10 block h-full'
                   >
-                    <div className='flex h-full w-[90px] flex-col md:w-[160px]'>
+                    <div className='relative flex h-full min-h-[220px] w-[110px] flex-col md:min-h-[280px] md:w-[160px]'>
                       {item.image?.url && (
                         <AspectRatio
                           classNames={aspectRatioClasses}
-                          className='mt-4'
+                          className='mt-4 shrink-0'
+                          ratio={1}
                         >
                           <Image
                             src={item.image.url}
@@ -120,28 +129,32 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
                           />
                         </AspectRatio>
                       )}
-                      <div className='leading-md py-4 text-center text-sm'>
+                      <div className='leading-md flex-1 px-1 py-4 text-center text-sm'>
                         <Text lineClamp={3} component='div'>
                           {item.title}
                         </Text>
                       </div>
-                      <div className='mx-auto mt-auto mb-10 h-[5px] w-[69px] rounded bg-blue-200 opacity-100 transition-opacity duration-400' />
+                      <div className='absolute bottom-0 left-1/2 h-[5px] w-[69px] -translate-x-1/2 rounded bg-blue-200 opacity-100 transition-opacity duration-400' />
                     </div>
                   </Box>
                   <div
-                    className={`z-0 overflow-hidden transition-all duration-600 ease-in-out ${
-                      !isTouchDevice && hoveredIndex === index
-                        ? 'pointer-events-auto w-[250px] opacity-100 md:w-[310px]'
-                        : 'pointer-events-none w-0 opacity-0'
+                    className={`absolute left-30 top-0 h-[186px] w-[370px] z-0 mt-3 overflow-visible transition-opacity duration-300 ease-in-out ${
+                      !isMobile && hoveredIndex === index
+                        ? 'pointer-events-auto opacity-100'
+                        : 'pointer-events-none opacity-0'
                     }`}
+                    style={{
+                      transform: !isMobile && hoveredIndex === index ? 'translateX(0)' : 'translateX(-10px)',
+                      transition: 'opacity 300ms ease-in-out, transform 300ms ease-in-out',
+                    }}
                     onMouseEnter={() =>
-                      !isTouchDevice && setHoveredIndex(index)
+                      !isMobile && setHoveredIndex(index)
                     }
                   >
                     <div
-                      className='absolute top-4 left-20 block h-[156px] min-w-[200px] items-center justify-center rounded-r-xl bg-orange-50 px-1 py-3 text-center shadow-lg md:min-w-[390px]'
+                      className='ml-2 block h-[156px] items-center justify-center rounded-r-xl bg-orange-50 px-4 py-3 text-center shadow-lg  '
                       onMouseEnter={() =>
-                        !isTouchDevice && setHoveredIndex(index)
+                        !isMobile && setHoveredIndex(index)
                       }
                     >
                       <div className='flex h-full flex-col items-center justify-center'>
@@ -161,9 +174,9 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
                         )}
                         {item.buttonText &&
                           item.buttonText !== '' &&
-                          linkUrl && (
+                          item.link && (
                             <Link
-                              href={linkUrl}
+                              href={item.link as Route}
                               className='mt-auto inline-flex items-center text-sm text-blue-600 transition-colors hover:text-blue-800 md:text-base'
                             >
                               {item.buttonText}{' '}
@@ -182,7 +195,7 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
           })}
         </Carousel>
         {showAllButton && (
-          <div className='flex justify-center'>
+          <div className='flex justify-center mt-8'>
             <Button component={Link} href={allButtonLink as Route}>
               {allButtonText}
             </Button>

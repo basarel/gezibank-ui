@@ -82,7 +82,7 @@ export const Header: React.FC<HeaderProps> = ({ headerContent }) => {
                 href='https://www.whatsapp.com/channel/0029Vau83EmCRs1qIYPnNO0a'
                 className='flex items-center gap-1'
               >
-                <div className='relative size-[36px]'>
+                <div className='relative size-[40px]'>
                   <Img src={'/whatsapp-icon.jpg'} />
                 </div>
                 <div className='leading-sm text-xs text-black'>WhatsApp</div>
