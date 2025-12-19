@@ -85,9 +85,7 @@ export const HeaderMenu: React.FC<HeaderMenuProps> = ({ menuItems = [] }) => {
                             {link.label}
                           </Link>
                         ) : (
-                          <div
-                            className={`${classes.leftSideLink}`}
-                          >
+                          <div className={`${classes.leftSideLink}`}>
                             {link.label}
                           </div>
                         )
@@ -138,9 +136,7 @@ export const HeaderMenu: React.FC<HeaderMenuProps> = ({ menuItems = [] }) => {
                                     <span>{link.label}</span>
                                   </Link>
                                 ) : (
-                                  <div
-                                    className={`${classes.menuLink}`}
-                                  >
+                                  <div className={`${classes.menuLink}`}>
                                     <span>{link.label}</span>
                                   </div>
                                 )

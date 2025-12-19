@@ -52,11 +52,11 @@ const nextConfig: NextConfig = {
         protocol: 'https' as const,
         hostname: '*.s3.*.amazonaws.com',
       },
-       {
+      {
         protocol: 'https' as const,
         hostname: '*.supabase.co',
       },
-       {
+      {
         protocol: 'http' as const,
         hostname: 'localhost',
         port: '3000',

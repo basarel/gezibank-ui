@@ -5,7 +5,7 @@ import type { Payload } from 'payload'
 export type HeaderMenuLink = {
   label: string
   url?: string | null
- }
+}
 
 export type HeaderMenuColumn = {
   image?: string | { id: string; url?: string } | null

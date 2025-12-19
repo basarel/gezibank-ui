@@ -29,7 +29,10 @@ export const LandingFaqBlock: React.FC<LandingFaqBlockProps> = ({
 
   return (
     <div className='w-full'>
-      <Title order={2} className='mb-6 text-start text-2xl font-bold md:text-3xl'>
+      <Title
+        order={2}
+        className='mb-6 text-start text-2xl font-bold md:text-3xl'
+      >
         {title}
       </Title>
       <Accordion
@@ -50,7 +53,7 @@ export const LandingFaqBlock: React.FC<LandingFaqBlockProps> = ({
             </AccordionControl>
             <AccordionPanel className='w-full'>
               <div
-                className='prose prose-sm max-w-none w-full'
+                className='prose prose-sm w-full max-w-none'
                 dangerouslySetInnerHTML={{
                   __html: item.answer,
                 }}

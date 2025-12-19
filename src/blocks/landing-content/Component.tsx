@@ -18,10 +18,7 @@ export const LandingContentBlock: React.FC<LandingContentBlockProps> = ({
   return (
     <Paper shadow='md' p='xl' radius='md' className='bg-white text-gray-800'>
       {title && (
-        <Title
-          order={2}
-          className='mb-4 text-2xl font-bold md:text-3xl'
-        >
+        <Title order={2} className='mb-4 text-2xl font-bold md:text-3xl'>
           {title}
         </Title>
       )}

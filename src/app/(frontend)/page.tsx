@@ -15,9 +15,9 @@ export default async function Home() {
         <Image
           src='https://ykmturizm.mncdn.com/11/Files/638923998198240440.jpg'
           fill
-           alt='GeziBank'
+          alt='GeziBank'
           priority
-          className='absolute top-0 left-0  -z-50 hidden h-full w-full object-cover md:block'
+          className='absolute top-0 left-0 -z-50 hidden h-full w-full object-cover md:block'
           style={{
             clipPath: 'ellipse(90% 90% at 50% 00%)',
           }}

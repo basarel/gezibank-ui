@@ -40,21 +40,19 @@ export const LandingGridBlock: React.FC<LandingGridBlockProps> = ({
           {title}
         </Title>
       )}
-      <div className='grid grid-cols-2 md:grid-cols-4 gap-4 w-full'>
+      <div className='grid w-full grid-cols-2 gap-4 md:grid-cols-4'>
         {items.map((item) => {
           return (
             <Link
               key={item.id}
               href={item.link as Route}
-              className='group relative block bg-black/70 aspect-square overflow-hidden rounded-2xl'
+              className='group relative block aspect-square overflow-hidden rounded-2xl bg-black/70'
             >
               {item.image && (
                 <Image
                   src={
                     item.image.url ||
-                    (item.image.filename
-                      ? `/media/${item.image.filename}`
-                      : '')
+                    (item.image.filename ? `/media/${item.image.filename}` : '')
                   }
                   alt={item.image.alt || item.title}
                   fill
@@ -62,8 +60,8 @@ export const LandingGridBlock: React.FC<LandingGridBlockProps> = ({
                   sizes='(max-width: 768px) 50vw, 25vw'
                 />
               )}
-               <div className='absolute inset-0 rounded-2xl bg-black/0 transition-all duration-500 group-hover:bg-transparent md:bg-black/30' />
-              <div className='absolute bottom-0 left-0 right-0 p-4'>
+              <div className='absolute inset-0 rounded-2xl bg-black/0 transition-all duration-500 group-hover:bg-transparent md:bg-black/30' />
+              <div className='absolute right-0 bottom-0 left-0 p-4'>
                 <h3 className='text-lg font-bold text-white md:text-xl'>
                   {item.title}
                 </h3>

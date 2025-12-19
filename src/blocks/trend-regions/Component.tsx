@@ -62,7 +62,7 @@ export const TrendRegionsBlock: React.FC<TrendRegionsBlockProps> = ({
           }
 
           const linkUrl = item.link
-            
+
           const content = (
             <>
               <div className='h-full w-full overflow-hidden'>
