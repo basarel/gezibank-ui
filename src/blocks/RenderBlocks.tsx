@@ -53,7 +53,7 @@ export const RenderBlocks: React.FC<RenderBlocksProps> = ({ blocks }) => {
 
         if (block && 'isActive' in block && block.isActive === false) {
           return null
-        }// burası var ama tabii cms e eklenmelı 
+        } // burası var ama tabii cms e eklenmelı
 
         if (blockType && blockType in blockComponents) {
           const BlockComponent = blockComponents[blockType]
