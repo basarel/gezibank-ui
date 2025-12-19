@@ -750,7 +750,6 @@ const Pages = {
               label: 'Title',
               required: false,
             },
-           
             {
               name: 'items',
               type: 'array',
@@ -831,7 +830,6 @@ const Pages = {
               required: false,
               defaultValue: 'Sıkça Sorulan Sorular',
             },
-            
             {
               name: 'items',
               type: 'array',
@@ -950,7 +948,6 @@ const Globals = {
                       description: 'e.g.: /tours/domestic',
                     },
                   },
-
                 ],
               },
             ],
