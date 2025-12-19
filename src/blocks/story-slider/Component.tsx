@@ -51,18 +51,27 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
   allButtonText = 'Tüm Kampanyaları Gör',
   items = [],
 }) => {
-  const autoplay = useRef(Autoplay({ delay: 3000 }))
+  const autoplay = useRef(
+    Autoplay({
+      delay: 3000,
+      stopOnInteraction: false, 
+      stopOnMouseEnter: false,
+    })
+  )
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [isTouchDevice, setIsTouchDevice] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [isLargeScreen, setIsLargeScreen] = useState(false)
 
   useEffect(() => {
     const checkDevice = () => {
       const touchDevice =
         'ontouchstart' in window || navigator.maxTouchPoints > 0
       const mobileWidth = window.innerWidth < 768
+      const largeScreen = window.innerWidth >= 1024
       setIsTouchDevice(touchDevice)
       setIsMobile(touchDevice || mobileWidth)
+      setIsLargeScreen(largeScreen)
     }
 
     checkDevice()
@@ -98,6 +107,8 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
           }}
           emblaOptions={{
             loop: true,
+            align: 'start',
+            dragFree: true,
           }}
           plugins={[autoplay.current]}
         >
@@ -106,12 +117,12 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
               <CarouselSlide key={item.id} className='flex overflow-visible'>
                 <div
                   className={`relative flex h-full items-start justify-start overflow-visible transition-all duration-400 ease-in-out ${
-                    !isMobile && hoveredIndex === index
-                      ? 'mr-[210px] md:mr-[330px]'
+                    isLargeScreen && hoveredIndex === index
+                      ? 'mr-[330px]'
                       : ''
                   }`}
-                  onMouseEnter={() => !isMobile && setHoveredIndex(index)}
-                >
+                  onMouseEnter={() => isLargeScreen && setHoveredIndex(index)}
+                 >
                   <Box
                     target='_blank'
                     component={item.link ? Link : undefined}
@@ -141,23 +152,23 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
                   </Box>
                   <div
                     className={`absolute top-0 left-30 z-0 mt-3 h-[186px] w-[370px] overflow-visible transition-opacity duration-300 ease-in-out ${
-                      !isMobile && hoveredIndex === index
+                      isLargeScreen && hoveredIndex === index
                         ? 'pointer-events-auto opacity-100'
                         : 'pointer-events-none opacity-0'
                     }`}
                     style={{
                       transform:
-                        !isMobile && hoveredIndex === index
+                        isLargeScreen && hoveredIndex === index
                           ? 'translateX(0)'
                           : 'translateX(-10px)',
                       transition:
                         'opacity 300ms ease-in-out, transform 300ms ease-in-out',
                     }}
-                    onMouseEnter={() => !isMobile && setHoveredIndex(index)}
-                  >
+                    onMouseEnter={() => isLargeScreen && setHoveredIndex(index)}
+                   >
                     <div
                       className='ml-2 block h-[156px] items-center justify-center rounded-r-xl bg-orange-50 px-4 py-3 text-center shadow-lg'
-                      onMouseEnter={() => !isMobile && setHoveredIndex(index)}
+                      onMouseEnter={() => isLargeScreen && setHoveredIndex(index)}
                     >
                       <div className='flex h-full flex-col items-center justify-center'>
                         <Text
