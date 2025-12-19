@@ -964,6 +964,12 @@ export default buildConfig({
     routes: {
       admin: '/admin',
     },
+    css: path.resolve(dirname, 'src/app/(payload)/custom.scss'),
+    components: {
+      graphics: {
+        Logo: '@/components/Admin/logo#Logo',
+       },
+    },
   },
   collections: [Users, Media, Pages],
   globals: [Globals.header],
