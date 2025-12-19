@@ -54,7 +54,7 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
   const autoplay = useRef(
     Autoplay({
       delay: 3000,
-      stopOnInteraction: false, 
+      stopOnInteraction: false,
       stopOnMouseEnter: false,
     })
   )
@@ -117,12 +117,10 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
               <CarouselSlide key={item.id} className='flex overflow-visible'>
                 <div
                   className={`relative flex h-full items-start justify-start overflow-visible transition-all duration-400 ease-in-out ${
-                    isLargeScreen && hoveredIndex === index
-                      ? 'mr-[330px]'
-                      : ''
+                    isLargeScreen && hoveredIndex === index ? 'mr-[330px]' : ''
                   }`}
                   onMouseEnter={() => isLargeScreen && setHoveredIndex(index)}
-                 >
+                >
                   <Box
                     target='_blank'
                     component={item.link ? Link : undefined}
@@ -165,10 +163,12 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
                         'opacity 300ms ease-in-out, transform 300ms ease-in-out',
                     }}
                     onMouseEnter={() => isLargeScreen && setHoveredIndex(index)}
-                   >
+                  >
                     <div
                       className='ml-2 block h-[156px] items-center justify-center rounded-r-xl bg-orange-50 px-4 py-3 text-center shadow-lg'
-                      onMouseEnter={() => isLargeScreen && setHoveredIndex(index)}
+                      onMouseEnter={() =>
+                        isLargeScreen && setHoveredIndex(index)
+                      }
                     >
                       <div className='flex h-full flex-col items-center justify-center'>
                         <Text
