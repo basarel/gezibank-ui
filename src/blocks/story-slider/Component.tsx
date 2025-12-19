@@ -84,7 +84,7 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
   }
 
   return (
-    <div className='w-full overflow-x-hidden py-8'>
+    <div className='w-full overflow-x-hidden pb-8'>
       {title && (
         <h2 className='relative mx-auto my-8 border-blue-800 py-3 text-center text-2xl font-bold text-blue-600 md:text-3xl'>
           {title}

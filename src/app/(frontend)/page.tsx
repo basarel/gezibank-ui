@@ -11,7 +11,7 @@ export default async function Home() {
   const blocks = page?.layout || []
   return (
     <div className='flex flex-col gap-4 md:gap-10'>
-      <div className='relative md:py-10'>
+      <div className='relative'>
         <Image
           src='/engine-bg.png'
           fill
@@ -26,7 +26,7 @@ export default async function Home() {
           CRASSULA TURİZM SEYAHAT ACENTASI Belge No: 15092
         </div>
         <div>
-          <Container className='px-0 md:px-4 md:pt-[188px]'>
+          <Container className='px-0 md:px-4 md:pt-[288px]'>
             {/* <Title
               className='hidden text-center font-medium text-white md:mb-10 md:block'
               style={{ fontSize: '32px' }}
