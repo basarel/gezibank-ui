@@ -110,14 +110,14 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
             align: 'start',
             dragFree: true,
           }}
-          plugins={[autoplay.current]}
+          // plugins={[autoplay.current]}
         >
           {items.map((item, index) => {
             return (
               <CarouselSlide key={item.id} className='flex overflow-visible'>
                 <div
                   className={`relative flex h-full items-start justify-start overflow-visible transition-all duration-400 ease-in-out ${
-                    isLargeScreen && hoveredIndex === index ? 'mr-[330px]' : ''
+                    isLargeScreen && hoveredIndex === index ? 'mr-[350px]' : ''
                   }`}
                   onMouseEnter={() => isLargeScreen && setHoveredIndex(index)}
                 >
@@ -149,7 +149,7 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
                     </div>
                   </Box>
                   <div
-                    className={`absolute top-0 left-30 z-0 mt-3 h-[186px] w-[370px] overflow-visible transition-opacity duration-300 ease-in-out ${
+                    className={`absolute top-0 left-27 z-0 mt-7  w-[400px] overflow-visible transition-opacity duration-300 ease-in-out ${
                       isLargeScreen && hoveredIndex === index
                         ? 'pointer-events-auto opacity-100'
                         : 'pointer-events-none opacity-0'
@@ -165,7 +165,7 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
                     onMouseEnter={() => isLargeScreen && setHoveredIndex(index)}
                   >
                     <div
-                      className='ml-2 block h-[156px] items-center justify-center rounded-r-xl bg-orange-50 px-4 py-3 text-center shadow-lg'
+                      className='pl-10 block h-[136px] items-center justify-center rounded-r-xl bg-orange-50 px-4 py-3 text-center shadow-lg'
                       onMouseEnter={() =>
                         isLargeScreen && setHoveredIndex(index)
                       }
