@@ -63,7 +63,7 @@ export const HeaderMenu: React.FC<HeaderMenuProps> = ({ menuItems = [] }) => {
         return (
           <Menu
             key={index}
-            width={900}
+            width={1200}
             position='bottom-start'
             classNames={{
               dropdown: classes.dropdown,
@@ -166,6 +166,74 @@ export const HeaderMenu: React.FC<HeaderMenuProps> = ({ menuItems = [] }) => {
                   </div>
                 )}
               </div>
+              
+              {/* Bottom Contents - 4 kart yatay dizilim */}
+              {item.bottomContents && item.bottomContents.length > 0 && (
+                <div className='mt-8 grid grid-cols-4 gap-6 border-t border-gray-200 pt-6'>
+                  {item.bottomContents.map((bottomContent, index) => {
+                    const imageUrl =
+                      bottomContent.image && typeof bottomContent.image === 'object'
+                        ? bottomContent.image.url
+                        : typeof bottomContent.image === 'string'
+                          ? bottomContent.image
+                          : null
+
+                    const CardContent = (
+                      <div className='flex flex-col'>
+                        {imageUrl && (
+                          <div className='mb-4 h-[150px] w-full overflow-hidden rounded-lg shadow-md'>
+                            <Image
+                              src={imageUrl}
+                              alt={bottomContent.title || 'Bottom content image'}
+                              className='h-full w-full object-cover transition-transform duration-300 hover:scale-105'
+                            />
+                          </div>
+                        )}
+                        {bottomContent.title && (
+                          <h3 className='mb-3 text-lg font-bold text-gray-900'>
+                            {bottomContent.title}
+                          </h3>
+                        )}
+                        {bottomContent.links && bottomContent.links.length > 0 && (
+                          <div className='flex flex-col gap-2'>
+                            {bottomContent.links.map((link, linkIndex) => {
+                              const linkContent = link.url ? (
+                                <Link
+                                  href={link.url as Route}
+                                  className='text-sm text-gray-600 transition-colors hover:text-blue-600 hover:underline'
+                                  onClick={(e) => e.stopPropagation()}
+                                >
+                                  {link.label}
+                                </Link>
+                              ) : (
+                                <span className='text-sm text-gray-600'>
+                                  {link.label}
+                                </span>
+                              )
+                              return <div key={linkIndex}>{linkContent}</div>
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    )
+
+                    return (
+                      <div key={index} className='transition-transform duration-200 hover:scale-[1.02]'>
+                        {bottomContent.link ? (
+                          <Link
+                            href={bottomContent.link as Route}
+                            className='block'
+                          >
+                            {CardContent}
+                          </Link>
+                        ) : (
+                          CardContent
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
             </Menu.Dropdown>
           </Menu>
         )

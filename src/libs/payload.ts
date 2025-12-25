@@ -8,9 +8,16 @@ export type HeaderMenuLink = {
 }
 
 export type HeaderMenuColumn = {
-  image?: string | { id: string; url?: string } | null
+  image?: string | { id: number; url?: string } | null
   columnTitle?: string | null
   links: HeaderMenuLink[]
+}
+
+export type HeaderMenuBottomContent = {
+  image: string | { id: number; url?: string } | null
+  title?: string | null
+  link?: string | null
+  links?: HeaderMenuLink[] | null
 }
 
 export type HeaderMenuItem = {
@@ -18,6 +25,7 @@ export type HeaderMenuItem = {
   slug?: string | null
   content?: string | null
   columns: HeaderMenuColumn[]
+  bottomContents?: HeaderMenuBottomContent[] | null
 }
 
 export type GlobalHeader = {

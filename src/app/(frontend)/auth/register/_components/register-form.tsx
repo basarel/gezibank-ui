@@ -103,10 +103,7 @@ export const RegisterForm = () => {
   })
 
   return (
-    <Container className='mt-5 grid gap-5 rounded-lg p-0 md:grid-cols-4'>
-      <div className='col-span-2 hidden rounded-lg shadow-lg md:grid'>
-        <Image src='/login-bg.png' alt='GeziBank' className='rounded-lg' />
-      </div>
+    <Container className='mt-5 grid gap-5 rounded-lg p-0'>
       <form
         className='col-span-1 mx-2 rounded-lg border border-gray-200 p-5 shadow-xl md:col-span-2'
         onSubmit={form.handleSubmit((data) => {

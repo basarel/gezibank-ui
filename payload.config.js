@@ -1118,6 +1118,10 @@ const Globals = {
             type: 'array',
             label: 'Columns',
             minRows: 1,
+            maxRows: 4,
+            admin: {
+              description: 'İlk kolon sol tarafta, diğer 3 kolon sağ tarafta gösterilir (toplam 4 kolon: 1 sol + 3 sağ)',
+            },
             fields: [
               {
                 name: 'image',
@@ -1143,6 +1147,72 @@ const Globals = {
                 type: 'array',
                 label: 'Links',
                 minRows: 1,
+                fields: [
+                  {
+                    name: 'label',
+                    type: 'text',
+                    label: 'Link Text',
+                    required: true,
+                  },
+                  {
+                    name: 'url',
+                    type: 'text',
+                    label: 'URL',
+                    required: false,
+                    admin: {
+                      description: 'e.g.: /tours/domestic',
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            name: 'bottomContents',
+            type: 'array',
+            label: 'Bottom Contents',
+            required: false,
+            maxRows: 4,
+            admin: {
+              description: 'Alt kısımda gösterilecek içerikler (maksimum 4 adet)',
+            },
+            fields: [
+              {
+                name: 'image',
+                type: 'upload',
+                relationTo: 'media',
+                label: 'Image',
+                required: true,
+                admin: {
+                  description: 'Kart için resim',
+                },
+              },
+              {
+                name: 'title',
+                type: 'text',
+                label: 'Title',
+                required: true,
+                admin: {
+                  description: 'Kart başlığı (e.g.: İstanbul Hareketli Turlar)',
+                },
+              },
+              {
+                name: 'link',
+                type: 'text',
+                label: 'Link URL',
+                required: false,
+                admin: {
+                  description: 'Karta tıklandığında gidilecek URL (opsiyonel)',
+                },
+              },
+              {
+                name: 'links',
+                type: 'array',
+                label: 'Links',
+                required: false,
+                admin: {
+                  description: 'Kart altında gösterilecek linkler (opsiyonel)',
+                },
                 fields: [
                   {
                     name: 'label',
