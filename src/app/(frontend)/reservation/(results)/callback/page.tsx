@@ -5,26 +5,14 @@ import { ModuleNames } from '@/types/global'
 import { formatCurrency } from '@/libs/util'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
-import { HotelSummary } from './products/hotel'
 import {
-  BusSummaryResponse,
-  CarSummaryResponse,
-  FlightSummaryResponse,
-  HotelSummaryResponse,
   OperationResultType,
-  TransferSummaryResponse,
   TourSummaryResponse,
-  CyprusPackageSummaryResponse,
 } from '../../types'
-import { BusSummary } from './products/bus'
-import { TransferSummary } from './products/transfer'
-import { FlightSummary } from './products/flight'
 import { notFound } from 'next/navigation'
 import { resend } from '@/libs/resend'
 import EmailBookResult from '@/emails/book-results'
-import { CarSummary } from './products/car'
 import { TourSummary } from './products/tour'
-import { CyprusPackageSummary } from './products/cyprusPackage'
 import { BillingCard } from '@/components/order-components/billing-card'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -125,33 +113,6 @@ const CallbackPage: React.FC<IProps> = async ({ searchParams }) => {
             <div>
               {(() => {
                 switch (productData.moduleName) {
-                  case 'Flight':
-                    return (
-                      <FlightSummary
-                        data={productData as FlightSummaryResponse}
-                      />
-                    )
-                  case 'Hotel':
-                    return (
-                      <HotelSummary
-                        data={productData as HotelSummaryResponse}
-                        passengerCount={passengerData?.passengers?.length}
-                      />
-                    )
-                  case 'Bus':
-                    return (
-                      <BusSummary data={productData as BusSummaryResponse} />
-                    )
-                  case 'Transfer':
-                    return (
-                      <TransferSummary
-                        data={productData as TransferSummaryResponse}
-                      />
-                    )
-                  case 'CarRental':
-                    return (
-                      <CarSummary data={productData as CarSummaryResponse} />
-                    )
                   case 'Tour':
                     return (
                       <TourSummary
@@ -159,14 +120,8 @@ const CallbackPage: React.FC<IProps> = async ({ searchParams }) => {
                         passengerCount={passengerData?.passengers?.length}
                       />
                     )
-                  case 'CyprusPackage':
-                    return (
-                      <CyprusPackageSummary
-                        data={productData as CyprusPackageSummaryResponse}
-                      />
-                    )
                   default:
-                    break
+                    return notFound()
                 }
               })()}
             </div>
@@ -178,9 +133,6 @@ const CallbackPage: React.FC<IProps> = async ({ searchParams }) => {
                     <div>Adı Soyadı</div>
                     <div>Doğum Tarihi</div>
                     <div>TC No</div>
-                    {productData.moduleName === 'Flight' && (
-                      <div>E-Bilet No</div>
-                    )}
                     <div>Rezervasyon No</div>
                   </div>
                   {passengerData.passengers.map(
@@ -204,12 +156,7 @@ const CallbackPage: React.FC<IProps> = async ({ searchParams }) => {
                           {dayjs(birthday).format('DD.MM.YYYY')}
                         </div>
                         <div className='text-sm'>{identityNumber}</div>
-                        {productData.moduleName === 'Flight' && (
-                          <div className='text-sm'>{eTicketNumber}</div>
-                        )}
-                        <div
-                          className={`text-sm ${productData.moduleName === 'Flight' ? 'col-span-1' : ''}`}
-                        >
+                        <div className='text-sm'>
                           {bookingCode}
                         </div>
                       </div>
@@ -239,19 +186,17 @@ const CallbackPage: React.FC<IProps> = async ({ searchParams }) => {
                     )}
                   </div>
                 </div>
-                {passengerData.paymentInformation.basketDiscountTotal > 0 &&
-                  !(productData as HotelSummaryResponse).roomGroup
-                    ?.earlyBooking && (
-                    <div className='flex items-center gap-2'>
-                      <div className='w-36 font-medium'>İndirim Tutarı</div>
-                      <div>:</div>
-                      <div className='font-bold text-green-600'>
-                        {formatCurrency(
-                          passengerData.paymentInformation.basketDiscountTotal
-                        )}
-                      </div>
+                {passengerData.paymentInformation.basketDiscountTotal > 0 && (
+                  <div className='flex items-center gap-2'>
+                    <div className='w-36 font-medium'>İndirim Tutarı</div>
+                    <div>:</div>
+                    <div className='font-bold text-green-600'>
+                      {formatCurrency(
+                        passengerData.paymentInformation.basketDiscountTotal
+                      )}
                     </div>
-                  )}
+                  </div>
+                )}
                 {passengerData.paymentInformation.mlTotal != null &&
                   passengerData.paymentInformation.mlTotal > 0 && (
                     <div className='flex items-center gap-2'>
@@ -263,43 +208,6 @@ const CallbackPage: React.FC<IProps> = async ({ searchParams }) => {
                         )}
                       </div>
                     </div>
-                  )}
-
-                {productData.moduleName === 'Hotel' &&
-                  (productData as HotelSummaryResponse).roomGroup
-                    ?.earlyBooking && (
-                    <>
-                      <div className='flex items-center gap-2'>
-                        <div className='w-36 font-medium'>Ön Ödeme</div>
-                        <div>:</div>
-                        <div className='font-bold'>
-                          {formatCurrency(
-                            passengerData.paymentInformation.collectingTotal
-                          )}
-                        </div>
-                      </div>
-                      <div className='flex items-center gap-2'>
-                        <div className='w-36 font-medium'>Kalan Tutar</div>
-                        <div>:</div>
-                        <div className='font-bold'>
-                          {formatCurrency(
-                            passengerData.paymentInformation.basketDiscountTotal
-                          )}
-                        </div>
-                      </div>
-                      <div className='flex items-center gap-2'>
-                        <div className='w-36 font-medium'>Son Ödeme Tarihi</div>
-                        <div>:</div>
-                        <div className='font-bold'>
-                          {dayjs(
-                            (productData as HotelSummaryResponse).roomGroup
-                              .checkInDate as string
-                          )
-                            .subtract(4, 'days')
-                            .format('DD MMMM YYYY')}
-                        </div>
-                      </div>
-                    </>
                   )}
                 <div className='flex items-center gap-2'>
                   <div className='w-36 font-medium'>Kart Numarası</div>

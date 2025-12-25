@@ -47,7 +47,6 @@ import { CmsContent, Params, Widgets } from '@/types/cms-types'
 import { useQuery } from '@tanstack/react-query'
 import Breadcrumb from '@/app/breadcrumb'
 import { SearchResultsLoadingSkeleton } from '@/components/search-results-loading-skeleton'
-import { LoaderBanner } from '@/app/(frontend)/hotel/search-results/components/loader-banner'
 import { NotFoundForm } from '@/app/(frontend)/hotel/(detail)/[slug]/_components/no-rooms-form'
 
 const skeltonLoader = new Array(3).fill(true)

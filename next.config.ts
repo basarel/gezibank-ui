@@ -83,8 +83,8 @@ const nextConfig: NextConfig = {
         destination: '/campaigns',
       },
       {
-        source: '/kampanyalar/:slug/:target',
-        destination: '/campaigns/detail',
+        source: '/kampanyalar/:slug',
+        destination: '/campaigns/:slug',
       },
       {
         source: '/ucak-bileti',
@@ -111,10 +111,6 @@ const nextConfig: NextConfig = {
         destination: '/landings/transfer',
       },
       {
-        source: '/tur',
-        destination: '/landings/tour',
-      },
-      {
         source: '/resmi-tatil-gunleri',
         destination: '/landings/holidays',
       },
@@ -137,17 +133,6 @@ const nextConfig: NextConfig = {
       {
         source: '/sifre-yenileme',
         destination: '/auth/password-renew',
-      },
-      {
-        source: '/:slug',
-        destination: '/contents/:slug',
-        has: [
-          {
-            type: 'header',
-            key: 'x-pathname',
-            value: '(?!.*admin).*',
-          },
-        ],
       },
     ]
   },

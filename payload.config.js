@@ -65,6 +65,46 @@ const Pages = {
       label: 'Head Title',
     },
     {
+      name: 'showSearchEngine',
+      type: 'checkbox',
+      label: 'Arama Motoru Gösterilsin mi?',
+      defaultValue: false,
+      admin: {
+        description: 'Sayfanın en üstünde arama motoru gösterilsin mi?',
+      },
+    },
+    {
+      name: 'searchEngineType',
+      type: 'select',
+      label: 'Arama Motoru Tipi',
+      required: false,
+      admin: {
+        condition: (data) => data.showSearchEngine === true,
+        description: 'Hangi arama motoru gösterilecek?',
+      },
+      options: [
+        {
+          label: 'Otel',
+          value: 'otel',
+        },
+        {
+          label: 'Tur',
+          value: 'tur',
+        },
+      ],
+    },
+    {
+      name: 'searchEngineBackgroundImage',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Arama Motoru Arka Plan Resmi',
+      required: false,
+      admin: {
+        condition: (data) => data.showSearchEngine === true,
+        description: 'Arama motorunun arka planında gösterilecek resim',
+      },
+    },
+    {
       name: 'layout',
       type: 'blocks',
       label: 'Layout',

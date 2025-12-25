@@ -5,14 +5,7 @@ import { useMemo } from 'react'
 import { useCheckoutMethods } from '@/app/(frontend)/reservation/checkout-query'
 import { ProductPassengerApiResponseModel } from '@/types/passengerViewModel'
 
-import { FlightSummary } from '@/app/(frontend)/reservation/components/flight/summary'
-import { HotelSummarySection } from '@/app/(frontend)/reservation/components/hotel/summary'
-import { CarReservationSummary } from '@/app/(frontend)/reservation/components/car/summary'
-import { BusSummarySection } from '@/app/(frontend)/reservation/components/bus/summary'
-import { TransferSummary } from '@/app/(frontend)/reservation/components/transfer/summary'
 import { TourSummary } from '@/app/(frontend)/reservation/components/tour/summary'
-import { CyprusPackageSummarySection } from '@/app/(frontend)/reservation/components/cyprusPackage/cyprusPackage'
-// import { useCheckoutContext } from '../store'
 
 const ReservationSummarySection = () => {
   const { checkoutData } = useCheckoutMethods()
@@ -35,20 +28,8 @@ const ReservationSummarySection = () => {
     <div className='relative'>
       {(() => {
         switch (moduleName?.toLowerCase()) {
-          case 'flight':
-            return <FlightSummary data={viewBag} />
-          case 'hotel':
-            return <HotelSummarySection data={viewBag} />
-          case 'carrental':
-            return <CarReservationSummary data={viewBag} />
-          case 'bus':
-            return <BusSummarySection data={viewBag} />
-          case 'transfer':
-            return <TransferSummary data={viewBag} />
           case 'tour':
             return <TourSummary data={viewBag} />
-          case 'cypruspackage':
-            return <CyprusPackageSummarySection data={viewBag} />
           default:
             return null // TODO: implement an error view
         }
