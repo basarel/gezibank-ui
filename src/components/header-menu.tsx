@@ -27,6 +27,23 @@ export const HeaderMenu: React.FC<HeaderMenuProps> = ({ menuItems = [] }) => {
   return (
     <div className='flex items-center px-3'>
       {menuItems.map((item, index) => {
+        // Eğer slug varsa, link olarak davran
+        if (item.slug) {
+          const href = item.slug.startsWith('/') 
+            ? item.slug 
+            : `/${item.slug}`
+          return (
+            <UnstyledButton
+              key={index}
+              component={Link}
+              href={href as Route}
+              className={`flex items-center gap-1 text-sm font-medium ${classes.target}`}
+            >
+              <span className='text-sm font-medium'>{item.title}</span>
+            </UnstyledButton>
+          )
+        }
+
         const hasContent =
           item.columns &&
           item.columns.length > 0 &&

@@ -1,4 +1,4 @@
-import { getContentsByCategorySlug } from '@/libs/cms-data'
+import { getCampaigns, type Campaign } from '@/libs/payload'
 import {
   AspectRatio,
   Card,
@@ -15,45 +15,53 @@ type PageProps = {
   categoryId: string
 }
 
-const CategoryContents: React.FC<PageProps> = async ({ categoryId }) => {
-  const categories = (await getContentsByCategorySlug())?.data
-    ?.sort((a, b) => a.ordering - b.ordering)
-    .filter((item) => item.active)
-    .filter((item) => (categoryId ? '' + item.categoryId === categoryId : true))
+const CategoryContents: React.FC<PageProps> = async ({
+  categoryId,
+}): Promise<React.JSX.Element> => {
+  const campaigns: Campaign[] = await getCampaigns(categoryId || undefined)
 
   return (
     <div className='@container grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-7'>
-      {categories?.map((category) => (
-        <div key={category.id}>
-          <Card
-            radius={'md'}
-            component={Link}
-            href={`${category.redirect}/${category.slug}` as Route}
-            h={'100%'}
-          >
-            <CardSection>
-              <AspectRatio ratio={16 / 9}>
-                <Image
-                  component={NextImage}
-                  src={`${process.env.NEXT_PUBLIC_CMS_CDN}/${category.params.image.value}`}
-                  alt={category.title}
-                  width={550}
-                  height={550}
-                  priority
-                  radius={'md'}
-                  placeholder='empty'
-                />
-              </AspectRatio>
-            </CardSection>
-            <Title
-              pt={rem(10)}
-              className='@xs:text-md px-0 text-start text-lg @sm:text-lg'
+      {campaigns?.map((campaign: Campaign) => {
+        const imageUrl =
+          typeof campaign.image === 'object' && campaign.image?.url
+            ? campaign.image.url
+            : typeof campaign.image === 'string'
+              ? campaign.image
+              : ''
+
+        return (
+          <div key={campaign.id}>
+            <Card
+              radius={'md'}
+              component={Link}
+              href={`/kampanyalar/${campaign.slug}` as Route}
+              h={'100%'}
             >
-              {category.title}
-            </Title>
-          </Card>
-        </div>
-      ))}
+              <CardSection>
+                <AspectRatio ratio={16 / 9}>
+                  <Image
+                    component={NextImage}
+                    src={imageUrl}
+                    alt={campaign.title || ''}
+                    width={550}
+                    height={550}
+                    priority
+                    radius={'md'}
+                    placeholder='empty'
+                  />
+                </AspectRatio>
+              </CardSection>
+              <Title
+                pt={rem(10)}
+                className='@xs:text-md px-0 text-start text-lg @sm:text-lg'
+              >
+                {campaign.title}
+              </Title>
+            </Card>
+          </div>
+        )
+      })}
     </div>
   )
 }

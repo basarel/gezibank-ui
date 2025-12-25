@@ -15,6 +15,7 @@ export type HeaderMenuColumn = {
 
 export type HeaderMenuItem = {
   title: string
+  slug?: string | null
   content?: string | null
   columns: HeaderMenuColumn[]
 }
@@ -102,6 +103,100 @@ export async function getGlobalHeader(): Promise<GlobalHeader | null> {
     return {
       menuItems: result.menuItems || [],
     }
+  } catch (error) {
+    return null
+  }
+}
+
+export type CampaignCategory = {
+  id: string
+  title: string
+  slug: string
+  ordering: number
+  active: boolean
+}
+
+export type Campaign = {
+  id: string
+  title: string
+  slug: string
+  image: string | { id: string; url?: string } | null
+  description: any
+  category: string | CampaignCategory | null
+  detailImage?: string | { id: string; url?: string } | null
+  discountCode?: string | null
+  buttonText?: string | null
+  buttonLink?: string | null
+  ordering: number
+  active: boolean
+}
+
+export async function getCampaignCategories(): Promise<CampaignCategory[]> {
+  try {
+    const payload = await getPayloadInstance()
+    const result = await payload.find({
+      collection: 'campaign-categories',
+      where: {
+        active: {
+          equals: true,
+        },
+      },
+      sort: 'ordering',
+      depth: 1,
+    })
+
+    return (result.docs as CampaignCategory[]) || []
+  } catch (error) {
+    return []
+  }
+}
+
+export async function getCampaigns(categoryId?: string): Promise<Campaign[]> {
+  try {
+    const payload = await getPayloadInstance()
+    const where: any = {
+      active: {
+        equals: true,
+      },
+    }
+
+    if (categoryId) {
+      where.category = {
+        equals: categoryId,
+      }
+    }
+
+    const result = await payload.find({
+      collection: 'campaigns',
+      where,
+      sort: 'ordering',
+      depth: 2,
+    })
+
+    return (result.docs as Campaign[]) || []
+  } catch (error) {
+    return []
+  }
+}
+
+export async function getCampaignBySlug(slug: string): Promise<Campaign | null> {
+  try {
+    const payload = await getPayloadInstance()
+    const result = await payload.find({
+      collection: 'campaigns',
+      where: {
+        slug: {
+          equals: slug,
+        },
+        active: {
+          equals: true,
+        },
+      },
+      limit: 1,
+      depth: 2,
+    })
+
+    return (result.docs[0] as Campaign) || null
   } catch (error) {
     return null
   }

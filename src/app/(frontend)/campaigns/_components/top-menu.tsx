@@ -1,4 +1,4 @@
-import { getCategoriesByParent } from '@/libs/cms-data'
+import { getCampaignCategories, type CampaignCategory } from '@/libs/payload'
 import { Button, ScrollArea } from '@mantine/core'
 import { Link } from 'next-view-transitions'
 import { SearchParams } from 'nuqs'
@@ -9,9 +9,11 @@ type CampaignTopMenusProps = {
   searchParams: Promise<SearchParams>
 }
 
-const CampaignTopMenus = async ({ searchParams }: CampaignTopMenusProps) => {
+const CampaignTopMenus = async ({
+  searchParams,
+}: CampaignTopMenusProps): Promise<React.JSX.Element> => {
   const { categoryId } = await searchParams
-  const campaignData = (await getCategoriesByParent())?.data
+  const campaignData: CampaignCategory[] = await getCampaignCategories()
 
   return (
     <ScrollArea
@@ -33,7 +35,7 @@ const CampaignTopMenus = async ({ searchParams }: CampaignTopMenusProps) => {
             Tümü
           </Button>
         </div>
-        {campaignData?.map((item) => {
+        {campaignData?.map((item: CampaignCategory) => {
           const isActive = categoryId === String(item.id)
           return (
             <div key={item.id}>
