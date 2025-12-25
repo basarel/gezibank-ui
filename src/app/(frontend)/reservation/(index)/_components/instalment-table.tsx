@@ -2,7 +2,6 @@ import { formatCurrency } from '@/libs/util'
 import { ProductPassengerApiResponseModel } from '@/types/passengerViewModel'
 import { Group, Image, Radio, Table, Accordion } from '@mantine/core'
 import { Fragment } from 'react'
-import { FaInfoCircle } from 'react-icons/fa'
 import { MdInfo } from 'react-icons/md'
 
 type IProps = {

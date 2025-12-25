@@ -109,7 +109,7 @@ export async function getGlobalHeader(): Promise<GlobalHeader | null> {
 }
 
 export type CampaignCategory = {
-  id: string
+  id: number
   title: string
   slug: string
   ordering: number
@@ -117,13 +117,13 @@ export type CampaignCategory = {
 }
 
 export type Campaign = {
-  id: string
+  id: number
   title: string
   slug: string
-  image: string | { id: string; url?: string } | null
+  image: string | { id: number; url?: string } | null
   description: any
-  category: string | CampaignCategory | null
-  detailImage?: string | { id: string; url?: string } | null
+  category: number | CampaignCategory | null
+  detailImage?: string | { id: number; url?: string } | null
   discountCode?: string | null
   buttonText?: string | null
   buttonLink?: string | null
@@ -162,7 +162,7 @@ export async function getCampaigns(categoryId?: string): Promise<Campaign[]> {
 
     if (categoryId) {
       where.category = {
-        equals: categoryId,
+        equals: Number(categoryId),
       }
     }
 

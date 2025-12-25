@@ -18,7 +18,7 @@ type PageProps = {
 const CategoryContents: React.FC<PageProps> = async ({
   categoryId,
 }): Promise<React.JSX.Element> => {
-  const campaigns: Campaign[] = await getCampaigns(categoryId || undefined)
+  const campaigns: Campaign[] = await getCampaigns(categoryId ? String(categoryId) : undefined)
 
   return (
     <div className='@container grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-7'>

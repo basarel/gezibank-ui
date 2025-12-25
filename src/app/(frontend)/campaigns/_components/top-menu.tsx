@@ -36,7 +36,7 @@ const CampaignTopMenus = async ({
           </Button>
         </div>
         {campaignData?.map((item: CampaignCategory) => {
-          const isActive = categoryId === String(item.id)
+          const isActive = categoryId === String(item.id) || categoryId === item.id?.toString()
           return (
             <div key={item.id}>
               <Button

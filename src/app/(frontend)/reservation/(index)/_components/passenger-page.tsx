@@ -81,8 +81,6 @@ import { useSession } from 'next-auth/react'
 import { TourSummaryResponse } from '../../types'
 import { useUserInfoQuery, useExternalLoginQuery } from '@/hooks/useUser'
 import { TourExtraServices } from '../tour/extras'
-import { EarlyReservationInsurance } from '../hotel/insurance-options'
-import { FlightOptionalServices } from '../flight-optional-services'
 import { TravelInsurancePackages } from '../travel-insurance'
 import { useDisclosure } from '@mantine/hooks'
 import { SocialLogin } from '@/app/(frontend)/auth/login/_components/social-login'
@@ -1016,6 +1014,7 @@ export function CheckoutPassengerPage({ access_token, providerName }: IProps) {
           {/*  */}
           {/* Tour extra and optional services */}
 
+          {/* Hotel ile alakalı, tur ile alakalı değil - kaldırıldı
           {moduleName.toLowerCase() === 'hotel' &&
             checkQueryData?.data?.viewBag.HotelCancelWarrantyPriceStatusModel &&
             checkQueryData?.data?.viewBag.HotelCancelWarrantyPriceStatusModel
@@ -1027,35 +1026,7 @@ export function CheckoutPassengerPage({ access_token, providerName }: IProps) {
                 }
               />
             )}
-          {moduleName === 'Flight' &&
-            passengerData &&
-            checkQueryData?.data?.viewBag?.AdditionalData &&
-            checkQueryData?.data?.viewBag?.AdditionalData.additionalData &&
-            checkQueryData?.data?.viewBag?.AdditionalData?.additionalData?.subGroups?.filter(
-              (item) =>
-                item.subGroups.find((item2) =>
-                  item2.items.find(
-                    (item3) =>
-                      item3.code === 'XBAG' || item3.code === 'FrequentFlyer'
-                  )
-                )
-            ).length > 0 && (
-              <FlightOptionalServices
-                flightInfos={
-                  checkQueryData.data?.viewBag.SummaryViewDataResponser
-                    .summaryResponse as FlightReservationSummary
-                }
-                data={
-                  checkQueryData.data?.viewBag.AdditionalData.additionalData
-                    .subGroups as FlightAdditionalDataSubGroup[]
-                }
-                passengers={passengerData}
-                isLoading={
-                  checkoutDataQuery.isLoading || checkoutDataQuery.isRefetching
-                }
-              />
-            )}
-
+          */}
           {insuranceInfoQuery.data?.data &&
             moduleName !== 'TRANSFER' &&
             moduleName !== 'TOUR' && (

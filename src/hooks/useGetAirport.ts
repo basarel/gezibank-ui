@@ -1,4 +1,6 @@
-import { AirportCodeServiceResponse } from '@/app/(frontend)/flight/type'
+// Flight modülü bulunamadı - tur ile alakalı değil
+type AirportCodeServiceResponse = any // Geçici type tanımı
+// import { AirportCodeServiceResponse } from '@/app/(frontend)/flight/type'
 import { request } from '@/network'
 import { useQuery } from '@tanstack/react-query'
 
