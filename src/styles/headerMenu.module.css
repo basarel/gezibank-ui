@@ -20,41 +20,40 @@
 }
 
 .megaMenu {
-  padding: 24px !important;
+  padding: 20px !important;
 }
 
 .columnsContainer {
   display: grid;
   grid-template-columns: 250px repeat(2, 1fr);
-  gap: 12px;
+  gap: 10px;
 }
 
 .column {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .columnTitle {
   font-weight: 700;
   font-size: 16px;
-  color: #1f2937;
-  margin-bottom: 8px;
-  padding-bottom: 8px;
+  margin-bottom: 6px;
+  padding-bottom: 6px;
   border-bottom: 1px solid #e5e7eb;
 }
 
 .columnItems {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 1px;
 }
 
 .menuLink {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 12px;
+  padding: 6px 10px;
   border-radius: 6px;
   font-size: 14px;
   font-weight: normal;
@@ -86,9 +85,8 @@
   color: #2563eb;
 }
 
-/* İlk kolon için özel stil (ok işaretli) */
-.column:first-child .menuLink {
-  padding: 10px 12px;
+ .column:first-child .menuLink {
+  padding: 8px 10px;
 }
 
 .column:first-child .menuLink:hover {
@@ -100,26 +98,40 @@
   flex-direction: column;
   gap: 0;
   min-width: 200px;
-   padding-right: 24px;
-  margin-right: 24px;
+   padding-right: 20px;
+  margin-right: 20px;
 }
 
 .leftSideLink {
   display: flex;
   align-items: center;
-  padding: 8px 0;
-  font-size: 18px;
+  padding: 5px 10px;
+  font-size: 16px;
+  margin-right: 55px;
   font-weight: bold;
   color: #000000;
   transition: all 0.15s ease;
   cursor: pointer;
   text-decoration: none;
-  border-bottom: 1px solid #f3f4f6;
+  width: 100%;
+  border-radius: 8px;
 }
 
+.leftSideLinkTitle {
+  padding: 5px 10px;
+  border: 1px solid transparent;
+  background-color: #50555e;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #e5e7eb;
+}
 .leftSideLink:hover {
   color: #000000;
-}
+  background-color: #f3f4f6;
+ }
 
 .leftSideLink.active {
   color: #000000;
@@ -129,14 +141,14 @@
 .rightSideColumns {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 24px;
+  gap: 20px;
   flex: 1;
 }
 
 .rightSideColumn {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .columnImage {
@@ -144,5 +156,5 @@
   height: 150px;
   object-fit: cover;
   border-radius: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }

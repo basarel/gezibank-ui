@@ -1,6 +1,6 @@
 'use client'
 
-import { Menu, UnstyledButton, Image } from '@mantine/core'
+import { Menu, UnstyledButton, Image, Skeleton } from '@mantine/core'
 import { useMounted } from '@mantine/hooks'
 import { Link } from 'next-view-transitions'
 import { Route } from 'next'
@@ -15,20 +15,17 @@ export const HeaderMenu: React.FC<HeaderMenuProps> = ({ menuItems = [] }) => {
   const isMounted = useMounted()
   if (!isMounted || !menuItems || menuItems.length === 0) {
     return (
-      <div className='flex items-center px-3'>
-        {menuItems?.map((item, index) => (
-          <UnstyledButton key={index} className='text-sm font-medium'>
-            {item.title}
-          </UnstyledButton>
-        ))}
+      <div className='flex items-center gap-4 px-3'>
+        <Skeleton height={20} width={80} radius='md' />
+        <Skeleton height={20} width={100} radius='md' />
+        <Skeleton height={20} width={90} radius='md' />
       </div>
     )
   }
   return (
     <div className='flex items-center px-3'>
       {menuItems.map((item, index) => {
-        // Eğer slug varsa, link olarak davran
-        if (item.slug) {
+         if (item.slug) {
           const href = item.slug.startsWith('/') 
             ? item.slug 
             : `/${item.slug}`
@@ -93,13 +90,18 @@ export const HeaderMenu: React.FC<HeaderMenuProps> = ({ menuItems = [] }) => {
                   item.columns[0]?.links &&
                   item.columns[0].links.length > 0 && (
                     <div className={classes.leftSideLinks}>
+                      <div className={classes.leftSideLinkTitle}>
+                        {item.title}
+                      </div>
                       {item.columns[0].links.map((link, linkIndex) => {
                         const content = link.url ? (
+                          
                           <Link
                             href={link.url as Route}
                             className={`${classes.leftSideLink}`}
                           >
                             {link.label}
+                            
                           </Link>
                         ) : (
                           <div className={`${classes.leftSideLink}`}>
@@ -114,24 +116,20 @@ export const HeaderMenu: React.FC<HeaderMenuProps> = ({ menuItems = [] }) => {
                 {item.columns && item.columns.length > 1 && (
                   <div className={classes.rightSideColumns}>
                     {item.columns
-                      .slice(1) // İlk kolonu atla
+                      .slice(1) 
                       .filter((col) => col.links && col.links.length > 0)
                       .map((column, colIndex) => {
-                        const imageUrl =
-                          column.image && typeof column.image === 'object'
-                            ? column.image.url
-                            : null
-
+                        
                         return (
                           <div
                             key={colIndex}
                             className={classes.rightSideColumn}
                           >
-                            {imageUrl && (
+                            {column.image && (
                               <div className='h-[150px] w-full overflow-hidden rounded-lg'>
                                 <Image
-                                  src={imageUrl}
-                                  alt={column.columnTitle || 'Menu image'}
+                                  src={column.image?.url || ''}
+                                  alt={column.image?.alt || 'Menu image'}
                                   className='h-full w-full object-cover'
                                 />
                               </div>
@@ -167,23 +165,15 @@ export const HeaderMenu: React.FC<HeaderMenuProps> = ({ menuItems = [] }) => {
                 )}
               </div>
               
-              {/* Bottom Contents - 4 kart yatay dizilim */}
               {item.bottomContents && item.bottomContents.length > 0 && (
-                <div className='mt-8 grid grid-cols-4 gap-6 border-t border-gray-200 pt-6'>
+                <div className='mt-8 grid grid-cols-4 gap-6'>
                   {item.bottomContents.map((bottomContent, index) => {
-                    const imageUrl =
-                      bottomContent.image && typeof bottomContent.image === 'object'
-                        ? bottomContent.image.url
-                        : typeof bottomContent.image === 'string'
-                          ? bottomContent.image
-                          : null
-
                     const CardContent = (
                       <div className='flex flex-col'>
-                        {imageUrl && (
+                        {bottomContent.image && (
                           <div className='mb-4 h-[150px] w-full overflow-hidden rounded-lg shadow-md'>
                             <Image
-                              src={imageUrl}
+                              src={bottomContent.image?.url || ''}
                               alt={bottomContent.title || 'Bottom content image'}
                               className='h-full w-full object-cover transition-transform duration-300 hover:scale-105'
                             />

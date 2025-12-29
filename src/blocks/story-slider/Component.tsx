@@ -110,7 +110,7 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
             align: 'start',
             dragFree: true,
           }}
-          // plugins={[autoplay.current]}
+          plugins={[autoplay.current]}
         >
           {items.map((item, index) => {
             return (

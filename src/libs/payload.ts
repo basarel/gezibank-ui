@@ -8,13 +8,21 @@ export type HeaderMenuLink = {
 }
 
 export type HeaderMenuColumn = {
-  image?: string | { id: number; url?: string } | null
+  image?: {
+    id: string
+    url: string
+    alt?: string
+  }
   columnTitle?: string | null
   links: HeaderMenuLink[]
 }
 
 export type HeaderMenuBottomContent = {
-  image: string | { id: number; url?: string } | null
+  image?: {
+    id: string
+    url: string
+    alt?: string
+  }
   title?: string | null
   link?: string | null
   links?: HeaderMenuLink[] | null
@@ -35,8 +43,11 @@ export type GlobalHeader = {
 export type FooterLink = {
   label?: string | null
   url?: string | null
-  image?: string | { id: number; url?: string } | null
-}
+  image?: {
+    id: string
+    url: string
+    alt?: string
+  }}
 
 export type FooterNavigationColumn = {
   title?: string | null
@@ -45,11 +56,19 @@ export type FooterNavigationColumn = {
 
 export type FooterPaymentMethod = {
   name: string
-  logo?: string | { id: number; url?: string } | null
+  logo?: {
+    id: string
+    url: string
+    alt?: string
+  } | null
 }
 
 export type GlobalFooter = {
-  logo?: string | { id: number; url?: string } | null
+  logo?: {
+    id: string
+    url: string
+    alt?: string
+  } | null
   companyName?: string | null
   brandLicense?: string | null
   address?: string | null

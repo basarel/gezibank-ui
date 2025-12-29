@@ -371,7 +371,7 @@ const TourSearchResultClient = () => {
           />
         </div>
         <div className='grid items-start gap-4 md:grid-cols-12 md:gap-6'>
-          <div className='sm:col-span-4 lg:col-span-3 border rounded-lg p-3'>
+          <div className='sm:col-span-4 lg:col-span-3 md:border rounded-lg md:p-3'>
             <Transition
               transition={'slide-right'}
               mounted={filterSectionIsOpened || !!isBreakPointMatchesMd}

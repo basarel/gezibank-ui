@@ -88,7 +88,6 @@ const Footer = async () => {
               )}
             </div>
 
-          {/* Navigasyon Kolonları */}
           {footerData.navigationColumns &&
             footerData.navigationColumns.map((column, index) => {
               return (
@@ -129,7 +128,6 @@ const Footer = async () => {
                       {column.links
                         .filter((link) => link.label || (getImageUrl(link.image) && link.label))
                         .map((link, linkIndex) => {
-                          const linkImageUrl = getImageUrl(link.image)
                           return (
                             <li key={linkIndex} className='flex flex-col gap-2 items-center justify-center md:justify-start md:items-start'>
                               {link.label && (
@@ -148,10 +146,10 @@ const Footer = async () => {
                                   )}
                                 </div>
                               )}
-                              {linkImageUrl && link.label && (
+                              {link.image && link.label && (
                                 <div className='mt-1 flex items-center gap-2'>
                                   <NextImage
-                                    src={linkImageUrl}
+                                    src={link.image.url}
                                     alt={link.label || 'Image'}
                                     width={20}
                                     height={20}
@@ -226,13 +224,12 @@ const Footer = async () => {
               footerData.paymentMethods.length > 0 && (
                 <div className='flex items-center gap-4'>
                   {footerData.paymentMethods.map((payment, index) => {
-                    const paymentLogoUrl = getImageUrl(payment.logo)
                     return (
                       <div key={index}>
-                        {paymentLogoUrl ? (
+                        {payment.logo ? (
                           <NextImage
-                            src={paymentLogoUrl}
-                            alt={payment.name}
+                            src={payment.logo.url}
+                            alt={payment.name || ''}
                             width={50}
                             height={30}
                             className='object-contain'
