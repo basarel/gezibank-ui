@@ -14,11 +14,11 @@ type ThemeCardItem = {
     url: string
     alt?: string
   }
-  price: string
-  discountPrice?: string
   location?: string
   tag?: string
+   price?: string
   link?: string
+  active?: boolean
 }
 
 type ThemeCardsBlockProps = {
@@ -31,7 +31,9 @@ export const ThemeCardsBlock: React.FC<ThemeCardsBlockProps> = ({
   title,
   cards = [],
 }) => {
-  if (!cards || cards.length === 0) {
+  const activeCards = cards.filter((card) => card.active !== false)
+  
+  if (!activeCards || activeCards.length === 0) {
     return null
   }
 
@@ -62,7 +64,7 @@ export const ThemeCardsBlock: React.FC<ThemeCardsBlockProps> = ({
           </div>
         }
       >
-        {cards.map((item) => {
+        {activeCards.map((item) => {
           const linkUrl = item.link
 
           return (
@@ -103,21 +105,24 @@ export const ThemeCardsBlock: React.FC<ThemeCardsBlockProps> = ({
                     {item.location && (
                       <p className='text-xs text-gray-900'>{item.location}</p>
                     )}
-                    <div className='flex items-center justify-between pt-5'>
-                      <p className='text-xl font-bold'>
-                        {item.discountPrice || item.price}
-                        <span className='text-sm font-normal'> / Kişi</span>
-                      </p>
-                      <Button
-                        component='div'
-                        variant='light'
-                        color='blue'
-                        size='sm'
-                        radius='xl'
-                        className='transition-all ease-linear group-hover:bg-blue-800 group-hover:text-white'
-                      >
-                        İncele
-                      </Button>
+                    <div className='flex flex-col gap-2 pt-5'>
+                      <div className='flex items-center gap-2'> 
+                      {item.price && (
+                        <p className='text-lg font-bold text-gray-900'>{item.price}</p>
+                      )} <span className='text-sm font-medium'> / Kişi</span>
+                      </div>
+                      <div className='flex items-center justify-end pt-2'>
+                        <Button
+                          component='div'
+                          variant='light'
+                          color='blue'
+                          size='sm'
+                          radius='xl'
+                          className='transition-all ease-linear group-hover:bg-blue-800 group-hover:text-white'
+                        >
+                          İncele
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </Box>

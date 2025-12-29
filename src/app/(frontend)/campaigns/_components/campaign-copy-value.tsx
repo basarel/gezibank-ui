@@ -6,11 +6,11 @@ export function CampaignCopySection({ code }: { code: string }) {
     <>
       {code && (
         <div className='my-5 inline-grid grid-cols-12 items-center gap-2 rounded-md border border-blue-600 p-2'>
-          <div className='col-span-4'>
+          <div className='col-span-5'>
             <div className='text-sm'>İndirim Kodu :</div>
             <div className='text-2xl font-bold'>{code}</div>
           </div>
-          <div className='col-span-8 text-right'>
+          <div className='col-span-7 text-right'>
             <CopyButton value={code}>
               {({ copied, copy }) => (
                 <Button

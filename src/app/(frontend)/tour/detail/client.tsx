@@ -569,7 +569,7 @@ const TourDetailClient = () => {
               </Container>
 
               <Container className='px-0'>
-                <div className='sticky top-0 z-20 my-6 bg-orange-900 shadow-[-10px_20px_20px_0px_rgba(0,0,0,0.25)] md:rounded'>
+                <div className='sticky top-0 z-20 my-6 bg-orange-900  md:rounded'>
                   <TourTableOfContents />
                 </div>
 
@@ -653,7 +653,7 @@ const TourDetailClient = () => {
                         </Alert>
                       </Collapse>
                       <Button
-                        className='bg-orange-900 text-white'
+                        className='bg-blue-600 text-white'
                         type='button'
                         fullWidth
                         size={'lg'}
@@ -673,7 +673,7 @@ const TourDetailClient = () => {
                       </Button>
                     </div>
                   </div>
-                  <div className='order-3 rounded-lg border p-5 shadow-sm md:col-span-4 md:col-start-9 md:row-start-2'>
+                  <div className='order-3 rounded-lg border p-5 md:col-span-4 md:col-start-9 md:row-start-2'>
                     <TourGeneralInformation
                       data={detailQuery.data}
                       transportTypeText={transportTypeText}

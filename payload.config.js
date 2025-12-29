@@ -143,24 +143,6 @@ const Pages = {
                   required: false,
                 },
                 {
-                  name: 'price',
-                  type: 'text',
-                  label: 'Price',
-                  required: true,
-                  admin: {
-                    description: 'e.g.: ₺1.500,00',
-                  },
-                },
-                {
-                  name: 'discountPrice',
-                  type: 'text',
-                  label: 'Discount Price',
-                  required: false,
-                  admin: {
-                    description: 'e.g.: ₺1.200,00',
-                  },
-                },
-                {
                   name: 'location',
                   type: 'text',
                   label: 'Location',
@@ -172,7 +154,16 @@ const Pages = {
                   label: 'Tag',
                   required: false,
                   admin: {
-                    description: 'e.g.: New, Popular, Offer',
+                    description: 'e.g.: New, Popular, Offer, Ay, İndirim',
+                  },
+                },
+                {
+                  name: 'price',
+                  type: 'text',
+                  label: 'Fiyat',
+                  required: false,
+                  admin: {
+                    description: 'e.g.: ₺1.500,00',
                   },
                 },
                 {
@@ -184,7 +175,19 @@ const Pages = {
                     description: 'Product detail page URL',
                   },
                 },
+                {
+                  name: 'active',
+                  type: 'checkbox',
+                  label: 'Aktif',
+                  defaultValue: true,
+                },
               ],
+            },
+            {
+              name: 'isActive',
+              type: 'checkbox',
+              label: 'Block Aktif',
+              defaultValue: true,
             },
           ],
         },
@@ -270,7 +273,21 @@ const Pages = {
                     description: 'On hover panel button text',
                   },
                 },
+                {
+                  name: 'active',
+                  type: 'checkbox',
+                  label: 'Aktif',
+                  defaultValue: true,
+                  admin: {
+                  },
+                },
               ],
+            },
+            {
+              name: 'isActive',
+              type: 'checkbox',
+              label: 'Block Aktif',
+              defaultValue: true,
             },
           ],
         },
@@ -324,7 +341,21 @@ const Pages = {
                     description: 'Item detail page URL',
                   },
                 },
+                {
+                  name: 'active',
+                  type: 'checkbox',
+                  label: 'Aktif',
+                  defaultValue: true,
+                  admin: {
+                  },
+                },
               ],
+            },
+            {
+              name: 'isActive',
+              type: 'checkbox',
+              label: 'Block Aktif',
+              defaultValue: true,
             },
           ],
         },
@@ -369,7 +400,21 @@ const Pages = {
                     description: 'Region detail page URL',
                   },
                 },
+                {
+                  name: 'active',
+                  type: 'checkbox',
+                  label: 'Aktif',
+                  defaultValue: true,
+                  admin: {
+                  },
+                },
               ],
+            },
+            {
+              name: 'isActive',
+              type: 'checkbox',
+              label: 'Block Aktif',
+              defaultValue: true,
             },
           ],
         },
@@ -426,7 +471,21 @@ const Pages = {
                     description: 'Page URL to navigate when slide is clicked',
                   },
                 },
+                {
+                  name: 'active',
+                  type: 'checkbox',
+                  label: 'Aktif',
+                  defaultValue: true,
+                  admin: {
+                  },
+                },
               ],
+            },
+            {
+              name: 'isActive',
+              type: 'checkbox',
+              label: 'Block Aktif',
+              defaultValue: true,
             },
           ],
         },
@@ -467,7 +526,19 @@ const Pages = {
                     description: 'Item detail page URL',
                   },
                 },
+                {
+                  name: 'active',
+                  type: 'checkbox',
+                  label: 'Aktif',
+                  defaultValue: true,
+                },
               ],
+            },
+            {
+              name: 'isActive',
+              type: 'checkbox',
+              label: 'Block Aktif',
+              defaultValue: true, 
             },
           ],
         },
@@ -542,9 +613,31 @@ const Pages = {
                         description: 'e.g.: /tours/domestic',
                       },
                     },
+                    {
+                      name: 'active',
+                      type: 'checkbox',
+                      label: 'Aktif',
+                      defaultValue: true,
+                      admin: {
+                      },
+                    },
                   ],
                 },
+                {
+                  name: 'active',
+                  type: 'checkbox',
+                  label: 'Aktif',
+                  defaultValue: true,
+                  admin: {
+                  },
+                },
               ],
+            },
+            {
+              name: 'isActive',
+              type: 'checkbox',
+              label: 'Block Aktif',
+              defaultValue: true,
             },
           ],
         },
@@ -592,6 +685,12 @@ const Pages = {
                 description:
                   'YouTube or other video embed URL (e.g., https://www.youtube.com/embed/VIDEO_ID)',
               },
+            },
+            {
+              name: 'isActive',
+              type: 'checkbox',
+              label: 'Block Aktif',
+              defaultValue: true,
             },
           ],
         },
@@ -650,7 +749,20 @@ const Pages = {
                     description: 'e.g.: /campaigns/new-members',
                   },
                 },
+                {
+                  name: 'active',
+                  type: 'checkbox',
+                  label: 'Aktif',
+                  defaultValue: true,
+                  
+                },
               ],
+            },
+            {
+              name: 'isActive',
+              type: 'checkbox',
+              label: 'Block Aktif',
+              defaultValue: true,
             },
           ],
         },
@@ -717,7 +829,21 @@ const Pages = {
                     description: 'e.g.: /video-contents/yeni-uyeler',
                   },
                 },
+                {
+                  name: 'active',
+                  type: 'checkbox',
+                  label: 'Aktif',
+                  defaultValue: true,
+                  admin: {
+                  },
+                },
               ],
+            },
+            {
+              name: 'isActive',
+              type: 'checkbox',
+              label: 'Block Aktif',
+              defaultValue: true,
             },
           ],
         },
@@ -773,7 +899,21 @@ const Pages = {
                     description: 'Image click to go to the page URL',
                   },
                 },
+                {
+                  name: 'active',
+                  type: 'checkbox',
+                  label: 'Aktif',
+                  defaultValue: true,
+                  admin: {
+                  },
+                },
               ],
+            },
+            {
+              name: 'isActive',
+              type: 'checkbox',
+              label: 'Block Aktif',
+              defaultValue: true,
             },
           ],
         },
@@ -828,7 +968,21 @@ const Pages = {
                     description: 'Link URL for the item',
                   },
                 },
+                {
+                  name: 'active',
+                  type: 'checkbox',
+                  label: 'Aktif',
+                  defaultValue: true,
+                  admin: {
+                  },
+                },
               ],
+            },
+            {
+              name: 'isActive',
+              type: 'checkbox',
+              label: 'Block Aktif',
+              defaultValue: true,
             },
           ],
         },
@@ -853,6 +1007,12 @@ const Pages = {
               admin: {
                 description: 'Rich text content (supports bold, italic, etc.)',
               },
+            },
+            {
+              name: 'isActive',
+              type: 'checkbox',
+              label: 'Block Aktif',
+              defaultValue: true,
             },
           ],
         },
@@ -891,7 +1051,21 @@ const Pages = {
                     description: 'FAQ cevabı',
                   },
                 },
+                {
+                  name: 'active',
+                  type: 'checkbox',
+                  label: 'Aktif',
+                  defaultValue: true,
+                  admin: {
+                  },
+                },
               ],
+            },
+            {
+              name: 'isActive',
+              type: 'checkbox',
+              label: 'Block Aktif',
+              defaultValue: true,
             },
           ],
         },
@@ -1072,6 +1246,144 @@ const Campaigns = {
   ],
 }
 
+const Search = {
+  slug: 'search',
+  admin: {
+    useAsTitle: 'title',
+    defaultColumns: ['title', 'active', 'ordering'],
+  },
+  access: {
+    read: () => true,
+    create: () => true,
+    update: () => true,
+    delete: () => true,
+  },
+  fields: [
+    {
+      name: 'title',
+      type: 'text',
+      label: 'Başlık',
+      required: true,
+      admin: {
+        description: 'Arama sayfası başlığı',
+      },
+    },
+    {
+      name: 'campaigns',
+      type: 'array',
+      label: 'Kampanyalar',
+      minRows: 0,
+      fields: [
+        {
+          name: 'text',
+          type: 'text',
+          label: 'Kampanya Metni',
+          required: true,
+          admin: {
+            description: 'Kampanya butonunda gösterilecek metin',
+          },
+        },
+        {
+          name: 'link',
+          type: 'text',
+          label: 'Kampanya Linki',
+          required: true,
+          admin: {
+            description: 'Kampanya butonuna tıklandığında gidilecek URL',
+          },
+        },
+        {
+          name: 'viewCountry',
+          type: 'select',
+          label: 'Görüntüleme Ülkesi',
+          required: true,
+          options: [
+            {
+              label: 'Yurt İçi',
+              value: '1',
+            },
+            {
+              label: 'Yurt Dışı',
+              value: '0',
+            },
+          ],
+          admin: {
+            description: 'Kampanyanın hangi turlarda gösterileceği',
+          },
+        },
+        {
+          name: 'active',
+          type: 'checkbox',
+          label: 'Aktif',
+          defaultValue: true,
+          admin: {
+          },
+        },
+      ],
+    },
+    {
+      name: 'loaderBanners',
+      type: 'array',
+      label: 'Loader Bannerlar',
+      minRows: 0,
+      fields: [
+        {
+          name: 'text',
+          type: 'text',
+          label: 'Banner Metni',
+          required: false,
+          admin: {
+            description: 'Loader bannerında gösterilecek metin',
+          },
+        },
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Banner Resmi',
+          required: false,
+          admin: {
+            description: 'Loader bannerında gösterilecek resim',
+          },
+        },
+        {
+          name: 'viewCountry',
+          type: 'select',
+          label: 'Görüntüleme Ülkesi',
+          required: true,
+          options: [
+            {
+              label: 'Yurt İçi',
+              value: '1',
+            },
+            {
+              label: 'Yurt Dışı',
+              value: '0',
+            },
+          ],
+          admin: {
+            description: 'Bannerın hangi turlarda gösterileceği',
+          },
+        },
+        {
+          name: 'active',
+          type: 'checkbox',
+          label: 'Aktif',
+          defaultValue: true,
+          admin: {
+          },
+        },
+      ],
+    },
+    {
+      name: 'active',
+      type: 'checkbox',
+      label: 'Aktif',
+      defaultValue: true,
+    },
+  ],
+}
+
 const Globals = {
   header: {
     slug: 'header',
@@ -1237,6 +1549,166 @@ const Globals = {
       },
     ],
   },
+  footer: {
+    slug: 'footer',
+    label: 'Footer',
+    access: {
+      read: () => true,
+    },
+    fields: [
+      {
+        name: 'logo',
+        type: 'upload',
+        relationTo: 'media',
+        label: 'Logo',
+        required: false,
+        admin: {
+          description: 'Footer logo',
+        },
+      },
+      {
+        name: 'companyName',
+        type: 'text',
+        label: 'Şirket Adı',
+        required: false,
+        admin: {
+          description: 'Örn: CRASSULA TURİZM SEYAHAT ACENTASI',
+        },
+      },
+      {
+        name: 'brandLicense',
+        type: 'text',
+        label: 'Marka/Lisans',
+        required: false,
+        admin: {
+          description: 'Örn: GEZİBANK | BELGE NO: 15092',
+        },
+      },
+      {
+        name: 'address',
+        type: 'text',
+        label: 'Adres',
+        required: false,
+        admin: {
+          description: 'Şirket adresi',
+        },
+      },
+      {
+        name: 'email',
+        type: 'email',
+        label: 'E-posta',
+        required: false,
+        admin: {
+          description: 'İletişim e-postası',
+        },
+      },
+      {
+        name: 'phone',
+        type: 'text',
+        label: 'Telefon',
+        required: false,
+        admin: {
+          description: 'İletişim telefonu',
+        },
+      },
+      {
+        name: 'navigationColumns',
+        type: 'array',
+        label: 'Navigasyon Kolonları',
+        minRows: 1,
+        maxRows: 3,
+        fields: [
+          {
+            name: 'title',
+            type: 'text',
+            label: 'Kolon Başlığı',
+            required: false,
+            admin: {
+              description: 'Örn: Bilgi Sayfaları, Kurumsal, Sosyal Medya (opsiyonel)',
+            },
+          },
+          {
+            name: 'links',
+            type: 'array',
+            label: 'Linkler',
+            minRows: 1,
+            fields: [
+              {
+                name: 'label',
+                type: 'text',
+                label: 'Link Metni',
+                required: false,
+                admin: {
+                  description: 'Link metni (opsiyonel)',
+                },
+              },
+              {
+                name: 'url',
+                type: 'text',
+                label: 'URL',
+                required: false,
+                admin: {
+                  description: 'Link URL\'si (opsiyonel)',
+                },
+              },
+              {
+                name: 'image',
+                type: 'upload',
+                relationTo: 'media',
+                label: 'Resim',
+                required: false,
+                admin: {
+                  description: 'Item için resim (opsiyonel)',
+                },
+              },
+            ],
+          },
+        ],
+      },
+      {
+        name: 'paymentMethods',
+        type: 'array',
+        label: 'Ödeme Yöntemleri',
+        required: false,
+        fields: [
+          {
+            name: 'name',
+            type: 'text',
+            label: 'Ödeme Yöntemi Adı',
+            required: true,
+            admin: {
+              description: 'Örn: VISA, Mastercard, American Express, Troy',
+            },
+          },
+          {
+            name: 'logo',
+            type: 'upload',
+            relationTo: 'media',
+            label: 'Logo',
+            required: false,
+          },
+        ],
+      },
+      {
+        name: 'copyrightText',
+        type: 'text',
+        label: 'Telif Hakkı Metni',
+        required: false,
+        admin: {
+          description: 'Örn: Gezibank bir Blk Group markasıdır © 2025 Tüm hakları saklıdır.',
+        },
+      },
+      {
+        name: 'blkGroupUrl',
+        type: 'text',
+        label: 'Blk Group URL',
+        required: false,
+        admin: {
+          description: 'Blk Group linki (opsiyonel)',
+        },
+      },
+    ],
+  },
 }
 
 export default buildConfig({
@@ -1252,8 +1724,8 @@ export default buildConfig({
        },
     },
   },
-  collections: [Users, Media, Pages, CampaignCategories, Campaigns],
-  globals: [Globals.header],
+  collections: [Users, Media, Pages, CampaignCategories, Campaigns, Search],
+  globals: [Globals.header, Globals.footer],
   secret: process.env.PAYLOAD_SECRET || 'dev-secret',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

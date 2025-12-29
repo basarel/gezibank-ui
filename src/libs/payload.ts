@@ -32,6 +32,35 @@ export type GlobalHeader = {
   menuItems: HeaderMenuItem[]
 }
 
+export type FooterLink = {
+  label?: string | null
+  url?: string | null
+  image?: string | { id: number; url?: string } | null
+}
+
+export type FooterNavigationColumn = {
+  title?: string | null
+  links: FooterLink[]
+}
+
+export type FooterPaymentMethod = {
+  name: string
+  logo?: string | { id: number; url?: string } | null
+}
+
+export type GlobalFooter = {
+  logo?: string | { id: number; url?: string } | null
+  companyName?: string | null
+  brandLicense?: string | null
+  address?: string | null
+  email?: string | null
+  phone?: string | null
+  navigationColumns?: FooterNavigationColumn[] | null
+  paymentMethods?: FooterPaymentMethod[] | null
+  copyrightText?: string | null
+  blkGroupUrl?: string | null
+}
+
 export async function getPayloadInstance(): Promise<Payload> {
   return await getPayload({ config: configPromise })
 }
@@ -111,6 +140,29 @@ export async function getGlobalHeader(): Promise<GlobalHeader | null> {
     return {
       menuItems: result.menuItems || [],
     }
+  } catch (error) {
+    return null
+  }
+}
+
+export async function getGlobalFooter(): Promise<GlobalFooter | null> {
+  try {
+    const payload = await getPayloadInstance()
+
+    type FindGlobalMethod = <T = GlobalFooter>(args: {
+      slug: string
+      depth?: number
+    }) => Promise<T | null>
+    const findGlobalMethod = payload.findGlobal as FindGlobalMethod
+
+    const result = await findGlobalMethod<GlobalFooter>({
+      slug: 'footer',
+      depth: 2,
+    })
+
+    if (!result) return null
+
+    return result
   } catch (error) {
     return null
   }
@@ -205,6 +257,51 @@ export async function getCampaignBySlug(slug: string): Promise<Campaign | null> 
     })
 
     return (result.docs[0] as Campaign) || null
+  } catch (error) {
+    return null
+  }
+}
+
+export type SearchCampaign = {
+  id: string
+  text: string
+  link: string
+  viewCountry: string
+  active?: boolean
+}
+
+export type SearchLoaderBanner = {
+  id?: string
+  text?: string
+  image?: number | { id: number; url?: string } | null
+  viewCountry: string
+  active?: boolean
+}
+
+export type Search = {
+  id: number
+  title: string
+  campaigns: SearchCampaign[]
+  loaderBanners?: SearchLoaderBanner[]
+  active: boolean
+}
+
+export async function getSearch(): Promise<Search | null> {
+  try {
+    const payload = await getPayloadInstance()
+    const result = await (payload as any).find({
+      collection: 'search',
+      where: {
+        active: {
+          equals: true,
+        },
+      },
+      sort: 'ordering',
+      limit: 1,
+      depth: 1,
+    })
+
+    return (result.docs[0] as Search) || null
   } catch (error) {
     return null
   }

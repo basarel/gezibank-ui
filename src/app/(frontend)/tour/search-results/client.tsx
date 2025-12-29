@@ -35,21 +35,20 @@ import { GoMoveToTop } from 'react-icons/go'
 import { useMemo, useState, useEffect } from 'react'
 import { PriceRangeSlider } from './_components/price-range-slider'
 import { cleanObj, formatCurrency, slugify } from '@/libs/util'
-import { FaCheck } from 'react-icons/fa'
+import { FaCheck, FaArrowDown, FaArrowUp } from 'react-icons/fa'
+import { TbCalendar, TbWalk } from 'react-icons/tb'
 import { useDestinationGetBySlug } from '@/hooks/destination'
 import { CruiseSearchEngine } from '@/modules/cruise'
 import { TourSearchEngine } from '@/modules/tour'
 import { IoSearchSharp } from 'react-icons/io5'
 import dayjs from 'dayjs'
 import { MdTour } from 'react-icons/md'
-import { getContent } from '@/libs/cms-data'
-import { CmsContent, Params, Widgets } from '@/types/cms-types'
 import { useQuery } from '@tanstack/react-query'
+import { type SearchCampaign, type SearchLoaderBanner } from '@/libs/payload'
 import Breadcrumb from '@/app/breadcrumb'
 import { SearchResultsLoadingSkeleton } from '@/components/search-results-loading-skeleton'
 import { NotFoundForm } from '@/app/(frontend)/hotel/(detail)/[slug]/_components/no-rooms-form'
-
-const skeltonLoader = new Array(3).fill(true)
+import { LoaderBanner } from './loader-banner'
 
 const TourSearchResultClient = () => {
   const { searchResultsQuery, searchParamsQuery, searchParams } =
@@ -59,19 +58,22 @@ const TourSearchResultClient = () => {
   const [{ order, ...filterParams }, setFilterParams] =
     useQueryStates(filterParser)
 
-  const { data: cmsData } = useQuery({
-    queryKey: ['cms-data', 'tur-arama'],
-    queryFn: () =>
-      getContent<CmsContent<Widgets, Params>>('tur-arama').then(
-        (response) => response?.data
-      ),
+  const { data: searchDataPayload } = useQuery({
+    queryKey: ['search-data', 'payload'],
+    queryFn: async () => {
+      const response = await fetch(
+        '/api/search?where[active][equals]=true&sort=ordering&limit=1&depth=1'
+      )
+      if (!response.ok) {
+        throw new Error('Failed to fetch search data')
+      }
+      const data = await response.json()
+      return data.docs?.[0] || null
+    },
   })
-  const loaderBannerTour =
-    cmsData?.widgets?.filter((x) => x.point === 'loader_banner_tour_react') ??
-    []
-  const tourCampaign =
-    cmsData?.widgets?.filter((x) => x.point === 'tur-search-campaign-react') ??
-    []
+
+  const tourCampaign = searchDataPayload?.campaigns ?? []
+  const loaderBanners: SearchLoaderBanner[] = searchDataPayload?.loaderBanners ?? []
 
   const searchRequestIsLoading =
     searchResultsQuery.isLoading || searchResultsQuery.hasNextPage
@@ -94,6 +96,25 @@ const TourSearchResultClient = () => {
         .filter(Boolean) as TourSearchResultSearchItem[],
     [searchResultsQuery.data?.pages]
   )
+  const firstTourFromData = searchData?.[0]
+  const firstTourFromQuery = searchResultsQuery.data?.pages?.[0]?.data?.searchResults?.[0]?.items?.[0]
+  const firstTour = firstTourFromData || firstTourFromQuery
+  
+  const filteredLoaderBanner = loaderBanners.length > 0 && firstTour
+    ? (() => {
+        const matchingBanner = loaderBanners.find((banner: SearchLoaderBanner) => {
+          if (banner.active === false) return false
+          
+          if (firstTour.isDomestic) {
+            return banner.viewCountry === '1'
+          } else {
+            return banner.viewCountry === '0'
+          }
+        })
+        return matchingBanner || null
+      })()
+    : null
+
   const groupTitles: string[] = []
   const searchGroupedData: (TourSearchResultGroupedItem | undefined)[] =
     searchData
@@ -350,7 +371,7 @@ const TourSearchResultClient = () => {
           />
         </div>
         <div className='grid items-start gap-4 md:grid-cols-12 md:gap-6'>
-          <div className='sm:col-span-4 lg:col-span-3'>
+          <div className='sm:col-span-4 lg:col-span-3 border rounded-lg p-3'>
             <Transition
               transition={'slide-right'}
               mounted={filterSectionIsOpened || !!isBreakPointMatchesMd}
@@ -418,8 +439,8 @@ const TourSearchResultClient = () => {
                     ) : (
                       <div>
                         <div className='flex justify-between px-3 pb-6 md:px-0'>
-                          <Title className='text-xl font-medium'>
-                            Filtreler
+                          <Title className='text-xl font-semibold text-blue-600'>
+                           Sonuçları Filtrele
                           </Title>
                           <div
                             hidden={
@@ -468,7 +489,7 @@ const TourSearchResultClient = () => {
                           </div>
                           {nightCountChecks.length > 1 && (
                             <div className='mb-5'>
-                              <div className='mb-2 font-medium'>
+                              <div className='mb-2 font-bold text-xl'>
                                 Gece Sayısı{' '}
                               </div>
                               <ScrollArea.Autosize
@@ -504,7 +525,7 @@ const TourSearchResultClient = () => {
                             </div>
                           )}
                           <div className='mb-5'>
-                            <div className='mb-2 font-medium'>Bölgeler</div>
+                            <div className='mb-2 font-bold text-xl'>Bölge</div>
                             <ScrollArea.Autosize
                               mah={rem(200)}
                               type='always'
@@ -538,7 +559,7 @@ const TourSearchResultClient = () => {
                           </div>
                           {tourCitiesChecks.length > 0 && (
                             <div className='mb-5'>
-                              <div className='mb-2 font-medium'>
+                              <div className='mb-2 font-bold text-xl'>
                                 Rota İçi Bölgeler{' '}
                               </div>
                               <ScrollArea.Autosize
@@ -575,7 +596,7 @@ const TourSearchResultClient = () => {
                           )}
                           {departurePointChecks.length > 0 && (
                             <div className='mb-5'>
-                              <div className='mb-2 font-medium'>
+                              <div className='mb-2 font-bold text-xl'>
                                 Kalkış Noktası{' '}
                               </div>
                               <ScrollArea.Autosize
@@ -614,7 +635,7 @@ const TourSearchResultClient = () => {
                           )}
                           {transportTypeChecks.length > 0 && (
                             <div className='mb-5'>
-                              <div className='mb-2 font-medium'>Ulaşım </div>
+                              <div className='mb-2 font-bold text-xl'>Ulaşım </div>
                               <ScrollArea.Autosize
                                 mah={rem(150)}
                                 type='always'
@@ -666,142 +687,142 @@ const TourSearchResultClient = () => {
             </Transition>
           </div>
           <div className='grid gap-2 sm:col-span-8 lg:col-span-9'>
-            <div className='flex justify-between gap-3 md:px-0'>
-              <Skeleton
-                className='hidden md:flex'
+            <div className='md:rounded-lg md:bg-white md:p-3 px-3 md:border'>
+            <Skeleton
                 visible={searchRequestIsLoading || !filteredData}
               >
-                <div className='hidden items-center gap-2 md:flex'>
-                  <div>
-                    <span className='text-lg font-bold'>{destination},</span>{' '}
-                    {totalCount} Tur Bulundu
-                  </div>
-                </div>
-              </Skeleton>
+            <div className='flex items-center gap-3'>              
+                <h1 className='text-xl md:text-3xl font-bold text-gray-800 mb-1'>
+                  {destination}
+                </h1>
+                <p className='text-xs md:text-base text-blue-600 font-medium'>
+                  {totalCount} tur bulundu
+                </p>
+             </div>
+              <div
+                className='hidden mt-2 md:grid items-center grid-cols-4 justify-start gap-2'
+                 
+              >
+                {filterOptions.map((option) => {
+                  let icon = null
+                  if (option.value === SortOrderEnums.priceAsc) {
+                    icon = < FaArrowUp size={16} />
+                  } else if (option.value === SortOrderEnums.priceDesc) {
+                    icon = <FaArrowDown size={16} />
+                  } else if (
+                    option.value === SortOrderEnums.dateAsc ||
+                    option.value === SortOrderEnums.dateDesc
+                  ) {
+                    icon = <TbCalendar size={18} />
+                  }
 
-              {totalCount > 0 && (
-                <div>
-                  <Button
-                    size='sm'
-                    color='black'
-                    className='mx-1 flex border-gray-400 px-8 font-medium md:hidden'
-                    variant='outline'
-                    onClick={() => setFilterSectionIsOpened((prev) => !prev)}
-                  >
-                    Filtreler
-                  </Button>
-                </div>
-              )}
-              {totalCount > 0 && (
-                <div className='mx-2'>
-                  <NativeSelect
-                    leftSection={<FaCheck />}
-                    className='font-medium md:hidden'
-                    data={[
-                      {
-                        label: 'Fiyata Göre Artan ',
-                        value: SortOrderEnums.priceAsc,
-                      },
-                      {
-                        label: 'Fiyata Göre Azalan',
-                        value: SortOrderEnums.priceDesc,
-                      },
-                      {
-                        label: 'En Erken',
-                        value: SortOrderEnums.dateAsc,
-                      },
-                      {
-                        label: 'En Geç',
-                        value: SortOrderEnums.dateDesc,
-                      },
-                    ]}
-                    onChange={({ target: { value } }) => {
-                      setFilterParams({
-                        order: value as SortOrderEnums,
-                      })
-                    }}
-                    value={order}
-                  />
-                </div>
-              )}
+                  return (
+                    <Button
+                      size='sm'
+                      className={
+                        order === option.value
+                          ? 'rounded-md border border-blue-500 bg-blue-100 font-medium text-blue-600'
+                          : 'rounded-md border border-gray-300 font-normal text-gray-700 hover:bg-gray-50 hover:border-gray-400'
+                      }
+                      key={option.value}
+                      leftSection={icon}
+                      variant='outline'
+                      onClick={() =>
+                        setFilterParams({
+                          order: option.value,
+                        })
+                      }
+                    >
+                      {option.label}
+                    </Button>
+                  )
+                })}
+              </div>
+              </Skeleton>
             </div>
             {totalCount > 0 && (
-              <Skeleton
-                className='hidden items-center justify-start gap-1 md:grid md:grid-cols-4'
-                visible={
-                  searchRequestIsLoading ||
-                  (!searchParamsQuery.isLoading && searchData?.length === 0)
-                }
-              >
-                {filterOptions.map((option) => (
-                  <Button
-                    size='sm'
-                    className={
-                      order === option.value
-                        ? 'my-3 rounded-md border-0 bg-blue-100 font-medium text-blue-600'
-                        : 'rounded-md border-gray-400 font-normal text-black hover:bg-blue-50 hover:text-blue-600'
-                    }
-                    key={option.value}
-                    leftSection={order === option.value ? <FaCheck /> : ''}
-                    color='blue'
-                    variant={order === option.value ? 'filled' : 'outline'}
-                    onClick={() =>
-                      setFilterParams({
-                        order: option.value,
-                      })
-                    }
-                  >
-                    {option.label}
-                  </Button>
-                ))}
-              </Skeleton>
+              <div className='flex justify-between items-center gap-3 md:hidden mx-3'>
+                <Button
+                  size='sm'
+                  color='black'
+                  className='flex border-gray-400 px-8 font-medium'
+                  variant='outline'
+                  onClick={() => setFilterSectionIsOpened((prev) => !prev)}
+                >
+                  Filtreler
+                </Button>
+                <NativeSelect
+                  leftSection={<FaCheck />}
+                  className='font-medium'
+                  data={[
+                    {
+                      label: 'Fiyata Göre Artan ',
+                      value: SortOrderEnums.priceAsc,
+                    },
+                    {
+                      label: 'Fiyata Göre Azalan',
+                      value: SortOrderEnums.priceDesc,
+                    },
+                    {
+                      label: 'En Erken',
+                      value: SortOrderEnums.dateAsc,
+                    },
+                    {
+                      label: 'En Geç',
+                      value: SortOrderEnums.dateDesc,
+                    },
+                  ]}
+                  onChange={({ target: { value } }) => {
+                    setFilterParams({
+                      order: value as SortOrderEnums,
+                    })
+                  }}
+                  value={order}
+                />
+              </div>
             )}
-            {totalCount > 0 && (
-              <Skeleton
-                className='flex items-center gap-2 px-1 md:hidden'
-                visible={
-                  searchResultsQuery.isFetching ||
-                  searchResultsQuery.isLoading ||
-                  !searchResultsQuery.data
-                }
-              >
-                <span className='text-sm'>
-                  <span className='text-lg font-bold'>Toplam,</span>{' '}
-                  {totalCount} Tur Bulundu
-                </span>
-              </Skeleton>
-            )}
+
+           
             <div className='grid gap-5'>
-              {!searchRequestIsLoading &&
-                searchResultsQuery.data &&
-                filteredData?.length === 0 && <NotFoundForm moduleName='Tur' />}
+              {!searchParamsQuery.isLoading &&
+    searchData?.length === 0 &&
+    searchResultsQuery.data?.pages.find((page) => page.code !== 1)&& <NotFoundForm moduleName='Tur' />}
 
               {searchRequestIsLoading && (
                 <>
-                  <Skeleton height={200} radius='md' />
-
                   <div className='space-y-4'>
-                    {Array.from({ length: 6 }).map((_, index) => (
-                      <div key={index} className='mb-4 rounded-lg border-2 p-4'>
-                        <div className='flex gap-4'>
-                          <Skeleton height={120} width={100} radius='md' />
-                          <div className='flex-1 space-y-3'>
-                            <Skeleton height={20} width='60%' />
-                            <Skeleton height={16} width='40%' />
-                            <Skeleton height={16} width='80%' />
-                            <div className='flex gap-2'>
-                              <Skeleton height={24} width={60} />
-                              <Skeleton height={24} width={60} />
-                              <Skeleton height={24} width={60} />
-                            </div>
-                            <div className='flex justify-between'>
-                              <Skeleton height={20} width='30%' />
-                              <Skeleton height={32} width={100} />
+                    {Array.from({ length: 6 }).map((_, index) => {
+                      if (index === 0 && filteredLoaderBanner) {
+                        return (
+                          <LoaderBanner
+                            key={`loader-banner-${index}`}
+                            data={filteredLoaderBanner}
+                            Icon={MdTour}
+                          />
+                        )
+                      }
+                      return (
+                        <div key={index} className='mb-4 rounded-lg border p-4'>
+                          <div className='flex gap-4'>
+                            <Skeleton height={120} width={100} radius='md' />
+                            <div className='flex-1 space-y-3'>
+                              <Skeleton height={20} width='60%' />
+                              <Skeleton height={16} width='40%' />
+                              <Skeleton height={16} width='80%' />
+                              <div className='flex gap-2'>
+                                <Skeleton height={24} width={60} />
+                                <Skeleton height={24} width={60} />
+                                <Skeleton height={24} width={60} />
+                              </div>
+                              <div className='flex justify-between'>
+                                <Skeleton height={20} width='30%' />
+                                <Skeleton height={32} width={100} />
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
+                      )
+                    })}
                   </div>
                 </>
               )}

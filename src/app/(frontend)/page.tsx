@@ -46,9 +46,9 @@ export default async function Home() {
       {blocks && Array.isArray(blocks) && blocks.length > 0 && (
         <RenderBlocks blocks={blocks} />
       )}
-      <Container className='gap-7 md:gap-10'>
+      {/* <Container className='gap-7 md:gap-10'>
         <EbultenForm />
-      </Container>
+      </Container> */}
       <Container className='gap-7 md:gap-10'>
         <CallFormDrawer />
       </Container>

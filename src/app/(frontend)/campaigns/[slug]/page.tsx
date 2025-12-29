@@ -101,6 +101,11 @@ const CampaignDetailPage: React.FC<PageProps> = async ({
             </AspectRatio>
           </div>
         )}
+         {campaign.discountCode && (
+          <div className='my-5'>
+          <CampaignCopySection code={campaign.discountCode} />
+          </div>
+        )}
         {descriptionHtml && (
           <div
             className='prose prose-lg max-w-none mb-5'
@@ -109,11 +114,7 @@ const CampaignDetailPage: React.FC<PageProps> = async ({
             }}
           />
         )}
-        {campaign.discountCode && (
-          <div className='my-5'>
-          <CampaignCopySection code={campaign.discountCode} />
-          </div>
-        )}
+       
         {campaign.buttonText && campaign.buttonLink && (
           <Button
             size='lg'

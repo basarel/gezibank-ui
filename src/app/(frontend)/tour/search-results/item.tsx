@@ -3,11 +3,11 @@ import {
   TourSearchResultGroupedItem,
   TourSearchResultSearchItem,
 } from '@/modules/tour/type'
+import { SearchCampaign } from '@/libs/payload'
 import {
   AspectRatio,
   Badge,
   Box,
-  Button,
   Image,
   Skeleton,
   Text,
@@ -31,15 +31,13 @@ import { CiSun } from 'react-icons/ci'
 import { Route } from 'next'
 import { RiPlaneFill, RiTrainFill } from 'react-icons/ri'
 import { FaBus } from 'react-icons/fa'
-import { Widgets } from '@/types/cms-types'
-import { BsMoonStars } from 'react-icons/bs'
 import { HiOutlineLocationMarker } from 'react-icons/hi'
 import { useMediaQuery } from '@mantine/hooks'
 import { TbCalendarClock } from 'react-icons/tb'
 type Props = {
   // data: TourSearchResultSearchItem
   data: TourSearchResultGroupedItem
-  campaignContents: Widgets
+  campaignContents: SearchCampaign[]
 }
 
 export const TourSearchResultItem: React.FC<Props> = ({
@@ -71,7 +69,6 @@ export const TourSearchResultItem: React.FC<Props> = ({
       if (!hasDeparturePoint) return false
     }
 
-    // Ulaşım tipi filtresi
     if (filterParams.transportType && filterParams.transportType.length > 0) {
       const transportTypeSlug = item?.transportType?.toString() ?? ''
       const hasTransportType =
@@ -84,17 +81,14 @@ export const TourSearchResultItem: React.FC<Props> = ({
   const { searchParamsQuery } = useTourSearchResultsQuery()
   const [isImageLoading, setImageLoading] = useState(true)
 
-  // Filtrelenmiş veriden ilk item'ı seç, yoksa tüm veriden seç
   const availableItems =
     filteredRelatedItems.length > 0 ? filteredRelatedItems : sortedRelatedItems
   const [selectedTour, setSelectedTour] = useState<TourSearchResultSearchItem>(
     availableItems[0]
   )
 
-  // Filtre değiştiğinde selectedTour'u güncelle
   useEffect(() => {
     if (availableItems.length > 0) {
-      // Eğer mevcut selectedTour filtrelenmiş listede yoksa, ilk item'ı seç
       const isCurrentTourAvailable = availableItems.some(
         (item) => item.key === selectedTour.key
       )
@@ -152,12 +146,13 @@ export const TourSearchResultItem: React.FC<Props> = ({
     : null
 
   const isMobile = useMediaQuery('(max-width: 62em)')
+  console.log(campaignContents)
   return (
     <div className='grid grid-cols-1 rounded-lg bg-white p-3 shadow-md hover:shadow-2xl md:grid-cols-4'>
       <div className='col-span-1 flex flex-col gap-4 md:col-span-3'>
-        <div className='grid grid-cols-1 gap-5 md:grid-cols-2'>
-          <Box className='relative w-full' component={Link} href={detailUrl}>
-            <AspectRatio ratio={4 / 3}>
+        <div className='grid grid-cols-1 gap-3 md:grid-cols-2 items-stretch'>
+          <Box className='relative w-full h-full col-span-1' component={Link} href={detailUrl}>
+            <div className='relative h-full w-full'>
               <Transition
                 mounted={isImageLoading}
                 transition='fade'
@@ -181,7 +176,7 @@ export const TourSearchResultItem: React.FC<Props> = ({
                 alt={selectedTour.title}
                 radius={'md'}
                 fit='cover'
-                className='rounded-lg'
+                className='rounded-lg h-full object-cover'
                 onLoad={() => {
                   setImageLoading(false)
                 }}
@@ -189,15 +184,15 @@ export const TourSearchResultItem: React.FC<Props> = ({
               {selectedTour.quota > 0 && (
                 <div className='absolute start-3 top-3'>
                   <Badge className='bg-orange-900 px-4 py-3 text-white opacity-90 shadow-lg'>
-                    Son {selectedTour.quota >= 7 ? '7' : selectedTour.quota}{' '}
+                    Son {selectedTour.quota >= 7 ? '7+' : selectedTour.quota}{' '}
                     kişi
                   </Badge>
                 </div>
               )}
-            </AspectRatio>
+            </div>
           </Box>
 
-          <div className='flex flex-col gap-3'>
+          <div className='flex flex-col gap-3 col-span-1'>
             <div className='relative'>
               <Title order={1} className='text-xl font-bold text-black'>
                 {selectedTour.title.split('|')[0]}
@@ -243,48 +238,47 @@ export const TourSearchResultItem: React.FC<Props> = ({
                 <Text className='text-sm'>Günübirlik Tur</Text>
               </div>
             )}
-
-            {campaignContents?.filter(
-              (campaign) =>
-                campaign.params.view_country.value ===
-                String(selectedTour.isDomestic)
-            ).length > 0 && (
+            {campaignContents && campaignContents.length > 0 && (
               <div className='flex flex-wrap gap-2'>
-                {campaignContents
-                  ?.filter(
-                    (campaign) =>
-                      campaign.params.view_country.value ===
-                      String(selectedTour.isDomestic)
-                  )
-                  .slice(0, 2)
-                  .map((campaign) => (
+                 {campaignContents
+                   .filter((campaign) => {
+                     if (campaign.active === false) return false
+                     
+                     if (selectedTour.isDomestic) {
+                       return campaign.viewCountry === '1'
+                     } else {
+                       return campaign.viewCountry === '0'
+                     }
+                   })
+                   .map((campaign) => (
                     <Link
                       key={campaign.id}
-                      href={campaign.params.link?.value as Route}
+                      href={campaign.link as Route}
                     >
-                      <div className='rounded-md bg-green-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-green-700'>
-                        {campaign.title}
+                      <div className='rounded-md bg-green-50 text-green-700 px-3 py-1.5 text-sm font-medium hover:bg-green-100 transition-all duration-200'>
+                        {campaign.text}
                       </div>
                     </Link>
                   ))}
               </div>
             )}
+           
           </div>
         </div>
 
-        <div className='flex items-center gap-5 pt-4 text-sm'>
+        <div className='flex items-center gap-5 pt-2 text-sm'>
           {transportTypeText && (
             <div className='flex items-center gap-2'>
               {transportType === 1 && (
-                <RiPlaneFill size={20} className='text-orange-700' />
+                <RiPlaneFill size={22} className='text-orange-700' />
               )}
               {transportType === 2 && (
-                <FaBus size={18} className='text-orange-700' />
+                <FaBus size={22} className='text-orange-700' />
               )}
               {transportType === 3 && (
-                <RiTrainFill size={18} className='text-orange-700' />
+                <RiTrainFill size={22} className='text-orange-700' />
               )}
-              <span>Gidiş-Dönüş: {transportTypeText} ile</span>
+              <span className='text-base'>Gidiş-Dönüş: {transportTypeText} ile</span>
             </div>
           )}
           <div className='hidden items-center gap-2 md:flex'>
@@ -297,7 +291,7 @@ export const TourSearchResultItem: React.FC<Props> = ({
         </div>
       </div>
 
-      <div className='col-span-1 flex flex-col justify-between rounded-t-xl border p-3 shadow-xl'>
+      <div className='col-span-1 flex flex-col justify-between rounded-t-xl rounded-br-xl md:border p-2 shadow-xl'>
         <div className='mb-4 flex flex-col items-center justify-center'>
           <div className='w-full text-center'>
             <div className='mb-2 text-sm font-medium text-black'>
@@ -305,7 +299,7 @@ export const TourSearchResultItem: React.FC<Props> = ({
             </div>
             {euroPriceFormatted && (
               <div className='mb-1 flex items-center justify-center'>
-                <div className='rounded-t-lg rounded-tr-lg rounded-br-lg rounded-bl-none bg-orange-900 p-3'>
+                <div className='rounded-t-lg rounded-tr-lg rounded-br-lg rounded-bl-none bg-orange-900 py-2 px-3'>
                   <div className='flex items-start justify-center gap-2 text-3xl font-bold text-white md:text-5xl'>
                     {euroPriceFormatted}
                     {selectedTour.isDomestic && (
@@ -330,17 +324,15 @@ export const TourSearchResultItem: React.FC<Props> = ({
             </div>
           </div>
         </div>
-        <Button
-          className='w-full rounded-tl-lg rounded-tr-lg rounded-b-lg rounded-bl-none bg-blue-600 px-0 text-lg font-extrabold hover:bg-blue-800 md:text-3xl'
-          size={isMobile ? 'md' : 'lg'}
-          radius={'lg'}
-          component={Link}
-          href={detailUrl}
-          fullWidth
+        <Link href={detailUrl}>
+        <div
+          className='w-full mb-3 p-2 py-3 rounded-tl-xl rounded-tr-xl rounded-b-xl rounded-bl-none bg-blue-600 text-lg font-extrabold text-white hover:bg-blue-800 md:text-3xl flex items-center justify-center'
         >
-          Turu İncele
-        </Button>
-      </div>
+          
+                Turu İncele
+           </div>
+           </Link>
+       </div>
     </div>
   )
 }
