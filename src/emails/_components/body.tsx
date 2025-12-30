@@ -186,7 +186,7 @@ export const EmailBody: React.FC<IProps> = ({ children, previewText }) => {
                     <td>
                       • Detaylı bilgi için haftanın her günü 09:00-18:00
                       saatleri arasında{' '}
-                      <a href='tel:08508780400'>0850 878 0 400</a> nolu
+                      <a href='tel:08508780400'>0850 840 01 51</a> nolu
                       telefondan Müşteri Hizmetlerimize ulaşabilirsiniz.{' '}
                     </td>
                   </tr>

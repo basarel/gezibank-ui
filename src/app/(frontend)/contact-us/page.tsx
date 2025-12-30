@@ -3,6 +3,7 @@ import { getContent } from '@/libs/cms-data'
 import { CmsContent } from '@/types/cms-types'
 import { notFound } from 'next/navigation'
 import { HelpPage } from './_components/help-form-page'
+import { InfoPagesLayout } from '@/components/info-pages-layout'
 
 type CMSContactParams = {
   title: {
@@ -53,10 +54,10 @@ export default async function ContactPage() {
   const { params } = data
 
   return (
-    <Container className='mt-5 space-y-6 rounded-md border p-4 shadow'>
+    <InfoPagesLayout>
       <HelpPage />
       <div>
-        <div className='mb-5 px-7'>
+        <div className='mb-5 border rounded-md p-3'>
           <Title order={2} className='mb-4'>
             İletişim Bilgileri
           </Title>
@@ -113,6 +114,6 @@ export default async function ContactPage() {
           </div>
         </div>
       </div>
-    </Container>
+    </InfoPagesLayout>
   )
 }

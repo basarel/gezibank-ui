@@ -223,13 +223,6 @@ export const RegisterForm = () => {
           </div>
           <div className='col-span-2'>
             <Checkbox
-              label='Uçuş bilgilendirmeleri, fırsat ve kampanyalardan Rıza Metni kapsamında haberdar olmak istiyorum.'
-              {...form.register('confirmAgreement')}
-              error={form.formState.errors.confirmAgreement?.message}
-            />
-          </div>
-          <div className='col-span-2'>
-            <Checkbox
               label={
                 <span>
                   Oturum açarak{' '}

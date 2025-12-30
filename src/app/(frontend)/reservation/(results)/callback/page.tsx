@@ -265,7 +265,7 @@ const CallbackPage: React.FC<IProps> = async ({ searchParams }) => {
               </li>
               <li>
                 Detaylı bilgi için haftanın her günü 09:00-18:00 saatleri
-                arasında 0850 878 0 400 nolu telefondan Müşteri Hizmetlerimize
+                arasında 0850 840 01 51 nolu telefondan Müşteri Hizmetlerimize
                 ulaşabilirsiniz.
               </li>
               <li>

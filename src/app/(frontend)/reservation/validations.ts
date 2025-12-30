@@ -282,7 +282,7 @@ const createPassengerValidation = (
                 ctx.addIssue({
                   code: z.ZodIssueCode.custom,
                   message:
-                    'Seçim yapılan tesisin koşulları sebebiyle bu tesiste konaklamak için <a href="tel:0850878400" style="color: #3b82f6; text-decoration: underline;">0850 878 0 400</a> arayabilir veya Müşteri Hizmetlerimizden yardım isteyebilirsiniz.',
+                    'Seçim yapılan tesisin koşulları sebebiyle bu tesiste konaklamak için <a href="tel:0850878400" style="color: #3b82f6; text-decoration: underline;">0850 840 01 51</a> arayabilir veya Müşteri Hizmetlerimizden yardım isteyebilirsiniz.',
                   path: [],
                 })
                 break

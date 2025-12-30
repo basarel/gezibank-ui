@@ -114,7 +114,7 @@ function NotFoundForm({ moduleName }: IProps) {
               c='blue'
               className='cursor-pointer text-lg hover:underline'
             >
-              0850 878 0 400
+              0850 840 01 51
             </Text>{' '}
             nolu Müşteri Hizmetlerini arayabilir,{' '}
             <Text

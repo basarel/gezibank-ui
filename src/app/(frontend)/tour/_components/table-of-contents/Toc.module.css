@@ -1,58 +1,66 @@
 .root {
+  border-radius: 12px !important;
   display: flex;
   flex-direction: row;
-  padding: 0 5px;
-  gap: 16x;
+  padding: 5px 5px;
+  gap: 5px;
   pointer-events: auto;
   position: relative;
   z-index: 21;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .control {
-  font-size: 17px;
+  font-size: 14px;
   padding: 12px;
   position: relative;
-  font-weight: 500;
+  font-weight: 400;
   color: white !important;
   background-color: transparent !important;
   transition: all 0.2s ease;
   pointer-events: auto;
   cursor: pointer;
   z-index: 21;
-
-  &:hover {
-    background-color: transparent !important;
-    color: white !important;
-    opacity: 0.8;
-  }
-
-  &[data-active] {
-    background-color: transparent !important;
-    color: white !important;
-    font-weight: 500;
-
-    &::after {
-      content: '';
-      display: block;
-      position: absolute;
-      height: 8px;
-      border-radius: 8px;
-      background-color: orange;
-      width: 100%;
-      bottom: 0;
-      left: 0;
-    }
-  }
+  flex: 1;
+  text-align: center;
+  white-space: nowrap;
 }
+.control:hover {
+  opacity: 0.7;
+}
+.control[data-visa] {
+  scroll-margin: 0;
+}
+
+.control[data-active] {
+  background-color: transparent !important;
+  color: white !important;
+}
+
+.control[data-active]::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: 8px;
+  border-radius: 8px;
+  background-color: orange;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+}
+
 @media (max-width: 768px) {
   .root {
-    padding: 8px 10px;
-    gap: 8px;
+    padding: 3px 3px;
+    gap: 2px;
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    justify-content: flex-start;
   }
 
   .root::-webkit-scrollbar {
@@ -64,5 +72,6 @@
     padding: 8px 6px;
     white-space: nowrap;
     flex-shrink: 0;
+    flex: 0 0 auto;
   }
 }

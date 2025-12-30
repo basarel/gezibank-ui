@@ -23,6 +23,12 @@ export const creditCardSchema = z.object({
 export const paymentValidationSchema = creditCardSchema.merge(
   z.object({
     installment: z.number().default(1),
+    agreementAccepted: z.boolean().refine((val) => val === true, {
+      message: 'Mesafeli Satış Sözleşmesini kabul etmelisiniz',
+    }),
+    privacyAccepted: z.boolean().refine((val) => val === true, {
+      message: 'Gizlilik Sözleşmesini kabul etmelisiniz',
+    }),
   })
 )
 

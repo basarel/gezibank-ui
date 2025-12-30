@@ -12,6 +12,7 @@ import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { TourSearchEngine } from '@/modules/tour'
 import Image from 'next/image'
 import React from 'react'
+import { InfoPagesLayout } from '@/components/info-pages-layout'
 
 type CmsParams = {
   content: {
@@ -124,11 +125,19 @@ export default async function ContentPage({
   const slugString = slug.join('/')
   const headersList = await headers()
   const currentPath = headersList.get('x-pathname') || `/${slugString}`
-
-  // Önce Pages collection'ında ara
   const page = await getPageBySlug(slugString)
 
-  // Eğer Pages collection'ında sayfa bulunduysa, onu göster
+  const infoPageSlugs = [
+    'about',
+    'iletisim',
+    'kullanim-sartlari',
+    'gizlilik-politikasi',
+    'kvkk',
+  ]
+  const isInfoPage = infoPageSlugs.some((infoSlug) => 
+    slugString === infoSlug || slugString.startsWith(infoSlug + '/')
+  )
+
   if (page) {
     const blocks = page?.layout || []
     const showSearchEngine = page?.showSearchEngine || false
@@ -136,6 +145,36 @@ export default async function ContentPage({
     const searchEngineBackgroundImage = page?.searchEngineBackgroundImage
     const SearchEngineComponent = getSearchEngine(searchEngineType)
     const backgroundImageUrl = getImageUrl(searchEngineBackgroundImage)
+
+    if (isInfoPage) {
+      return (
+        <InfoPagesLayout>
+          {showSearchEngine && SearchEngineComponent && (
+            <div className='relative border-b bg-orange-900 py-4 mb-4'>
+              {backgroundImageUrl && (
+                <Image
+                  src={backgroundImageUrl}
+                  fill
+                  alt='Arama Motoru Arka Plan'
+                  className='absolute inset-0 object-cover'
+                  priority
+                />
+              )}
+              <div className='absolute inset-0 bg-black/50' aria-hidden />
+              <Container className='relative z-10'>
+                <div className='rounded-md bg-white p-3 md:p-5'>
+                  <SearchEngineComponent />
+                </div>
+              </Container>
+            </div>
+          )}
+
+          {blocks && Array.isArray(blocks) && blocks.length > 0 && (
+            <RenderBlocks blocks={blocks} />
+          ) }
+        </InfoPagesLayout>
+      )
+    }
 
     return (
       <div className='flex flex-col gap-4 md:gap-10'>

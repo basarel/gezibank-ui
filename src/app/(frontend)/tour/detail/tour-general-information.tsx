@@ -7,10 +7,16 @@ import { useDisclosure } from '@mantine/hooks'
 import { FaBus, FaCheck } from 'react-icons/fa'
 import { RiInformationLine, RiPlaneFill } from 'react-icons/ri'
 import { IoClose } from 'react-icons/io5'
+import Image from 'next/image'
 
 type IPrps = {
   data: TourDetailApiResponse
   transportTypeText: string
+  transportType?: number
+  visaModalOpened?: boolean
+  onVisaModalOpen?: () => void
+  onVisaModalClose?: () => void
+  isMobile?: boolean
 }
 
 const parseHtmlToListItems = (
@@ -71,11 +77,44 @@ const parseHtmlToListItems = (
   return <div dangerouslySetInnerHTML={{ __html: html }} />
 }
 
+  const getAirlineLogo = (flightText: string) => {
+  const text = flightText.toLowerCase()
+  
+  if (text.includes('pegasus') || text.includes('pc')) {
+    return {
+      src: 'https://paraflystatic.mncdn.com/a/airlines/PC.png',
+      alt: 'Pegasus',
+    }
+  }
+  
+  if (
+    text.includes('tk') || 
+    text.includes('turkish airlines') || 
+    text.includes('türk hava yolları') ||
+    text.includes('turk hava yollari')
+  ) {
+    return {
+      src: 'https://paraflystatic.mncdn.com/a/airlines/TK.png',
+      alt: 'Türk Hava Yolları',
+    }
+  }
+  
+  return null
+}
+
 export const TourGeneralInformation: React.FC<IPrps> = ({
   data,
   transportTypeText,
+  transportType,
+  visaModalOpened: externalOpened,
+  onVisaModalOpen: externalOpen,
+  onVisaModalClose: externalClose,
+  isMobile = false,
 }) => {
-  const [opened, { open, close }] = useDisclosure(false)
+  const [internalOpened, { open: internalOpen, close: internalClose }] = useDisclosure(false)
+  const opened = externalOpened !== undefined ? externalOpened : internalOpened
+  const open = externalOpen || internalOpen
+  const close = externalClose || internalClose
   const transportTypeIcon =
     transportTypeText === 'Uçaklı Tur' ? (
       <RiPlaneFill size={20} className='shrink-0 text-blue-700' />
@@ -87,42 +126,53 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
       <div className='flex flex-col gap-20'>
         <div className='grid items-center gap-3'>
           <span
-            id='included-information'
-            className='text-lg font-semibold text-blue-600 md:text-2xl'
+            id={isMobile ? undefined : 'included-information'}
+            className='text-lg font-semibold text-blue-600 md:text-xl'
           >
             Fiyata Dahil Hizmetler
           </span>
-          {parseHtmlToListItems(data.detail.includedInformation || '', true)}
+          {parseHtmlToListItems(
+            data.package.detail.includedInformation || 
+            data.detail.includedInformation || 
+            '', 
+            true
+          )}
         </div>
 
         <div className='grid items-center gap-3'>
           <span
-            id='not-included-information'
-            className='text-lg font-semibold text-blue-600 md:text-2xl'
+            id={isMobile ? undefined : 'not-included-information'}
+            className='text-lg font-semibold text-blue-600 md:text-xl'
           >
-            Fiyata Dahil Olmayan Hizmetler & Önemli Notlar
+            Fiyata Dahil Olmayan Hizmetler
           </span>
           <div className='my-5'>
             {parseHtmlToListItems(
-              data.detail.notIncludedInformation || '',
+              data.package.detail.notIncludedInformation || 
+              data.detail.notIncludedInformation || 
+              '',
               false
             )}
           </div>
         </div>
 
-        {data.detail.flightInformation !== null &&
+        {((data.package.detail.flightInformation !== null &&
+          data.package.detail.flightInformation !== undefined &&
+          data.package.detail.flightInformation.length > 0) ||
+          (data.detail.flightInformation !== null &&
           data.detail.flightInformation !== undefined &&
-          data.detail.flightInformation.length > 0 && (
+          data.detail.flightInformation.length > 0)) &&
+          transportType === 1 && (
             <>
               <div className='flex flex-col gap-5'>
                 <span
-                  id='transport'
-                  className='text-lg font-semibold text-blue-600 md:text-2xl'
+                  id={isMobile ? undefined : 'transport'}
+                  className='text-lg font-semibold text-blue-600 md:text-xl'
                 >
                   Ulaşım Bilgisi
                 </span>
                 <div className='grid gap-4'>
-                  {data.detail.flightInformation
+                  {(data.package.detail.flightInformation || data.detail.flightInformation || [])
                     .filter(
                       (flight) =>
                         flight &&
@@ -130,25 +180,68 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
                         flight.trim().length > 0 &&
                         flight.trim() !== '0'
                     )
-                    .map((flight, flightIndex) => (
-                      <div key={flightIndex}>
-                        <div dangerouslySetInnerHTML={{ __html: flight }} />
-                      </div>
-                    ))}
+                    .map((flight, flightIndex) => {
+                      const flightInfo = data.package.detail.flightInformation || data.detail.flightInformation || []
+                      const filteredFlights = flightInfo.filter(
+                        (f) =>
+                          f &&
+                          typeof f === 'string' &&
+                          f.trim().length > 0 &&
+                          f.trim() !== '0'
+                      )
+                      
+                      let flightLabel: string | null = null
+                      if (filteredFlights.length === 2) {
+                        if (flightIndex === 0) {
+                          flightLabel = 'Gidiş Uçuşu'
+                        } else if (flightIndex === 1) {
+                          flightLabel = 'Dönüş Uçuşu'
+                        }
+                      }
+                      
+                      const airlineLogo = getAirlineLogo(flight)
+                      
+                      return (
+                        <div key={flightIndex} className='flex my-2 flex-col gap-2'>
+                          {flightLabel && (
+                            <span className='text-md font-semibold text-orange-900'>
+                              {flightLabel}
+                            </span>
+                          )}
+                          <div className='flex items-center'>
+                            {airlineLogo && (
+                              <div className='relative h-8 w-10 shrink-0'>
+                                <Image
+                                  src={airlineLogo.src}
+                                  alt={airlineLogo.alt}
+                                  fill
+                                  className='object-contain'
+                                  onError={(e) => {
+                                    e.currentTarget.style.display = 'none'
+                                  }}
+                                />
+                              </div>
+                            )}
+                            <div 
+                              className='flex-1'
+                              dangerouslySetInnerHTML={{ __html: flight }} 
+                            />
+                          </div>
+                        </div>
+                      )
+                    })}
                 </div>
               </div>
             </>
           )}
-        {(!data.detail.flightInformation ||
-          data.detail.flightInformation === null ||
-          data.detail.flightInformation === undefined ||
-          data.detail.flightInformation.length === 0) &&
+        {(!(data.package.detail.flightInformation && data.package.detail.flightInformation.length > 0) &&
+          !(data.detail.flightInformation && data.detail.flightInformation.length > 0)) &&
           transportTypeText && (
             <>
               <div className='flex flex-col gap-5'>
                 <span
-                  id='transport'
-                  className='text-lg font-semibold text-blue-600 md:text-2xl'
+                  id={isMobile ? undefined : 'transport'}
+                  className='text-lg font-semibold text-blue-600 md:text-xl'
                 >
                   Ulaşım Bilgisi
                 </span>
@@ -167,8 +260,8 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
             <div className='flex flex-col gap-5'>
               <div className='grid items-center gap-3'>
                 <span
-                  id='hotel'
-                  className='text-lg font-semibold text-blue-600 md:text-2xl'
+                  id={isMobile ? undefined : 'hotel'}
+                  className='text-lg font-semibold text-blue-600 md:text-xl'
                 >
                   Otel Bilgisi
                 </span>
@@ -183,8 +276,8 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
           <>
             <div className='flex flex-col gap-5'>
               <span
-                id='hotel'
-                className='text-lg font-semibold text-blue-600 md:text-2xl'
+                id={isMobile ? undefined : 'hotel'}
+                className='text-lg font-semibold text-blue-600 md:text-xl'
               >
                 Otel Bilgisi
               </span>
@@ -203,9 +296,12 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
         <div className='flex flex-col gap-3'>
           <div className='flex items-center gap-3'>
             <span
-              id='visa-infos'
-              className='text-lg flex items-center gap-2 cursor-pointer font-semibold text-blue-600 md:text-2xl'
-              onClick={() => open()}
+              id={isMobile ? undefined : 'visa-infos'}
+              className='text-lg flex items-center gap-2 cursor-pointer font-semibold text-blue-600 md:text-xl'
+              onClick={(e) => {
+                e.preventDefault()
+                open()
+              }}
               role='button'
               tabIndex={0}
              >
@@ -220,7 +316,7 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
         opened={opened}
         onClose={close}
         title={
-          <span className='text-lg font-semibold text-blue-600 md:text-2xl'>
+          <span className='text-lg font-semibold text-blue-600 md:text-xl'>
             Vize Bilgileri
           </span>
         }

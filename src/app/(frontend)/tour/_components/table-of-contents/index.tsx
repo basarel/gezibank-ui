@@ -1,14 +1,50 @@
+import React from 'react'
 import { TableOfContents } from '@mantine/core'
 import classes from './Toc.module.css'
+import { FaInfoCircle, FaBed, FaBus, FaCheckCircle, FaTimesCircle, FaPassport } from 'react-icons/fa'
+import { BsLuggageFill } from 'react-icons/bs'
+import { IoClose } from 'react-icons/io5'
 
-const TourTableOfContents: React.FC = () => {
+type TourTableOfContentsProps = {
+  onVisaClick?: () => void
+}
+
+const getIconForTitle = (title: string) => {
+  const titleLower = title.toLowerCase()
+  
+  if (titleLower.includes('genel') || titleLower.includes('general')) {
+    return <FaInfoCircle size={16} className='mr-2' />
+  }
+  if (titleLower.includes('otel') || titleLower.includes('hotel')) {
+    return <FaBed size={16} className='mr-2' />
+  }
+  if (titleLower.includes('program') || titleLower.includes('tur program')) {
+    return <BsLuggageFill size={16} className='mr-2' />
+  }
+  if (titleLower.includes('ulaşım') || titleLower.includes('transport')) {
+    return <FaBus size={16} className='mr-2' />
+  }
+  if (titleLower.includes('dahil olmayan') || titleLower.includes('not included')) {
+    return <IoClose size={20} className='mr-2' />
+  }
+  if (titleLower.includes('dahil') || titleLower.includes('included')) {
+    return <FaCheckCircle size={16} className='mr-2' />
+  }
+  if (titleLower.includes('vize') || titleLower.includes('visa')) {
+    return <FaPassport size={16} className='mr-2' />
+  }
+  
+  return null
+}
+
+const TourTableOfContents: React.FC<TourTableOfContentsProps> = ({ onVisaClick }) => {
   return (
     <div
-      className='relative z-20 rounded-md bg-orange-900 text-white'
+      className='relative z-20 shadow-[-10px_10px_20px_0px_rgba(0,0,0,0.25)] rounded-lg bg-orange-900 text-white'
       style={{ pointerEvents: 'auto' }}
     >
       <div className='relative mx-auto max-w-6xl overflow-hidden'>
-        <div className='flex items-center justify-center overflow-x-auto overflow-y-hidden text-sm md:mt-0 md:flex-row md:justify-between md:overflow-visible'>
+        <div className='w-full'>
           <TableOfContents
             classNames={classes}
             variant='filled'
@@ -19,13 +55,51 @@ const TourTableOfContents: React.FC = () => {
               selector:
                 ' #general, #hotel, #tour-program, #transport, #included-information, #not-included-information, #visa-infos',
             }}
-            getControlProps={({ data }) => ({
-              onClick: () =>
-                data.getNode().scrollIntoView({
-                  behavior: 'smooth',
-                }),
-              children: data.value,
-            })}
+            getControlProps={({ data }) => {
+              const icon = getIconForTitle(data.value)
+              const isVisa = data.value.toLowerCase().includes('vize') || data.value.toLowerCase().includes('visa')
+              
+              if (isVisa && onVisaClick) {
+                return {
+                  onClick: (e: React.MouseEvent) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    if (e.nativeEvent) {
+                      e.nativeEvent.stopImmediatePropagation()
+                    }
+                    onVisaClick()
+                  },
+                  onMouseDown: (e: React.MouseEvent) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                  },
+                  href: '#',
+                  children: (
+                    <span className='flex items-center'>
+                      {icon}
+                      {data.value}
+                    </span>
+                  ),
+                }
+              }
+              
+              return {
+                onClick: () => {
+                  const node = data.getNode()
+                  if (node) {
+                    node.scrollIntoView({
+                      behavior: 'smooth',
+                    })
+                  }
+                },
+                children: (
+                  <span className='flex items-center'>
+                    {icon}
+                    {data.value}
+                  </span>
+                ),
+              }
+            }}
           />
         </div>
       </div>

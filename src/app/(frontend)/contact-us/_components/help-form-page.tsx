@@ -53,9 +53,9 @@ export const HelpPage = () => {
   return (
     <form
       onSubmit={formAction.handleSubmit(handleSubmit)}
-      className='mt-8 border-b pt-6 pb-2'
+      className='pb-2'
     >
-      <div className='px-7'>
+      <div className='px-7 border rounded-md p-3'>
         <Title order={2} className='mb-4 text-gray-800'>
           Bize Ulaşın
         </Title>

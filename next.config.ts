@@ -46,6 +46,10 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https' as const,
+        hostname: 'paraflystatic.mncdn.com',
+      },
+      {
+        protocol: 'https' as const,
         hostname: '*.s3.amazonaws.com',
       },
       {

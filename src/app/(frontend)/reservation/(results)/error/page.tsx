@@ -54,7 +54,7 @@ const CheckoutErrorPage = async ({
         <p>
           Sorun devam ederse, lütfen destek için{' '}
           <a href='tel:08508780400' className='text-blue-600 hover:underline'>
-            0850 878 0 400
+            0850 840 01 51
           </a>{' '}
           numaralı müşteri hizmetlerimizle iletişime geçin.
         </p>

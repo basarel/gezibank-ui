@@ -105,7 +105,7 @@ export const ThemeCardsBlock: React.FC<ThemeCardsBlockProps> = ({
                     {item.location && (
                       <p className='text-xs text-gray-900'>{item.location}</p>
                     )}
-                    <div className='flex flex-col gap-2 pt-5'>
+                    <div className='flex items-center justify-between gap-2 pt-5'>
                       <div className='flex items-center gap-2'> 
                       {item.price && (
                         <p className='text-lg font-bold text-gray-900'>{item.price}</p>

@@ -15,11 +15,13 @@ import {
   Box,
   Button,
   Center,
+  Checkbox,
   Group,
   LoadingOverlay,
   Modal,
   NativeSelect,
   SegmentedControl,
+  Stack,
   Text,
   TextInput,
   UnstyledButton,
@@ -61,9 +63,6 @@ import {
 } from '@/libs/credit-card-utils'
 
 import { MdCreditCard } from 'react-icons/md'
-import { FlightAgreementContent } from '@/components/contracts/flightAgreement'
-import { HotelAgreementContent } from '@/components/contracts/hotelAgreement'
-import { BusAgreementContent } from '@/components/contracts/busAgreement'
 import { TourAgreementContent } from '@/components/contracts/tourAgreement'
 import { PrivacyAgreementContent } from '@/components/contracts/privacy'
 import { useCheckoutContext } from '@/app/(frontend)/reservation/store'
@@ -117,6 +116,8 @@ export const PaymentPageSection = () => {
     resolver: zodResolver(paymentValidationSchema),
     defaultValues: {
       installment: 1,
+      agreementAccepted: false,
+      privacyAccepted: false,
     },
   })
 
@@ -137,6 +138,13 @@ export const PaymentPageSection = () => {
     () => checkoutQueryMemoData?.viewBag.ModuleName,
     [checkoutQueryMemoData?.viewBag.ModuleName]
   ) as ProductPassengerApiResponseModel['viewBag']['ModuleName']
+
+  useEffect(() => {
+    if (moduleName === 'TRANSFER') {
+      formMethods.setValue('agreementAccepted', true)
+    }
+  }, [moduleName, formMethods])
+
 
   const paymentMutation = useMutation<
     PaymentResponseType | null | undefined,
@@ -305,9 +313,26 @@ export const PaymentPageSection = () => {
 
   const reservationData = checkoutQueryMemoData
   const passengerData = reservationData?.treeContainer
-  const firstPassengerFullName = passengerData?.childNodes[0].items[0].value
-    ? `${upperFirst(passengerData?.childNodes[0].items[0].value.firstName.toLocaleLowerCase())} ${upperFirst(passengerData?.childNodes[0].items[0].value.lastName.toLocaleLowerCase())}`
-    : `${upperFirst(passengerData?.childNodes[0]?.childNodes?.at(0)?.items.at(0)?.value?.firstName?.toLowerCase() ?? '')} ${upperFirst(passengerData?.childNodes[0].childNodes.at(0)?.items.at(0)?.value.lastName.toLocaleLowerCase() ?? '')}`
+  
+  const firstPassengerFullName = useMemo(() => {
+    if (passengerData?.childNodes[0]?.items[0]?.value) {
+      const firstName = passengerData.childNodes[0].items[0].value.firstName
+      const lastName = passengerData.childNodes[0].items[0].value.lastName
+      if (firstName && lastName) {
+        return `${upperFirst(firstName.toLocaleLowerCase())} ${upperFirst(lastName.toLocaleLowerCase())}`
+      }
+    }
+    
+    if (passengerData?.childNodes[0]?.childNodes?.at(0)?.items.at(0)?.value) {
+      const firstName = passengerData.childNodes[0].childNodes.at(0)?.items.at(0)?.value?.firstName
+      const lastName = passengerData.childNodes[0].childNodes.at(0)?.items.at(0)?.value?.lastName
+      if (firstName && lastName) {
+        return `${upperFirst(firstName.toLowerCase())} ${upperFirst(lastName.toLocaleLowerCase())}`
+      }
+    }
+    
+    return ''
+  }, [passengerData])
 
   const isDomestic = checkoutQuery.data?.data?.paymentIndexModel.isDomestic
 
@@ -711,21 +736,72 @@ export const PaymentPageSection = () => {
 
         {paymentButtonSectionIsVisible && (
           <CheckoutCard>
-            <Text className='pt-5 text-center md:px-10' fz={'sm'}>
-              Ödemeyi tamamla butonuna tıkladığımda{' '}
+            <Stack gap='md' className='pt-5'>
               {moduleName !== 'TRANSFER' && (
-                <>
-                  <Anchor onClick={openAgreementModal} fz={'inherit'}>
-                    Mesafeli Satış Sözleşmesini
-                  </Anchor>
-                   ve{' '}
-                </>
+                <Checkbox
+                  label={
+                    <Text fz='sm'>
+                      <Anchor
+                        onClick={(e) => {
+                          e.preventDefault()
+                          openAgreementModal()
+                        }}
+                        fz='inherit'
+                        className='underline'
+                      >
+                        Mesafeli Satış Sözleşmesini
+                      </Anchor>{' '}
+                      okudum ve kabul ediyorum
+                    </Text>
+                  }
+                  checked={formMethods.watch('agreementAccepted')}
+                  onChange={(e) => {
+                    const isChecked = formMethods.watch('agreementAccepted')
+                    if (isChecked) {
+                      // İşaretliyse işareti kaldır
+                      formMethods.setValue('agreementAccepted', false)
+                    } else {
+                      // İşaretli değilse modal aç
+                      e.preventDefault()
+                      openAgreementModal()
+                    }
+                  }}
+                  error={
+                    formMethods.formState.errors.agreementAccepted?.message
+                  }
+                />
               )}
-              <Anchor fz='inherit' onClick={openPrivacyAgreementModal}>
-                Gizlilik Sözleşmesini
-              </Anchor>
-               okuduğumu ve kabul ettiğimi onaylıyorum.
-            </Text>
+              <Checkbox
+                label={
+                  <Text fz='sm'>
+                    <Anchor
+                      onClick={(e) => {
+                        e.preventDefault()
+                        openPrivacyAgreementModal()
+                      }}
+                      fz='inherit'
+                      className='underline'
+                    >
+                      Gizlilik Sözleşmesini
+                    </Anchor>{' '}
+                    okudum ve kabul ediyorum
+                  </Text>
+                }
+                checked={formMethods.watch('privacyAccepted')}
+                onChange={(e) => {
+                  const isChecked = formMethods.watch('privacyAccepted')
+                  if (isChecked) {
+                    // İşaretliyse işareti kaldır
+                    formMethods.setValue('privacyAccepted', false)
+                  } else {
+                    // İşaretli değilse modal aç
+                    e.preventDefault()
+                    openPrivacyAgreementModal()
+                  }
+                }}
+                error={formMethods.formState.errors.privacyAccepted?.message}
+              />
+            </Stack>
             <div className='flex justify-center'>
               {checkoutQueryMemoData ? (
                 <div className='flex flex-col gap-3'>
@@ -742,7 +818,16 @@ export const PaymentPageSection = () => {
                       />
                     </div>
                   </div>
-                  <Button className='my-3' size='lg' radius='md' type='submit'>
+                  <Button
+                    className='my-3'
+                    size='lg'
+                    radius='md'
+                    type='submit'
+                    disabled={
+                      !formMethods.watch('agreementAccepted') ||
+                      !formMethods.watch('privacyAccepted')
+                    }
+                  >
                     Ödemeyi Tamamla
                   </Button>
                 </div>
@@ -800,55 +885,35 @@ export const PaymentPageSection = () => {
         size={isMobile ? '100%' : '80%'}
         title='Mesafeli Satış Sözleşmesi'
       >
-        {(() => {
-          switch (moduleName) {
-            case 'Flight':
-              return (
-                <FlightAgreementContent
-                  customerFullName={firstPassengerFullName}
-                />
-              )
+        <Stack gap='md'>
+          <Box>
+            {(() => {
+              switch (moduleName) {
+                 
 
-            case 'HOTEL':
-              return (
-                <HotelAgreementContent
-                  customerFullName={firstPassengerFullName}
-                />
-              )
+                case 'TOUR':
+                  return <TourAgreementContent />
 
-            case 'BUS':
-              return (
-                <BusAgreementContent
-                  customerFullName={firstPassengerFullName}
-                />
-              )
-
-            case 'TOUR':
-              return <TourAgreementContent />
-
-            case 'CARRENTAL':
-              return (
-                <>
-                  <Box
-                    visibleFrom='sm'
-                    mih={800}
-                    className='size-full'
-                    component='iframe'
-                    src='/car-rent-terms.pdf#toolbar=0&navpanes=0&scrollbar=0'
-                  />
-                  <Anchor
-                    hiddenFrom='sm'
-                    href='/car-rent-terms.pdf'
-                    target='_blank'
-                  >
-                    PDF&apos;yi Yeni Sekmede Aç
-                  </Anchor>
-                </>
-              )
-            default:
-              return null
-          }
-        })()}
+               
+                default:
+                  return null
+              }
+            })()}
+          </Box>
+          <Group justify='flex-end' className='border-t pt-4 mt-4'>
+            <Button
+              onClick={() => {
+                formMethods.setValue('agreementAccepted', true)
+                formMethods.trigger('agreementAccepted')
+                closeAgreementModal()
+              }}
+              size='md'
+              radius='md'
+            >
+              Okudum, Onaylıyorum
+            </Button>
+          </Group>
+        </Stack>
       </Modal>
       <Modal
         opened={isPrivacyAgreementModalOpen}
@@ -856,7 +921,24 @@ export const PaymentPageSection = () => {
         size={isMobile ? '100%' : '80%'}
         title='Gizlilik Sözleşmesi'
       >
-        <PrivacyAgreementContent />
+        <Stack gap='md'>
+          <Box>
+            <PrivacyAgreementContent />
+          </Box>
+          <Group justify='flex-end' className='border-t pt-4 mt-4'>
+            <Button
+              onClick={() => {
+                formMethods.setValue('privacyAccepted', true)
+                formMethods.trigger('privacyAccepted')
+                closePrivacyAgreementModal()
+              }}
+              size='md'
+              radius='md'
+            >
+              Okudum, Onaylıyorum
+            </Button>
+          </Group>
+        </Stack>
       </Modal>
     </>
   )

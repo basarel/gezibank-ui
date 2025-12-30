@@ -63,7 +63,7 @@ export const RenderBlocks: React.FC<RenderBlocksProps> = ({ blocks }) => {
             return <BlockComponent key={blockId} {...blockData} />
           }
           return (
-            <Container key={blockId} className='my-5 w-full'>
+            <Container key={blockId} className='w-full'>
               <BlockComponent {...blockData} />
             </Container>
           )

@@ -1,0 +1,13 @@
+.thumbnailContainer {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.thumbnailContainer::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+

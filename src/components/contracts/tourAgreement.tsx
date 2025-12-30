@@ -40,7 +40,7 @@ export const TourAgreementContent = () => {
         </p>
         <p>
           <span>Telefon: </span>
-          <span>0850 878 0 400</span>
+          <span>0850 840 01 51</span>
         </p>
         <p>
           <span>Faks: </span>

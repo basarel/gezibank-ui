@@ -72,25 +72,18 @@ function CallForm() {
             href='tel:08508780400'
             className='font-medium text-blue-800 underline hover:no-underline'
           >
-            0850 878 0 400
+            0850 840 01 51
           </a>{' '}
           numaralı telefondan sizinle iletişime geçecektir.
         </div>
       </Modal>
       <Grid>
-        <GridCol span={12} className='text-sm'>
-          Konu başlığına göre sorumlu olacak departmanlar farklılık
-          göstermektedir. Konu başlığını doğru seçmeniz talebinizin en kısa
-          sürede sonuçlanmasına yardımcı olacaktır.
-        </GridCol>
         <GridCol span={12}>
           <NativeSelect
             size='md'
             label='Konu'
             data={[
               { label: 'Seçim Yapınız', value: '' },
-              'Otel veya Tur Rezervasyon Talebi',
-              'Uçak Bileti Rezervasyon Talebi',
               'Grup Rezervasyon Talebi',
               'Rezervasyon Sonrası Evrak Talebi',
               'İptal/İade veya Değişiklik Talebi',

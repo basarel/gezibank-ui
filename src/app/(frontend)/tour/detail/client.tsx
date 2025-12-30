@@ -9,10 +9,13 @@ import {
   Title,
   Collapse,
   Alert,
+  UnstyledButton,
 } from '@mantine/core'
-import { useDisclosure } from '@mantine/hooks'
+import { modals } from '@mantine/modals'
+import { CallForm } from '@/components/call-form'
+import { useDisclosure, useMediaQuery } from '@mantine/hooks'
 import { useEffect, useRef, useState } from 'react'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import NumberFlow from '@number-flow/react'
 import { useTransitionRouter } from 'next-view-transitions'
 import { createSerializer, useQueryStates } from 'nuqs'
@@ -27,25 +30,32 @@ import { reservationParsers } from '@/app/(frontend)/reservation/searchParams'
 import { tourDetailPageParamParser } from '@/modules/tour/detailSearchParams'
 import { CruiseSearchEngine } from '@/modules/cruise'
 import { IoCalendarClearOutline } from 'react-icons/io5'
-import { MdOutlineCameraAlt, MdOutlineLocalPhone } from 'react-icons/md'
+import { MdDownloading, MdOutlineCameraAlt, MdOutlineLocalPhone } from 'react-icons/md'
 import { TourMediaGallery } from '@/app/(frontend)/tour/_components/media-gallery/media-gallery'
 import TourTableOfContents from '@/app/(frontend)/tour/_components/table-of-contents'
+import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas'
+import { FaDownload } from 'react-icons/fa'
 
 import dayjs from 'dayjs'
 import { CiMail } from 'react-icons/ci'
 import { validateUrl, formatCurrency } from '@/libs/util'
 import { cdnSiteImageUrl } from '@/libs/cms-data'
-import { Skeleton, Stack } from '@mantine/core'
+import { Stack } from '@mantine/core'
 import NotFound from '@/app/(frontend)/not-found'
+import { TourDetailSkeleton } from './tour-detail-skeleton'
 import Breadcrumb from '@/app/breadcrumb'
 import Link from 'next/link'
-import { FaInfoCircle, FaBus } from 'react-icons/fa'
+import { FaInfoCircle, FaBus, FaBed } from 'react-icons/fa'
 import { HiOutlineLocationMarker } from 'react-icons/hi'
 import { TourGeneralInformation } from './tour-general-information'
-import { RiPlaneFill, RiWhatsappFill } from 'react-icons/ri'
+import { RiPlaneFill, RiWhatsappFill, RiInformationLine } from 'react-icons/ri'
 import { TbCalendarClock } from 'react-icons/tb'
+import { SearchCampaign } from '@/libs/payload'
+import { Route } from 'next'
 const TourDetailClient = () => {
   const router = useTransitionRouter()
+  const isMobile = useMediaQuery('(max-width: 768px)')
   const [
     isOpenExtraServicesModal,
     { open: openExtraServicesModal, close: closeExtraServicesModal },
@@ -53,11 +63,60 @@ const TourDetailClient = () => {
   const [searchParams, setSearchParams] = useQueryStates(
     tourDetailPageParamParser
   )
+  const tourProgramRef = useRef<HTMLDivElement>(null)
 
   const lastKeys = useRef({
     packageKey: '',
     calculatedId: '',
   })
+
+  const scrollToTransport = () => {
+    const transportElement = document.getElementById('transport')
+    if (transportElement) {
+      transportElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    }
+  }
+  const downloadPDF = async () => {
+    if (!tourProgramRef.current) return
+
+    try {
+      const canvas = await html2canvas(tourProgramRef.current, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+      })
+
+      const imgData = canvas.toDataURL('image/png')
+      const pdf = new jsPDF('p', 'mm', 'a4')
+      const pdfWidth = pdf.internal.pageSize.getWidth()
+      const pdfHeight = pdf.internal.pageSize.getHeight()
+      const imgWidth = canvas.width
+      const imgHeight = canvas.height
+      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight)
+      const imgScaledWidth = imgWidth * ratio
+      const imgScaledHeight = imgHeight * ratio
+      const marginX = (pdfWidth - imgScaledWidth) / 2
+      const marginY = (pdfHeight - imgScaledHeight) / 2
+
+      pdf.addImage(imgData, 'PNG', marginX, marginY, imgScaledWidth, imgScaledHeight)
+      let heightLeft = imgScaledHeight
+      let position = marginY
+
+      while (heightLeft >= pdfHeight) {
+        position = heightLeft - pdfHeight + marginY
+        pdf.addPage()
+        pdf.addImage(imgData, 'PNG', marginX, -position, imgScaledWidth, imgScaledHeight)
+        heightLeft -= pdfHeight
+      }
+
+      pdf.save('tur-programi.pdf')
+    } catch (error) {
+      console.error('PDF oluşturma hatası:', error)
+    }
+  }
 
   useEffect(() => {
     return () => {
@@ -69,6 +128,23 @@ const TourDetailClient = () => {
   }, [])
 
   const detailQuery = useTourDetailQuery()
+  const [visaModalOpened, { open: openVisaModal, close: closeVisaModal }] = useDisclosure(false)
+ 
+  const { data: searchDataPayload } = useQuery({
+    queryKey: ['search-data', 'payload'],
+    queryFn: async () => {
+      const response = await fetch(
+        '/api/search?where[active][equals]=true&sort=ordering&limit=1&depth=1'
+      )
+      if (!response.ok) {
+        throw new Error('Failed to fetch search data')
+      }
+      const data = await response.json()
+      return data.docs?.[0] || null
+    },
+  })
+
+  const tourCampaigns: SearchCampaign[] = searchDataPayload?.campaigns ?? []
 
   if (
     (!searchParams.searchToken || !searchParams.sessionToken) &&
@@ -298,21 +374,28 @@ const TourDetailClient = () => {
   const totalNights = dayjsEndDate.diff(dayjsStartDate, 'day')
   const totalDays = totalNights + 1
 
-  // Güzergah bilgisini formatla
   const formatItinerary = () => {
     if (
       detailQuery.data?.package.cities &&
       detailQuery.data.package.cities.length > 0
     ) {
-      return detailQuery.data.package.cities
-        .map((city) => city.title)
-        .join(' – ')
+      const formattedCities: string[] = []
+      const seenCities = new Set<string>()
+
+      detailQuery.data.package.cities.forEach((city) => {
+        const cityName = city.title
+        if (!seenCities.has(cityName)) {
+          seenCities.add(cityName)
+          formattedCities.push(cityName)
+        }
+      })
+
+      return formattedCities.join(' – ')
     }
     return ''
   }
   const itineraryText = formatItinerary()
 
-  // Fiyat bilgisi
   const euroPriceValue = !detailQuery.data?.package.isDomestic
     ? detailQuery.data?.package.priceInformations?.priceForDouble?.value
     : null
@@ -358,11 +441,7 @@ const TourDetailClient = () => {
           {!detailQuery.isLoading && !detailQuery.data ? (
             <NotFound />
           ) : detailQuery.isLoading || !detailQuery.data ? (
-            <Stack gap='md'>
-              <Skeleton height={400} />
-              <Skeleton height={200} />
-              <Skeleton height={300} />
-            </Stack>
+            <TourDetailSkeleton />
           ) : detailQuery.data ? (
             <div className='relative'>
               <div className='relative flex flex-col gap-4 px-3 md:flex-row md:px-0'>
@@ -383,6 +462,14 @@ const TourDetailClient = () => {
                         alt={detailQuery.data.package.title}
                       />
                     </figure>
+                    {isMobile && images.length > 1 && (
+                      <div className='absolute bottom-3 right-3 flex items-center gap-1.5 rounded-lg bg-black/60 px-2.5 py-1.5 backdrop-blur-sm'>
+                        <MdOutlineCameraAlt size={16} className='text-white' />
+                        <span className='text-xs font-medium text-white'>
+                         Galeri ({images.length})
+                        </span>
+                      </div>
+                    )}
                   </div>
                 )}
 
@@ -454,8 +541,8 @@ const TourDetailClient = () => {
                         {detailQuery.data.package.title}
                       </Title>
                     </div>
-
-                    <div className='flex flex-col gap-6 pt-5'>
+<div className='grid items-center md:justify-start gap-2 md:grid-cols-12'>
+                    <div className='flex flex-col gap-6 pt-5 font-medium col-span-8'>
                       {itineraryText && (
                         <div className='flex gap-2'>
                           <HiOutlineLocationMarker
@@ -481,7 +568,10 @@ const TourDetailClient = () => {
                       </div>
 
                       {transportTypeText && (
-                        <div className='flex items-center gap-2'>
+                        <div 
+                          className='flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity'
+                          onClick={scrollToTransport}
+                        >
                           {transportType === 1 ? (
                             <RiPlaneFill
                               size={24}
@@ -489,22 +579,91 @@ const TourDetailClient = () => {
                             />
                           ) : (
                             <FaBus
-                              size={22}
+                              size={21}
                               className='shrink-0 text-blue-700'
                             />
                           )}
                           <span className='text-sm text-orange-900 md:text-base'>
                             {transportTypeText}
                           </span>
+                          <RiInformationLine
+                            size={18}
+                            className='shrink-0 text-blue-700'
+                          />
                         </div>
                       )}
+
+                      {(detailQuery.data?.package.hotelInformations &&
+                        detailQuery.data.package.hotelInformations.length > 0) ||
+                      (detailQuery.data?.package.description &&
+                        detailQuery.data.package.description.length > 0) ? (
+                        <div className='flex flex-col gap-1'>
+                          <div className='flex items-center gap-2'>
+                            <FaBed
+                              size={24}
+                              className='shrink-0 text-blue-700'
+                            />
+                            <span className='text-sm text-orange-900 md:text-base font-semibold'>
+                            {detailQuery.data?.package.hotelInformations &&
+                          detailQuery.data.package.hotelInformations.length > 0 ? (
+                            <div className='flex flex-col gap-1'>
+                              {detailQuery.data.package.hotelInformations.map(
+                                (hotel, hotelIndex) =>
+                                  hotel.name && (
+                                    <span
+                                      key={hotelIndex}
+                                      className='text-xs text-orange-900 md:text-sm'
+                                    >
+                                      {hotel.name}
+                                    </span>
+                                  )
+                              )}
+                            </div>
+                          ) : detailQuery.data?.package.description ? (
+                            <div
+                              className='text-xs text-orange-900 md:text-sm'
+                              dangerouslySetInnerHTML={{
+                                __html: detailQuery.data.package.description,
+                              }}
+                            />
+                          ) : null}
+                            </span>
+                          </div>
+                         
+                        </div>
+                      ) : null}
                     </div>
+                      {tourCampaigns && tourCampaigns.length > 0 && (
+                        <div className='flex flex-wrap gap-2 md:mt-10 mt-4 col-span-4'>
+                          {tourCampaigns
+                            .filter((campaign) => {
+                              if (campaign.active === false) return false
+                              
+                              if (detailQuery.data?.package.isDomestic) {
+                                return campaign.viewCountry === '1'
+                              } else {
+                                return campaign.viewCountry === '0'
+                              }
+                            })
+                            .map((campaign) => (
+                              <Link
+                                key={campaign.id}
+                                href={campaign.link as Route}
+                              >
+                                <div className='rounded-md bg-green-50 text-green-700 px-3 py-1.5 text-sm font-medium hover:bg-green-100 transition-all duration-200'>
+                                  {campaign.text}
+                                </div>
+                              </Link>
+                            ))}
+                        </div>
+                      )}
+                  </div>
                   </div>
 
                   <div className='mt-auto flex w-full flex-col items-center gap-4 md:w-auto md:items-end'>
-                    {euroPriceFormatted && (
+                    {!detailQuery.data?.package.isDomestic && euroPriceFormatted && (
                       <div className='flex w-full flex-col items-center gap-2 md:w-auto md:items-end'>
-                        <div className='text-xs text-gray-600 md:text-sm md:text-black'>
+                        <div className='md:text-base text-sm font-medium'>
                           Çift Kişilik Oda Kişi Başı
                         </div>
                         <div className='w-full rounded-lg bg-orange-900 px-4 py-3 md:w-auto md:px-6 md:py-3'>
@@ -513,30 +672,44 @@ const TourDetailClient = () => {
                             <span className='text-xl md:text-3xl'>€</span>
                           </div>
                         </div>
-                        <div className='text-center text-xs font-medium text-gray-700 md:text-right md:text-sm md:text-black md:text-green-900'>
-                          (
-                          {formatCurrency(
-                            detailQuery.data.package.tlPrice.value
-                          )}
-                          )
+                        <UnstyledButton
+                          onClick={downloadPDF}
+                          className='w-full md:w-auto flex items-center justify-center gap-1 rounded-md bg-orange-50 px-3 py-2 transition-colors hover:bg-orange-100 md:bg-transparent md:py-2'
+                        >
+                         <MdDownloading size={26} className='text-blue-600'/>
+                          <span className='text-sm font-bold md:text-base'>
+                           Tur Programını İndir
+                          </span>
+                        </UnstyledButton>
+                      </div>
+                    )}
+                    {detailQuery.data?.package.isDomestic && (
+                      <div className='flex w-full flex-col items-center gap-2 md:w-auto md:items-end'>
+                        <div className='md:text-base text-sm font-medium'>
+                          Çift Kişilik Oda Kişi Başı
                         </div>
-                        <div className='text-center text-xs text-gray-600 md:text-right md:text-sm md:text-black'>
-                          &apos;den başlayan fiyatlar
+                        <div className='w-full rounded-lg bg-orange-900 px-4 py-3 md:w-auto md:px-6 md:py-3'>
+                          <div className='flex items-start justify-center gap-1 text-3xl font-bold text-white md:justify-start md:text-3xl'>
+                            {formatCurrency(
+                              detailQuery.data.package.tlPrice.value
+                            )}
+                           </div>
                         </div>
+                        <UnstyledButton
+                          onClick={downloadPDF}
+                          className='w-full md:w-auto flex items-center justify-center gap-1 rounded-md bg-orange-50 px-3 py-2 transition-colors hover:bg-orange-100 md:bg-transparent md:py-2'
+                        >
+                         <MdDownloading size={26} className='text-blue-600'/>
+                          <span className='text-sm font-bold md:text-base'>
+                           Tur Programını İndir
+                          </span>
+                        </UnstyledButton>
                       </div>
                     )}
 
                     <div className='flex w-full flex-col gap-3 md:w-auto'>
-                      {/* <Button
-                        variant='outline'
-                        color='black'
-                        className='w-full md:w-auto border-black text-black hover:bg-gray-100 hover:text-blue-600'
-                        leftSection={<MdOutlineCameraAlt size={18} />}
-                        size='md'
-                      >
-                        <span className='text-sm md:text-base'>Tur Programını İndir</span>
-                      </Button> */}
-                      <div className='grid grid-cols-2 gap-2 rounded-lg p-2 shadow-lg md:flex md:flex-col md:p-2 md:shadow-2xl'>
+                    
+                      <div className='grid grid-cols-2 gap-2 md:rounded-lg md:p-2 md:shadow-lg md:flex md:flex-col md:shadow-2xl'>
                         <Link
                           href='https://wa.me/08508400151'
                           className='flex items-center justify-center gap-2 rounded-md bg-green-50 px-3 py-2 transition-colors hover:bg-green-100 md:bg-transparent md:py-2'
@@ -549,10 +722,14 @@ const TourDetailClient = () => {
                             size={20}
                           />
                         </Link>
-                        <Link
-                          href='tel:0850 840 01 51'
-                          target='_blank'
-                          className='flex items-center justify-center gap-2 rounded-md bg-orange-50 px-3 py-2 transition-colors hover:bg-orange-100 md:bg-transparent md:py-2'
+                        <UnstyledButton
+                          onClick={() => {
+                            modals.open({
+                              title: 'Sizi Arayalım',
+                              children: <CallForm />,
+                            })
+                          }}
+                          className='flex items-center justify-center gap-2 rounded-md bg-orange-50 md:px-3 py-2 transition-colors hover:bg-orange-100 md:bg-transparent md:py-2'
                         >
                           <span className='text-sm font-medium md:text-base'>
                             Sizi Arayalım
@@ -561,7 +738,7 @@ const TourDetailClient = () => {
                             className='shrink-0 text-orange-600 md:text-orange-900'
                             size={20}
                           />
-                        </Link>
+                        </UnstyledButton>
                       </div>
                     </div>
                   </div>
@@ -569,16 +746,16 @@ const TourDetailClient = () => {
               </Container>
 
               <Container className='px-0'>
-                <div className='sticky top-0 z-20 my-6 bg-orange-900  md:rounded'>
-                  <TourTableOfContents />
+                <div className='sticky top-0 z-20 my-6'>
+                  <TourTableOfContents onVisaClick={openVisaModal} />
                 </div>
 
-                <div className='flex flex-col gap-4 py-4 md:grid md:grid-cols-12 md:grid-rows-[auto_auto] md:py-0'>
-                  <div className='order-2 rounded-lg border md:order-0 md:col-span-8 md:row-span-2'>
+                <div className='flex flex-col gap-4 py-4 md:flex md:flex-row md:items-start md:gap-4 md:py-0'>
+                  <div ref={tourProgramRef} className='order-2 rounded-xl border md:order-0 md:flex-1 shadow-[-10px_10px_20px_0px_rgba(0,0,0,0.25)]'>
                     <TourDetail data={detailQuery.data} />
                   </div>
-                  <div className='order-1 md:col-span-4 md:col-start-9 md:row-start-1'>
-                    <div className='relative flex flex-col gap-5 overflow-hidden rounded-lg border p-5 shadow-sm'>
+                  <div className='order-1 flex flex-col gap-4 md:w-[400px] md:flex-shrink-0 md:order-1'>
+                    <div className='relative flex flex-col gap-5 overflow-hidden rounded-xl border p-5 shadow-[-10px_1px_10px_0px_rgba(0,0,0,0.25)]'>
                       <TourDetailPriceSection
                         calculatedTotalPrice={
                           addOrRemoveExtraServicesMutation.data?.data?.tlPrice
@@ -645,7 +822,7 @@ const TourDetailClient = () => {
                                   size={19}
                                 />
                                 <span className='col-span-5'>
-                                  0850 878 0 400
+                                  0850 840 01 51
                                 </span>
                               </Link>
                             </div>
@@ -672,12 +849,30 @@ const TourDetailClient = () => {
                         Rezervasyon Yap
                       </Button>
                     </div>
+                    <div className='rounded-xl border p-5 md:block hidden shadow-[-10px_1px_10px_0px_rgba(0,0,0,0.25)]'>
+                      <TourGeneralInformation
+                        data={detailQuery.data}
+                        transportTypeText={transportTypeText}
+                        transportType={transportType}
+                        visaModalOpened={visaModalOpened}
+                        onVisaModalOpen={openVisaModal}
+                        onVisaModalClose={closeVisaModal}
+                        isMobile={false}
+                      />
+                    </div>
                   </div>
-                  <div className='order-3 rounded-lg border p-5 md:col-span-4 md:col-start-9 md:row-start-2'>
-                    <TourGeneralInformation
-                      data={detailQuery.data}
-                      transportTypeText={transportTypeText}
-                    />
+                  <div className='order-3 md:hidden'>
+                    <div className='rounded-lg border p-5'>
+                      <TourGeneralInformation
+                        data={detailQuery.data}
+                        transportTypeText={transportTypeText}
+                        transportType={transportType}
+                        visaModalOpened={visaModalOpened}
+                        onVisaModalOpen={openVisaModal}
+                        onVisaModalClose={closeVisaModal}
+                        isMobile={true}
+                      />
+                    </div>
                   </div>
                 </div>
               </Container>

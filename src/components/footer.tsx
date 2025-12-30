@@ -94,7 +94,7 @@ const Footer = async () => {
                 <div key={index} className='flex flex-col gap-3'>
                   {column.title && (
                     <div className='flex flex-col'>
-                      <h3 className='text-xl font-semibold text-gray-800 min-h-[28px] flex items-center md:pb-4 justify-center md:justify-start'>
+                      <h3 className='text-xl font-semibold text-gray-800 min-h-[28px] flex items-center md:pb-2 mt-2 justify-center md:justify-start'>
                         {column.title}
                       </h3>
                       <div className='border-b-2 border-blue-600 mt-1 w-full'></div>
