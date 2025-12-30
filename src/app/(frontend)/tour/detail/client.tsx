@@ -51,8 +51,9 @@ import { HiOutlineLocationMarker } from 'react-icons/hi'
 import { TourGeneralInformation } from './tour-general-information'
 import { RiPlaneFill, RiWhatsappFill, RiInformationLine } from 'react-icons/ri'
 import { TbCalendarClock } from 'react-icons/tb'
-import { SearchCampaign } from '@/libs/payload'
+import { SearchCampaign, Detail } from '@/libs/payload'
 import { Route } from 'next'
+import { TourDetailVideoModal } from './tour-detail-video-modal'
 const TourDetailClient = () => {
   const router = useTransitionRouter()
   const isMobile = useMediaQuery('(max-width: 768px)')
@@ -129,7 +130,41 @@ const TourDetailClient = () => {
 
   const detailQuery = useTourDetailQuery()
   const [visaModalOpened, { open: openVisaModal, close: closeVisaModal }] = useDisclosure(false)
+  const [videoModalOpened, { open: openVideoModal, close: closeVideoModal }] = useDisclosure(false)
  
+  // Tur başlığına göre video detayını çek
+  const tourTitle = detailQuery.data?.package.title
+  const { data: tourDetailVideo } = useQuery<Detail | null>({
+    queryKey: ['tour-detail-video', tourTitle],
+    queryFn: async () => {
+      if (!tourTitle) return null
+      
+      try {
+        const response = await fetch(`/api/detail-video?tourTitle=${encodeURIComponent(tourTitle)}`)
+        if (!response.ok) {
+          return null
+        }
+        const data = await response.json()
+        return data || null
+      } catch (error) {
+        return null
+      }
+    },
+    enabled: !!tourTitle,
+  })
+
+  // Video varsa ve sayfa yüklendiğinde modal'ı aç
+  useEffect(() => {
+    if (tourDetailVideo?.youtubeUrl && detailQuery.isSuccess) {
+      // Kısa bir gecikme ile modal'ı aç (sayfa yüklendikten sonra)
+      const timer = setTimeout(() => {
+        openVideoModal()
+      }, 500)
+      return () => clearTimeout(timer)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tourDetailVideo?.youtubeUrl, detailQuery.isSuccess])
+
   const { data: searchDataPayload } = useQuery({
     queryKey: ['search-data', 'payload'],
     queryFn: async () => {
@@ -953,6 +988,13 @@ const TourDetailClient = () => {
           title={detailQuery?.data?.package?.title}
           opened={galleryOpened}
           onClose={() => setGalleryOpened(false)}
+        />
+      )}
+      {tourDetailVideo?.youtubeUrl && (
+        <TourDetailVideoModal
+          opened={videoModalOpened}
+          onClose={closeVideoModal}
+          youtubeUrl={tourDetailVideo.youtubeUrl}
         />
       )}
     </>

@@ -325,3 +325,63 @@ export async function getSearch(): Promise<Search | null> {
     return null
   }
 }
+
+export type Detail = {
+  id: number
+  title: string
+  keywords: Array<{ keyword: string }>
+  youtubeUrl?: string | null
+  isActive: boolean
+}
+
+export async function getDetailByTourTitle(
+  tourTitle: string
+): Promise<Detail | null> {
+  try {
+    if (!tourTitle || typeof tourTitle !== 'string') {
+      return null
+    }
+
+    const payload = await getPayloadInstance()
+    const result = await payload.find({
+      collection: 'detail',
+      where: {
+        isActive: {
+          equals: true,
+        },
+      },
+      limit: 100,
+      depth: 1,
+    })
+
+    if (!result.docs || result.docs.length === 0) {
+      return null
+    }
+
+    const normalizedTourTitle = tourTitle.toLowerCase().trim()
+
+    // Her kayıt için keywords kontrolü yap
+    for (const detail of result.docs) {
+      const detailData = detail as Detail
+      
+      if (!detailData.keywords || !Array.isArray(detailData.keywords)) {
+        continue
+      }
+
+      // Keywords array'inde herhangi bir keyword tur adında geçiyor mu kontrol et
+      const hasMatch = detailData.keywords.some((keywordItem) => {
+        const keyword = keywordItem?.keyword?.toLowerCase().trim()
+        if (!keyword) return false
+        return normalizedTourTitle.includes(keyword)
+      })
+
+      if (hasMatch && detailData.youtubeUrl) {
+        return detailData
+      }
+    }
+
+    return null
+  } catch (error) {
+    return null
+  }
+}
