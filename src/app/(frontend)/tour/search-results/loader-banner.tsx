@@ -56,4 +56,3 @@ export const LoaderBanner = ({ data, Icon }: IProps) => {
     </div>
   )
 }
-

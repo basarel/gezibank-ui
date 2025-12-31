@@ -145,7 +145,6 @@ export const PaymentPageSection = () => {
     }
   }, [moduleName, formMethods])
 
-
   const paymentMutation = useMutation<
     PaymentResponseType | null | undefined,
     null,
@@ -313,7 +312,7 @@ export const PaymentPageSection = () => {
 
   const reservationData = checkoutQueryMemoData
   const passengerData = reservationData?.treeContainer
-  
+
   const firstPassengerFullName = useMemo(() => {
     if (passengerData?.childNodes[0]?.items[0]?.value) {
       const firstName = passengerData.childNodes[0].items[0].value.firstName
@@ -322,15 +321,18 @@ export const PaymentPageSection = () => {
         return `${upperFirst(firstName.toLocaleLowerCase())} ${upperFirst(lastName.toLocaleLowerCase())}`
       }
     }
-    
+
     if (passengerData?.childNodes[0]?.childNodes?.at(0)?.items.at(0)?.value) {
-      const firstName = passengerData.childNodes[0].childNodes.at(0)?.items.at(0)?.value?.firstName
-      const lastName = passengerData.childNodes[0].childNodes.at(0)?.items.at(0)?.value?.lastName
+      const firstName = passengerData.childNodes[0].childNodes
+        .at(0)
+        ?.items.at(0)?.value?.firstName
+      const lastName = passengerData.childNodes[0].childNodes.at(0)?.items.at(0)
+        ?.value?.lastName
       if (firstName && lastName) {
         return `${upperFirst(firstName.toLowerCase())} ${upperFirst(lastName.toLocaleLowerCase())}`
       }
     }
-    
+
     return ''
   }, [passengerData])
 
@@ -889,18 +891,15 @@ export const PaymentPageSection = () => {
           <Box>
             {(() => {
               switch (moduleName) {
-                 
-
                 case 'TOUR':
                   return <TourAgreementContent />
 
-               
                 default:
                   return null
               }
             })()}
           </Box>
-          <Group justify='flex-end' className='border-t pt-4 mt-4'>
+          <Group justify='flex-end' className='mt-4 border-t pt-4'>
             <Button
               onClick={() => {
                 formMethods.setValue('agreementAccepted', true)
@@ -925,7 +924,7 @@ export const PaymentPageSection = () => {
           <Box>
             <PrivacyAgreementContent />
           </Box>
-          <Group justify='flex-end' className='border-t pt-4 mt-4'>
+          <Group justify='flex-end' className='mt-4 border-t pt-4'>
             <Button
               onClick={() => {
                 formMethods.setValue('privacyAccepted', true)

@@ -20,7 +20,7 @@ const getEmbedUrl = (url: string): string | null => {
   const watchMatch = url.match(
     /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/
   )
-  
+
   if (watchMatch && watchMatch[1]) {
     return `https://www.youtube.com/embed/${watchMatch[1]}`
   }
@@ -45,7 +45,7 @@ export const TourDetailVideoModal: React.FC<TourDetailVideoModalProps> = ({
     <Modal
       opened={opened}
       onClose={onClose}
-      size="auto"
+      size='auto'
       centered
       withCloseButton={false}
       padding={0}
@@ -73,13 +73,13 @@ export const TourDetailVideoModal: React.FC<TourDetailVideoModalProps> = ({
         },
       }}
     >
-      <div className="relative aspect-video w-full min-w-[360px] max-w-[95vw] md:min-w-[640px] md:max-w-[1000px]">
+      <div className='relative aspect-video w-full max-w-[95vw] min-w-[360px] md:max-w-[1000px] md:min-w-[640px]'>
         <CloseButton
           onClick={onClose}
-          size="lg"
-          radius="md"
-          variant="filled"
-          className="absolute right-2 top-2 z-50 bg-white hover:bg-gray-100"
+          size='lg'
+          radius='md'
+          variant='filled'
+          className='absolute top-2 right-2 z-50 bg-white hover:bg-gray-100'
           style={{
             backgroundColor: 'white',
             color: '#000',
@@ -88,10 +88,10 @@ export const TourDetailVideoModal: React.FC<TourDetailVideoModalProps> = ({
         />
         <iframe
           src={embedUrl}
-          title="Video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          title='Video player'
+          allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
           allowFullScreen
-          className="h-full w-full rounded-xl"
+          className='h-full w-full rounded-xl'
           style={{
             border: 'none',
           }}
@@ -100,4 +100,3 @@ export const TourDetailVideoModal: React.FC<TourDetailVideoModalProps> = ({
     </Modal>
   )
 }
-

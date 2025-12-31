@@ -50,7 +50,7 @@ const TourDetailPriceSection: React.FC<Props> = ({
   return (
     <div className='relative'>
       <div className='grid gap-3'>
-        <Title order={3} fz={'h4'}>
+        <Title order={3} fz={'h2'} className='text-blue-600 md:text-2xl'>
           Tura katılacak Kişi Sayısı
         </Title>
 

@@ -73,7 +73,8 @@ const TourSearchResultClient = () => {
   })
 
   const tourCampaign = searchDataPayload?.campaigns ?? []
-  const loaderBanners: SearchLoaderBanner[] = searchDataPayload?.loaderBanners ?? []
+  const loaderBanners: SearchLoaderBanner[] =
+    searchDataPayload?.loaderBanners ?? []
 
   const searchRequestIsLoading =
     searchResultsQuery.isLoading || searchResultsQuery.hasNextPage
@@ -97,23 +98,27 @@ const TourSearchResultClient = () => {
     [searchResultsQuery.data?.pages]
   )
   const firstTourFromData = searchData?.[0]
-  const firstTourFromQuery = searchResultsQuery.data?.pages?.[0]?.data?.searchResults?.[0]?.items?.[0]
+  const firstTourFromQuery =
+    searchResultsQuery.data?.pages?.[0]?.data?.searchResults?.[0]?.items?.[0]
   const firstTour = firstTourFromData || firstTourFromQuery
-  
-  const filteredLoaderBanner = loaderBanners.length > 0 && firstTour
-    ? (() => {
-        const matchingBanner = loaderBanners.find((banner: SearchLoaderBanner) => {
-          if (banner.active === false) return false
-          
-          if (firstTour.isDomestic) {
-            return banner.viewCountry === '1'
-          } else {
-            return banner.viewCountry === '0'
-          }
-        })
-        return matchingBanner || null
-      })()
-    : null
+
+  const filteredLoaderBanner =
+    loaderBanners.length > 0 && firstTour
+      ? (() => {
+          const matchingBanner = loaderBanners.find(
+            (banner: SearchLoaderBanner) => {
+              if (banner.active === false) return false
+
+              if (firstTour.isDomestic) {
+                return banner.viewCountry === '1'
+              } else {
+                return banner.viewCountry === '0'
+              }
+            }
+          )
+          return matchingBanner || null
+        })()
+      : null
 
   const groupTitles: string[] = []
   const searchGroupedData: (TourSearchResultGroupedItem | undefined)[] =
@@ -371,7 +376,7 @@ const TourSearchResultClient = () => {
           />
         </div>
         <div className='grid items-start gap-4 md:grid-cols-12 md:gap-6'>
-          <div className='sm:col-span-4 lg:col-span-3 md:border rounded-lg md:p-3'>
+          <div className='rounded-lg sm:col-span-4 md:border md:p-3 lg:col-span-3'>
             <Transition
               transition={'slide-right'}
               mounted={filterSectionIsOpened || !!isBreakPointMatchesMd}
@@ -440,7 +445,7 @@ const TourSearchResultClient = () => {
                       <div>
                         <div className='flex justify-between px-3 pb-6 md:px-0'>
                           <Title className='text-xl font-semibold text-blue-600'>
-                           Sonuçları Filtrele
+                            Sonuçları Filtrele
                           </Title>
                           <div
                             hidden={
@@ -489,7 +494,7 @@ const TourSearchResultClient = () => {
                           </div>
                           {nightCountChecks.length > 1 && (
                             <div className='mb-5'>
-                              <div className='mb-2 font-bold text-xl'>
+                              <div className='mb-2 text-xl font-bold'>
                                 Gece Sayısı{' '}
                               </div>
                               <ScrollArea.Autosize
@@ -525,7 +530,7 @@ const TourSearchResultClient = () => {
                             </div>
                           )}
                           <div className='mb-5'>
-                            <div className='mb-2 font-bold text-xl'>Bölge</div>
+                            <div className='mb-2 text-xl font-bold'>Bölge</div>
                             <ScrollArea.Autosize
                               mah={rem(200)}
                               type='always'
@@ -559,7 +564,7 @@ const TourSearchResultClient = () => {
                           </div>
                           {tourCitiesChecks.length > 0 && (
                             <div className='mb-5'>
-                              <div className='mb-2 font-bold text-xl'>
+                              <div className='mb-2 text-xl font-bold'>
                                 Rota İçi Bölgeler{' '}
                               </div>
                               <ScrollArea.Autosize
@@ -596,7 +601,7 @@ const TourSearchResultClient = () => {
                           )}
                           {departurePointChecks.length > 0 && (
                             <div className='mb-5'>
-                              <div className='mb-2 font-bold text-xl'>
+                              <div className='mb-2 text-xl font-bold'>
                                 Kalkış Noktası{' '}
                               </div>
                               <ScrollArea.Autosize
@@ -635,7 +640,9 @@ const TourSearchResultClient = () => {
                           )}
                           {transportTypeChecks.length > 0 && (
                             <div className='mb-5'>
-                              <div className='mb-2 font-bold text-xl'>Ulaşım </div>
+                              <div className='mb-2 text-xl font-bold'>
+                                Ulaşım{' '}
+                              </div>
                               <ScrollArea.Autosize
                                 mah={rem(150)}
                                 type='always'
@@ -687,61 +694,56 @@ const TourSearchResultClient = () => {
             </Transition>
           </div>
           <div className='grid gap-2 sm:col-span-8 lg:col-span-9'>
-            <div className='md:rounded-lg md:bg-white md:p-3 px-3 md:border'>
-            <Skeleton
-                visible={searchRequestIsLoading || !filteredData}
-              >
-            <div className='flex items-center gap-3'>              
-                <h1 className='text-xl md:text-3xl font-bold text-gray-800 mb-1'>
-                  {destination}
-                </h1>
-                <p className='text-xs md:text-base text-blue-600 font-medium'>
-                  {totalCount} tur bulundu
-                </p>
-             </div>
-              <div
-                className='hidden mt-2 md:grid items-center grid-cols-4 justify-start gap-2'
-                 
-              >
-                {filterOptions.map((option) => {
-                  let icon = null
-                  if (option.value === SortOrderEnums.priceAsc) {
-                    icon = < FaArrowUp size={16} />
-                  } else if (option.value === SortOrderEnums.priceDesc) {
-                    icon = <FaArrowDown size={16} />
-                  } else if (
-                    option.value === SortOrderEnums.dateAsc ||
-                    option.value === SortOrderEnums.dateDesc
-                  ) {
-                    icon = <TbCalendar size={18} />
-                  }
+            <div className='px-3 md:rounded-lg md:border md:bg-white md:p-3'>
+              <Skeleton visible={searchRequestIsLoading || !filteredData}>
+                <div className='flex items-center gap-3'>
+                  <h1 className='mb-1 text-xl font-bold text-gray-800 md:text-3xl'>
+                    {destination}
+                  </h1>
+                  <p className='text-xs font-medium text-blue-600 md:text-base'>
+                    {totalCount} tur bulundu
+                  </p>
+                </div>
+                <div className='mt-2 hidden grid-cols-4 items-center justify-start gap-2 md:grid'>
+                  {filterOptions.map((option) => {
+                    let icon = null
+                    if (option.value === SortOrderEnums.priceAsc) {
+                      icon = <FaArrowUp size={16} />
+                    } else if (option.value === SortOrderEnums.priceDesc) {
+                      icon = <FaArrowDown size={16} />
+                    } else if (
+                      option.value === SortOrderEnums.dateAsc ||
+                      option.value === SortOrderEnums.dateDesc
+                    ) {
+                      icon = <TbCalendar size={18} />
+                    }
 
-                  return (
-                    <Button
-                      size='sm'
-                      className={
-                        order === option.value
-                          ? 'rounded-md border border-blue-500 bg-blue-100 font-medium text-blue-600'
-                          : 'rounded-md border border-gray-300 font-normal text-gray-700 hover:bg-gray-50 hover:border-gray-400'
-                      }
-                      key={option.value}
-                      leftSection={icon}
-                      variant='outline'
-                      onClick={() =>
-                        setFilterParams({
-                          order: option.value,
-                        })
-                      }
-                    >
-                      {option.label}
-                    </Button>
-                  )
-                })}
-              </div>
+                    return (
+                      <Button
+                        size='sm'
+                        className={
+                          order === option.value
+                            ? 'rounded-md border border-blue-500 bg-blue-100 font-medium text-blue-600'
+                            : 'rounded-md border border-gray-300 font-normal text-gray-700 hover:border-gray-400 hover:bg-gray-50'
+                        }
+                        key={option.value}
+                        leftSection={icon}
+                        variant='outline'
+                        onClick={() =>
+                          setFilterParams({
+                            order: option.value,
+                          })
+                        }
+                      >
+                        {option.label}
+                      </Button>
+                    )
+                  })}
+                </div>
               </Skeleton>
             </div>
             {totalCount > 0 && (
-              <div className='flex justify-between items-center gap-3 md:hidden mx-3'>
+              <div className='mx-3 flex items-center justify-between gap-3 md:hidden'>
                 <Button
                   size='sm'
                   color='black'
@@ -782,11 +784,12 @@ const TourSearchResultClient = () => {
               </div>
             )}
 
-           
             <div className='grid gap-5'>
               {!searchParamsQuery.isLoading &&
-    searchData?.length === 0 &&
-    searchResultsQuery.data?.pages.find((page) => page.code !== 1)&& <NotFoundForm moduleName='Tur' />}
+                searchData?.length === 0 &&
+                searchResultsQuery.data?.pages.find(
+                  (page) => page.code !== 1
+                ) && <NotFoundForm moduleName='Tur' />}
 
               {searchRequestIsLoading && (
                 <>

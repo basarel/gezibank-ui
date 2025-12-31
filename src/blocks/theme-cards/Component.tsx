@@ -16,7 +16,7 @@ type ThemeCardItem = {
   }
   location?: string
   tag?: string
-   price?: string
+  price?: string
   link?: string
   active?: boolean
 }
@@ -32,7 +32,7 @@ export const ThemeCardsBlock: React.FC<ThemeCardsBlockProps> = ({
   cards = [],
 }) => {
   const activeCards = cards.filter((card) => card.active !== false)
-  
+
   if (!activeCards || activeCards.length === 0) {
     return null
   }
@@ -106,10 +106,13 @@ export const ThemeCardsBlock: React.FC<ThemeCardsBlockProps> = ({
                       <p className='text-xs text-gray-900'>{item.location}</p>
                     )}
                     <div className='flex items-center justify-between gap-2 pt-5'>
-                      <div className='flex items-center gap-2'> 
-                      {item.price && (
-                        <p className='text-lg font-bold text-gray-900'>{item.price}</p>
-                      )} <span className='text-sm font-medium'> / Kişi</span>
+                      <div className='flex items-center gap-2'>
+                        {item.price && (
+                          <p className='text-lg font-bold text-gray-900'>
+                            {item.price}
+                          </p>
+                        )}{' '}
+                        <span className='text-sm font-medium'> / Kişi</span>
                       </div>
                       <div className='flex items-center justify-end pt-2'>
                         <Button

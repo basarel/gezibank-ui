@@ -14,9 +14,9 @@ type PageProps = {
 // Lexical JSON'u basit HTML'e çeviren yardımcı fonksiyon
 function lexicalToHtml(lexical: any): string {
   if (!lexical || typeof lexical !== 'object') return ''
-  
+
   if (typeof lexical === 'string') return lexical
-  
+
   if (lexical.root && lexical.root.children) {
     return lexical.root.children
       .map((node: any) => {
@@ -29,18 +29,20 @@ function lexicalToHtml(lexical: any): string {
         }
         if (node.type === 'list' && node.children) {
           const tag = node.listType === 'number' ? 'ol' : 'ul'
-          return `<${tag}>${node.children.map((child: any) => {
-            if (child.children) {
-              return `<li>${child.children.map((c: any) => c.text || '').join('')}</li>`
-            }
-            return ''
-          }).join('')}</${tag}>`
+          return `<${tag}>${node.children
+            .map((child: any) => {
+              if (child.children) {
+                return `<li>${child.children.map((c: any) => c.text || '').join('')}</li>`
+              }
+              return ''
+            })
+            .join('')}</${tag}>`
         }
         return ''
       })
       .join('')
   }
-  
+
   return ''
 }
 
@@ -101,20 +103,20 @@ const CampaignDetailPage: React.FC<PageProps> = async ({
             </AspectRatio>
           </div>
         )}
-         {campaign.discountCode && (
+        {campaign.discountCode && (
           <div className='my-5'>
-          <CampaignCopySection code={campaign.discountCode} />
+            <CampaignCopySection code={campaign.discountCode} />
           </div>
         )}
         {descriptionHtml && (
           <div
-            className='prose prose-lg max-w-none mb-5'
+            className='prose prose-lg mb-5 max-w-none'
             dangerouslySetInnerHTML={{
               __html: descriptionHtml,
             }}
           />
         )}
-       
+
         {campaign.buttonText && campaign.buttonLink && (
           <Button
             size='lg'
@@ -131,4 +133,3 @@ const CampaignDetailPage: React.FC<PageProps> = async ({
 }
 
 export default CampaignDetailPage
-

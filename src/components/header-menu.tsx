@@ -25,10 +25,8 @@ export const HeaderMenu: React.FC<HeaderMenuProps> = ({ menuItems = [] }) => {
   return (
     <div className='flex items-center px-3'>
       {menuItems.map((item, index) => {
-         if (item.slug) {
-          const href = item.slug.startsWith('/') 
-            ? item.slug 
-            : `/${item.slug}`
+        if (item.slug) {
+          const href = item.slug.startsWith('/') ? item.slug : `/${item.slug}`
           return (
             <UnstyledButton
               key={index}
@@ -95,13 +93,11 @@ export const HeaderMenu: React.FC<HeaderMenuProps> = ({ menuItems = [] }) => {
                       </div>
                       {item.columns[0].links.map((link, linkIndex) => {
                         const content = link.url ? (
-                          
                           <Link
                             href={link.url as Route}
                             className={`${classes.leftSideLink}`}
                           >
                             {link.label}
-                            
                           </Link>
                         ) : (
                           <div className={`${classes.leftSideLink}`}>
@@ -116,10 +112,9 @@ export const HeaderMenu: React.FC<HeaderMenuProps> = ({ menuItems = [] }) => {
                 {item.columns && item.columns.length > 1 && (
                   <div className={classes.rightSideColumns}>
                     {item.columns
-                      .slice(1) 
+                      .slice(1)
                       .filter((col) => col.links && col.links.length > 0)
                       .map((column, colIndex) => {
-                        
                         return (
                           <div
                             key={colIndex}
@@ -164,7 +159,7 @@ export const HeaderMenu: React.FC<HeaderMenuProps> = ({ menuItems = [] }) => {
                   </div>
                 )}
               </div>
-              
+
               {item.bottomContents && item.bottomContents.length > 0 && (
                 <div className='mt-8 grid grid-cols-4 gap-6'>
                   {item.bottomContents.map((bottomContent, index) => {
@@ -174,7 +169,9 @@ export const HeaderMenu: React.FC<HeaderMenuProps> = ({ menuItems = [] }) => {
                           <div className='mb-4 h-[150px] w-full overflow-hidden rounded-lg shadow-md'>
                             <Image
                               src={bottomContent.image?.url || ''}
-                              alt={bottomContent.title || 'Bottom content image'}
+                              alt={
+                                bottomContent.title || 'Bottom content image'
+                              }
                               className='h-full w-full object-cover transition-transform duration-300 hover:scale-105'
                             />
                           </div>
@@ -184,31 +181,35 @@ export const HeaderMenu: React.FC<HeaderMenuProps> = ({ menuItems = [] }) => {
                             {bottomContent.title}
                           </h3>
                         )}
-                        {bottomContent.links && bottomContent.links.length > 0 && (
-                          <div className='flex flex-col gap-2'>
-                            {bottomContent.links.map((link, linkIndex) => {
-                              const linkContent = link.url ? (
-                                <Link
-                                  href={link.url as Route}
-                                  className='text-sm text-gray-600 transition-colors hover:text-blue-600 hover:underline'
-                                  onClick={(e) => e.stopPropagation()}
-                                >
-                                  {link.label}
-                                </Link>
-                              ) : (
-                                <span className='text-sm text-gray-600'>
-                                  {link.label}
-                                </span>
-                              )
-                              return <div key={linkIndex}>{linkContent}</div>
-                            })}
-                          </div>
-                        )}
+                        {bottomContent.links &&
+                          bottomContent.links.length > 0 && (
+                            <div className='flex flex-col gap-2'>
+                              {bottomContent.links.map((link, linkIndex) => {
+                                const linkContent = link.url ? (
+                                  <Link
+                                    href={link.url as Route}
+                                    className='text-sm text-gray-600 transition-colors hover:text-blue-600 hover:underline'
+                                    onClick={(e) => e.stopPropagation()}
+                                  >
+                                    {link.label}
+                                  </Link>
+                                ) : (
+                                  <span className='text-sm text-gray-600'>
+                                    {link.label}
+                                  </span>
+                                )
+                                return <div key={linkIndex}>{linkContent}</div>
+                              })}
+                            </div>
+                          )}
                       </div>
                     )
 
                     return (
-                      <div key={index} className='transition-transform duration-200 hover:scale-[1.02]'>
+                      <div
+                        key={index}
+                        className='transition-transform duration-200 hover:scale-[1.02]'
+                      >
                         {bottomContent.link ? (
                           <Link
                             href={bottomContent.link as Route}

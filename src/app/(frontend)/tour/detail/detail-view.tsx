@@ -9,9 +9,10 @@ const TourDetail: React.FC<Props> = ({ data }) => {
     <div className='flex flex-col gap-6'>
       <div className='flex flex-col gap-5 p-5'>
         <div className='flex flex-col gap-6'>
-          <Title className='border-b border-gray-400 pb-1'
+          <Title
+            className='border-b border-gray-400 pb-1 text-blue-600'
             order={2}
-            fz={{ base: 'h4', md: 'h2' }}
+            fz={'h2'}
             px={{ base: 'md', md: 0 }}
             id='tour-program'
           >

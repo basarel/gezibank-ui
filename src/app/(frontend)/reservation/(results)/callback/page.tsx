@@ -5,10 +5,7 @@ import { ModuleNames } from '@/types/global'
 import { formatCurrency } from '@/libs/util'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
-import {
-  OperationResultType,
-  TourSummaryResponse,
-} from '../../types'
+import { OperationResultType, TourSummaryResponse } from '../../types'
 import { notFound } from 'next/navigation'
 import { resend } from '@/libs/resend'
 import EmailBookResult from '@/emails/book-results'
@@ -156,9 +153,7 @@ const CallbackPage: React.FC<IProps> = async ({ searchParams }) => {
                           {dayjs(birthday).format('DD.MM.YYYY')}
                         </div>
                         <div className='text-sm'>{identityNumber}</div>
-                        <div className='text-sm'>
-                          {bookingCode}
-                        </div>
+                        <div className='text-sm'>{bookingCode}</div>
                       </div>
                     )
                   )}

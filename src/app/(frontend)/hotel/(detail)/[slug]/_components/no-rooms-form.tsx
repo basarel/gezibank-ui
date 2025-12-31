@@ -4,10 +4,10 @@ import {
   Button,
   TextInput,
   Textarea,
-   Text,
+  Text,
   Stack,
   Box,
-   Modal,
+  Modal,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 
@@ -119,13 +119,12 @@ function NotFoundForm({ moduleName }: IProps) {
             nolu Müşteri Hizmetlerini arayabilir,{' '}
             <Text
               component='a'
-              href='mailto:operasyon@ykmturizm.com.tr'
+              href='mailto:info@gezibank.com'
               fw={700}
               c='blue'
               className='cursor-pointer text-lg hover:underline'
             >
-              operasyon@ykmturizm.com.tr
-            </Text>{' '}
+info@gezibank.com            </Text>{' '}
             adresine mail atabilir ya da aşağıdaki formu doldurabilirsiniz.
             Yetkililerimiz en kısa zamanda size ulaşacaktır.
           </Text>

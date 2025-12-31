@@ -57,7 +57,7 @@ export default async function ContactPage() {
     <InfoPagesLayout>
       <HelpPage />
       <div>
-        <div className='mb-5 border rounded-md p-3'>
+        <div className='mb-5 rounded-md border p-3'>
           <Title order={2} className='mb-4'>
             İletişim Bilgileri
           </Title>

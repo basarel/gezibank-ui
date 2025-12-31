@@ -332,27 +332,7 @@ export const Header: React.FC<HeaderProps> = ({ headerContent }) => {
                         href='/online-operations'
                         c={'dark'}
                       >
-                        Seyahatinizi Görüntüleyin
-                      </Anchor>
-                    </Grid.Col>
-                    {/* <Grid.Col span={12}>
-                  <Anchor
-                    onClick={toggleDrawer}
-                    component={Link}
-                    href='/online-operations/cancel-flight'
-                    c={'dark'}
-                  >
-                    Bilet İptal, İade İşlemleri
-                  </Anchor>
-                </Grid.Col> */}
-                    <Grid.Col span={12}>
-                      <Anchor
-                        onClick={toggleDrawer}
-                        component={Link}
-                        href='/online-operations/checkin'
-                        c={'dark'}
-                      >
-                        Online Check in
+                        Turunuzu Görüntüleyin
                       </Anchor>
                     </Grid.Col>
                     <Grid.Col span={12}>

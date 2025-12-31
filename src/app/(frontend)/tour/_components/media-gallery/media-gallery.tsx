@@ -91,7 +91,7 @@ const TourMediaGallery = ({ images, title, opened, onClose }: Props) => {
         closeOnEscape={true}
       >
         <div className='relative flex h-full flex-col bg-black'>
-           <div className='absolute right-4 top-4 z-50'>
+          <div className='absolute top-4 right-4 z-50'>
             <CloseButton
               onClick={onClose}
               size={isMobile ? 'sm' : 'xl'}
@@ -105,7 +105,9 @@ const TourMediaGallery = ({ images, title, opened, onClose }: Props) => {
               className='hover:bg-white/30'
             />
           </div>
-          <div className={`flex-1 flex items-center justify-center ${isMobile ? 'p-2' : 'p-4'}`}>
+          <div
+            className={`flex flex-1 items-center justify-center ${isMobile ? 'p-2' : 'p-4'}`}
+          >
             <Carousel
               getEmblaApi={setEmbla}
               slideSize='100%'
@@ -128,11 +130,16 @@ const TourMediaGallery = ({ images, title, opened, onClose }: Props) => {
                 dragFree: false,
                 align: 'center',
               }}
-              className='w-full h-full'
+              className='h-full w-full'
             >
               {images.map((img, idx) => (
-                <Carousel.Slide key={idx} className='flex items-center justify-center'>
-                  <div className={`flex h-full w-full items-center justify-center ${isMobile ? 'p-2' : 'p-4'}`}>
+                <Carousel.Slide
+                  key={idx}
+                  className='flex items-center justify-center'
+                >
+                  <div
+                    className={`flex h-full w-full items-center justify-center ${isMobile ? 'p-2' : 'p-4'}`}
+                  >
                     <Image
                       src={validateUrl(img) ? img : cdnSiteImageUrl(img)}
                       alt={`${title} - ${idx + 1}`}
@@ -140,7 +147,9 @@ const TourMediaGallery = ({ images, title, opened, onClose }: Props) => {
                       style={{
                         height: 'auto',
                         width: 'auto',
-                        maxHeight: isMobile ? 'calc(100vh - 80px)' : 'calc(100vh - 200px)',
+                        maxHeight: isMobile
+                          ? 'calc(100vh - 80px)'
+                          : 'calc(100vh - 200px)',
                         maxWidth: '100%',
                       }}
                     />
@@ -150,7 +159,9 @@ const TourMediaGallery = ({ images, title, opened, onClose }: Props) => {
             </Carousel>
           </div>
 
-          <div className={`border-t border-gray-800 bg-black ${isMobile ? 'p-2' : 'p-4'}`}>
+          <div
+            className={`border-t border-gray-800 bg-black ${isMobile ? 'p-2' : 'p-4'}`}
+          >
             <div className={styles.thumbnailContainer}>
               {images.map((img, idx) => (
                 <UnstyledButton
@@ -161,7 +172,7 @@ const TourMediaGallery = ({ images, title, opened, onClose }: Props) => {
                   onClick={() => scrollTo(idx)}
                   className={`relative h-20 w-20 shrink-0 overflow-hidden rounded border-2 transition-all ${
                     selectedIndex === idx
-                      ? 'border-white scale-110'
+                      ? 'scale-110 border-white'
                       : 'border-gray-600 opacity-60 hover:opacity-100'
                   }`}
                 >

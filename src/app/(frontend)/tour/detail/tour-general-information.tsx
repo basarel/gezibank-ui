@@ -30,17 +30,16 @@ const parseHtmlToListItems = (
   const Icon = isIncluded ? FaCheck : IoClose
   const iconColor = isIncluded ? 'text-green-600' : 'text-red-600'
 
- 
   if (html.includes('<ul>') || html.includes('<li>')) {
-     const liPattern = /<li[^>]*>(.*?)<\/li>/gi
+    const liPattern = /<li[^>]*>(.*?)<\/li>/gi
     const matches = Array.from(html.matchAll(liPattern))
 
     if (matches.length > 0) {
       return (
-        <ul className='list-none space-y-2 ml-4'>
+        <ul className='ml-4 list-none space-y-2'>
           {matches.map((match, index) => (
             <li key={index} className='flex items-start gap-2'>
-              <Icon size={19} className={`${iconColor} shrink-0 mt-0.5`} />
+              <Icon size={19} className={`${iconColor} mt-0.5 shrink-0`} />
               <span dangerouslySetInnerHTML={{ __html: match[1] }} />
             </li>
           ))}
@@ -49,7 +48,6 @@ const parseHtmlToListItems = (
     }
   }
 
- 
   const items = html.split(/<br\s*\/?>/i).filter((item) => item.trim())
 
   if (items.length > 1) {
@@ -57,7 +55,7 @@ const parseHtmlToListItems = (
       <ul className='list-none space-y-2'>
         {items.map((item, index) => (
           <li key={index} className='flex items-start gap-2'>
-            <Icon size={16} className={`${iconColor} shrink-0 mt-0.5`} />
+            <Icon size={16} className={`${iconColor} mt-0.5 shrink-0`} />
             <span dangerouslySetInnerHTML={{ __html: item.trim() }} />
           </li>
         ))}
@@ -65,10 +63,10 @@ const parseHtmlToListItems = (
     )
   }
 
-   if (items.length === 1) {
+  if (items.length === 1) {
     return (
       <div className='flex items-start gap-2'>
-        <Icon size={16} className={`${iconColor} shrink-0 mt-0.5`} />
+        <Icon size={16} className={`${iconColor} mt-0.5 shrink-0`} />
         <span dangerouslySetInnerHTML={{ __html: items[0].trim() }} />
       </div>
     )
@@ -77,19 +75,19 @@ const parseHtmlToListItems = (
   return <div dangerouslySetInnerHTML={{ __html: html }} />
 }
 
-  const getAirlineLogo = (flightText: string) => {
+const getAirlineLogo = (flightText: string) => {
   const text = flightText.toLowerCase()
-  
+
   if (text.includes('pegasus') || text.includes('pc')) {
     return {
       src: 'https://paraflystatic.mncdn.com/a/airlines/PC.png',
       alt: 'Pegasus',
     }
   }
-  
+
   if (
-    text.includes('tk') || 
-    text.includes('turkish airlines') || 
+    text.includes('tk') ||
+    text.includes('turkish airlines') ||
     text.includes('türk hava yolları') ||
     text.includes('turk hava yollari')
   ) {
@@ -98,7 +96,7 @@ const parseHtmlToListItems = (
       alt: 'Türk Hava Yolları',
     }
   }
-  
+
   return null
 }
 
@@ -111,7 +109,8 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
   onVisaModalClose: externalClose,
   isMobile = false,
 }) => {
-  const [internalOpened, { open: internalOpen, close: internalClose }] = useDisclosure(false)
+  const [internalOpened, { open: internalOpen, close: internalClose }] =
+    useDisclosure(false)
   const opened = externalOpened !== undefined ? externalOpened : internalOpened
   const open = externalOpen || internalOpen
   const close = externalClose || internalClose
@@ -126,31 +125,31 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
       <div className='flex flex-col gap-20'>
         <div className='grid items-center gap-3'>
           <span
-            id={isMobile ? undefined : 'included-information'}
-            className='text-lg font-semibold text-blue-600 md:text-xl'
+            id='included-information'
+            className='text-lg font-semibold text-blue-600 md:text-2xl'
           >
             Fiyata Dahil Hizmetler
           </span>
           {parseHtmlToListItems(
-            data.package.detail.includedInformation || 
-            data.detail.includedInformation || 
-            '', 
+            data.package.detail.includedInformation ||
+              data.detail.includedInformation ||
+              '',
             true
           )}
         </div>
 
         <div className='grid items-center gap-3'>
           <span
-            id={isMobile ? undefined : 'not-included-information'}
-            className='text-lg font-semibold text-blue-600 md:text-xl'
+            id='not-included-information'
+            className='text-lg font-semibold text-blue-600 md:text-2xl'
           >
             Fiyata Dahil Olmayan Hizmetler
           </span>
           <div className='my-5'>
             {parseHtmlToListItems(
-              data.package.detail.notIncludedInformation || 
-              data.detail.notIncludedInformation || 
-              '',
+              data.package.detail.notIncludedInformation ||
+                data.detail.notIncludedInformation ||
+                '',
               false
             )}
           </div>
@@ -160,19 +159,23 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
           data.package.detail.flightInformation !== undefined &&
           data.package.detail.flightInformation.length > 0) ||
           (data.detail.flightInformation !== null &&
-          data.detail.flightInformation !== undefined &&
-          data.detail.flightInformation.length > 0)) &&
+            data.detail.flightInformation !== undefined &&
+            data.detail.flightInformation.length > 0)) &&
           transportType === 1 && (
             <>
               <div className='flex flex-col gap-5'>
                 <span
-                  id={isMobile ? undefined : 'transport'}
-                  className='text-lg font-semibold text-blue-600 md:text-xl'
+                  id='transport'
+                  className='text-lg font-semibold text-blue-600 md:text-2xl'
                 >
                   Ulaşım Bilgisi
                 </span>
                 <div className='grid gap-4'>
-                  {(data.package.detail.flightInformation || data.detail.flightInformation || [])
+                  {(
+                    data.package.detail.flightInformation ||
+                    data.detail.flightInformation ||
+                    []
+                  )
                     .filter(
                       (flight) =>
                         flight &&
@@ -181,7 +184,10 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
                         flight.trim() !== '0'
                     )
                     .map((flight, flightIndex) => {
-                      const flightInfo = data.package.detail.flightInformation || data.detail.flightInformation || []
+                      const flightInfo =
+                        data.package.detail.flightInformation ||
+                        data.detail.flightInformation ||
+                        []
                       const filteredFlights = flightInfo.filter(
                         (f) =>
                           f &&
@@ -189,7 +195,7 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
                           f.trim().length > 0 &&
                           f.trim() !== '0'
                       )
-                      
+
                       let flightLabel: string | null = null
                       if (filteredFlights.length === 2) {
                         if (flightIndex === 0) {
@@ -198,11 +204,14 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
                           flightLabel = 'Dönüş Uçuşu'
                         }
                       }
-                      
+
                       const airlineLogo = getAirlineLogo(flight)
-                      
+
                       return (
-                        <div key={flightIndex} className='flex my-2 flex-col gap-2'>
+                        <div
+                          key={flightIndex}
+                          className='my-2 flex flex-col gap-2'
+                        >
                           {flightLabel && (
                             <span className='text-md font-semibold text-orange-900'>
                               {flightLabel}
@@ -222,9 +231,9 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
                                 />
                               </div>
                             )}
-                            <div 
+                            <div
                               className='flex-1'
-                              dangerouslySetInnerHTML={{ __html: flight }} 
+                              dangerouslySetInnerHTML={{ __html: flight }}
                             />
                           </div>
                         </div>
@@ -234,14 +243,20 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
               </div>
             </>
           )}
-        {(!(data.package.detail.flightInformation && data.package.detail.flightInformation.length > 0) &&
-          !(data.detail.flightInformation && data.detail.flightInformation.length > 0)) &&
+        {!(
+          data.package.detail.flightInformation &&
+          data.package.detail.flightInformation.length > 0
+        ) &&
+          !(
+            data.detail.flightInformation &&
+            data.detail.flightInformation.length > 0
+          ) &&
           transportTypeText && (
             <>
               <div className='flex flex-col gap-5'>
                 <span
-                  id={isMobile ? undefined : 'transport'}
-                  className='text-lg font-semibold text-blue-600 md:text-xl'
+                  id='transport'
+                  className='text-lg font-semibold text-blue-600 md:text-2xl'
                 >
                   Ulaşım Bilgisi
                 </span>
@@ -260,8 +275,8 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
             <div className='flex flex-col gap-5'>
               <div className='grid items-center gap-3'>
                 <span
-                  id={isMobile ? undefined : 'hotel'}
-                  className='text-lg font-semibold text-blue-600 md:text-xl'
+                  id='hotel'
+                  className='text-lg font-semibold text-blue-600 md:text-2xl'
                 >
                   Otel Bilgisi
                 </span>
@@ -277,7 +292,7 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
             <div className='flex flex-col gap-5'>
               <span
                 id={isMobile ? undefined : 'hotel'}
-                className='text-lg font-semibold text-blue-600 md:text-xl'
+                className='text-lg font-semibold text-blue-600 md:text-2xl'
               >
                 Otel Bilgisi
               </span>
@@ -292,38 +307,41 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
             </div>
           </>
         ) : null}
-        <Tooltip label='Vize bilgileri için tıklayınız'>
-        <div className='flex flex-col gap-3'>
-          <div className='flex items-center gap-3'>
-            <span
-              id={isMobile ? undefined : 'visa-infos'}
-              className='text-lg flex items-center gap-2 cursor-pointer font-semibold text-blue-600 md:text-xl'
-              onClick={(e) => {
-                e.preventDefault()
-                open()
-              }}
-              role='button'
-              tabIndex={0}
-             >
-              Vize Bilgileri
-              <RiInformationLine size={20} />
-            </span>
+        {!data.package.isDomestic && (
+          <Tooltip label='Vize bilgileri için tıklayınız'>
+            <div className='flex flex-col gap-3'>
+              <div className='flex items-center gap-3'>
+                <span
+                  id='visa-infos'
+                  className='flex cursor-pointer items-center gap-2 text-lg font-semibold text-blue-600 md:text-2xl'
+                  onClick={(e) => {
+                    e.preventDefault()
+                    open()
+                  }}
+                  role='button'
+                  tabIndex={0}
+                >
+                  Vize Bilgileri
+                  <RiInformationLine size={20} />
+                </span>
+              </div>
             </div>
-          </div>
-        </Tooltip>
+          </Tooltip>
+        )}
       </div>
-      <Modal
-        opened={opened}
-        onClose={close}
-        title={
-          <span className='text-lg font-semibold text-blue-600 md:text-xl'>
-            Vize Bilgileri
-          </span>
-        }
-        size='lg'
-        withCloseButton
-      >
-        <ul className='ml-4 list-inside list-disc space-y-2'>
+      {!data.package.isDomestic && (
+        <Modal
+          opened={opened}
+          onClose={close}
+          title={
+            <span className='text-lg font-semibold text-blue-600 md:text-2xl'>
+              Vize Bilgileri
+            </span>
+          }
+          size='lg'
+          withCloseButton
+        >
+          <ul className='ml-4 list-inside list-disc space-y-2'>
           <li>
             Vize başvurusu için evrak talebinin (Otel, uçak rezervasyonu ve
             seyahat sigortası) vize randevu tarihinden en az 15 gün önce
@@ -331,8 +349,8 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
             yapılacak ülkelere göre değiştiğinden, vize randevusu almadan önce
             mutlaka satış ekiplerimizden evrakların iletilmesiyle ilgili bilgi
             alınması ve buna göre vize randevusu alınması gerekmektedir.
-            Acentemizin doğacak olumsuzluklardan dolayı herhangi bir
-            sorumluluğu bulunmamaktadır.
+            Acentemizin doğacak olumsuzluklardan dolayı herhangi bir sorumluluğu
+            bulunmamaktadır.
           </li>
           <li>
             Yeşil pasaport sahibi misafirlerimizin pasaportlarının süresi
@@ -366,52 +384,53 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
             öncesinde tamamlamanızı önemle tavsiye ediyoruz.
           </li>
           <li>
-            Ziyaret edilen ülke Türk vatandaşlarına vize uygulayan bir ülke
-            ise ilgili vizenin geçerli pasaportunuzda olması gerekmektedir.
-            İptal edilmiş bir pasaporttaki vize geçerli bir vize dahi olsa, bu
+            Ziyaret edilen ülke Türk vatandaşlarına vize uygulayan bir ülke ise
+            ilgili vizenin geçerli pasaportunuzda olması gerekmektedir. İptal
+            edilmiş bir pasaporttaki vize geçerli bir vize dahi olsa, bu
             vize/pasaport ile seyahat edilememektedir. Acentemizin doğacak
             olumsuzluklardan dolayı herhangi bir sorumluluğu bulunmamaktadır.
           </li>
           <li>
-            Gümrük geçişlerinde ve sınır kapılarında, pasaportunuza
-            giriş-çıkış kaşesi basılabilmesi için, pasaportunuzda en az 6 boş
-            sayfa olması gerekmektedir. Vize alınmış olması veya vize
-            gerektirmeyen pasaporta sahip olunması, ülkeye giriş ve çıkış
-            yapılabileceği anlamına gelmeyip, pasaport polisinin sizi ülkeye
-            giriş izni vermeme veya ülkeden çıkarmama yetkisi bulunmaktadır.
-            Acentemizin bu konuda herhangi bir sorumluluğu bulunmamaktadır.
+            Gümrük geçişlerinde ve sınır kapılarında, pasaportunuza giriş-çıkış
+            kaşesi basılabilmesi için, pasaportunuzda en az 6 boş sayfa olması
+            gerekmektedir. Vize alınmış olması veya vize gerektirmeyen pasaporta
+            sahip olunması, ülkeye giriş ve çıkış yapılabileceği anlamına
+            gelmeyip, pasaport polisinin sizi ülkeye giriş izni vermeme veya
+            ülkeden çıkarmama yetkisi bulunmaktadır. Acentemizin bu konuda
+            herhangi bir sorumluluğu bulunmamaktadır.
           </li>
           <li>
             Türk vatandaşı olmayan ya da çifte vatandaşlığı olup da diğer ülke
             pasaportunu kullanarak tura katılacak olan misafirlerin; seyahat
             edilecek ülkenin, kullanacakları pasaporta uyguladığı vize
-            prosedürünü ilgili konsolosluklara bizzat danışmaları
-            gerekmektedir. Acentemizin doğacak olumsuzluklardan dolayı
-            herhangi bir sorumluluğu bulunmamaktadır.
+            prosedürünü ilgili konsolosluklara bizzat danışmaları gerekmektedir.
+            Acentemizin doğacak olumsuzluklardan dolayı herhangi bir sorumluluğu
+            bulunmamaktadır.
           </li>
           <li>
-            Farklı bir ülkede oturum izni bulunan misafirlerin vize
-            durumlarını, bağlı bulundukları konsolosluklara bizzat danışmaları
-            gerekmektedir. Acentemizin doğacak olumsuzluklardan dolayı
-            herhangi bir sorumluluğu bulunmamaktadır.
+            Farklı bir ülkede oturum izni bulunan misafirlerin vize durumlarını,
+            bağlı bulundukları konsolosluklara bizzat danışmaları gerekmektedir.
+            Acentemizin doğacak olumsuzluklardan dolayı herhangi bir sorumluluğu
+            bulunmamaktadır.
           </li>
           <li>
             Yırtılmış, yıpranmış veya benzeri tahribatlara uğramış pasaportlar
             ile seyahat edilememektedir.
           </li>
           <li>
-            Evlilik sebebiyle soyadı değişen misafirlerin, evliliğin üzerinden
-            3 aydan fazla süre geçtiyse pasaportunu değiştirmesi
-            gerekmektedir. Ülkeden çıkış ve ilgili ülkelere giriş kuralları
-            tamamen pasaport polisi insiyatifindedir.
+            Evlilik sebebiyle soyadı değişen misafirlerin, evliliğin üzerinden 3
+            aydan fazla süre geçtiyse pasaportunu değiştirmesi gerekmektedir.
+            Ülkeden çıkış ve ilgili ülkelere giriş kuralları tamamen pasaport
+            polisi insiyatifindedir.
           </li>
           <li>
             18 yaşından küçük bireylerin tek başlarına ya da anne ve babadan
             sadece bir tanesi ile seyahat etmesi durumunda hem anneden hem de
             babadan noter onaylı muvafakatname alması gerekmektedir.
           </li>
-        </ul>
-      </Modal>
+          </ul>
+        </Modal>
+      )}
     </div>
   )
 }

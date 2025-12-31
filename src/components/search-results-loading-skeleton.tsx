@@ -61,7 +61,10 @@ export function SearchResultsLoadingSkeleton({
           >
             <div className='space-b-4'>
               {Array.from({ length: itemCount }).map((_, index) => (
-                <div key={index} className='mb-4 rounded-lg border border-gray-200 p-4'>
+                <div
+                  key={index}
+                  className='mb-4 rounded-lg border border-gray-200 p-4'
+                >
                   <div className='flex gap-4'>
                     <Skeleton height={120} width={100} radius='md' />
                     <div className='flex-1 space-y-3'>

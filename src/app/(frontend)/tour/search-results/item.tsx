@@ -150,8 +150,12 @@ export const TourSearchResultItem: React.FC<Props> = ({
   return (
     <div className='grid grid-cols-1 rounded-lg bg-white p-3 shadow-md hover:shadow-2xl md:grid-cols-4'>
       <div className='col-span-1 flex flex-col gap-4 md:col-span-3'>
-        <div className='grid grid-cols-1 gap-3 md:grid-cols-2 items-stretch'>
-          <Box className='relative w-full h-full col-span-1' component={Link} href={detailUrl}>
+        <div className='grid grid-cols-1 items-stretch gap-3 md:grid-cols-2'>
+          <Box
+            className='relative col-span-1 h-full w-full'
+            component={Link}
+            href={detailUrl}
+          >
             <div className='relative h-full w-full'>
               <Transition
                 mounted={isImageLoading}
@@ -176,7 +180,7 @@ export const TourSearchResultItem: React.FC<Props> = ({
                 alt={selectedTour.title}
                 radius={'md'}
                 fit='cover'
-                className='rounded-lg h-full object-cover'
+                className='h-full rounded-lg object-cover'
                 onLoad={() => {
                   setImageLoading(false)
                 }}
@@ -192,7 +196,7 @@ export const TourSearchResultItem: React.FC<Props> = ({
             </div>
           </Box>
 
-          <div className='flex flex-col gap-3 col-span-1'>
+          <div className='col-span-1 flex flex-col gap-3'>
             <div className='relative'>
               <Title order={1} className='text-xl font-bold text-black'>
                 {selectedTour.title.split('|')[0]}
@@ -240,29 +244,25 @@ export const TourSearchResultItem: React.FC<Props> = ({
             )}
             {campaignContents && campaignContents.length > 0 && (
               <div className='flex flex-wrap gap-2'>
-                 {campaignContents
-                   .filter((campaign) => {
-                     if (campaign.active === false) return false
-                     
-                     if (selectedTour.isDomestic) {
-                       return campaign.viewCountry === '1'
-                     } else {
-                       return campaign.viewCountry === '0'
-                     }
-                   })
-                   .map((campaign) => (
-                    <Link
-                      key={campaign.id}
-                      href={campaign.link as Route}
-                    >
-                      <div className='rounded-md bg-green-50 text-green-700 px-3 py-1.5 text-sm font-medium hover:bg-green-100 transition-all duration-200'>
+                {campaignContents
+                  .filter((campaign) => {
+                    if (campaign.active === false) return false
+
+                    if (selectedTour.isDomestic) {
+                      return campaign.viewCountry === '1'
+                    } else {
+                      return campaign.viewCountry === '0'
+                    }
+                  })
+                  .map((campaign) => (
+                    <Link key={campaign.id} href={campaign.link as Route}>
+                      <div className='rounded-md bg-green-50 px-3 py-1.5 text-sm font-medium text-green-700 transition-all duration-200 hover:bg-green-100'>
                         {campaign.text}
                       </div>
                     </Link>
                   ))}
               </div>
             )}
-           
           </div>
         </div>
 
@@ -278,7 +278,9 @@ export const TourSearchResultItem: React.FC<Props> = ({
               {transportType === 3 && (
                 <RiTrainFill size={22} className='text-orange-700' />
               )}
-              <span className='text-base'>Gidiş-Dönüş: {transportTypeText} ile</span>
+              <span className='text-base'>
+                Gidiş-Dönüş: {transportTypeText} ile
+              </span>
             </div>
           )}
           <div className='hidden items-center gap-2 md:flex'>
@@ -291,7 +293,7 @@ export const TourSearchResultItem: React.FC<Props> = ({
         </div>
       </div>
 
-      <div className='col-span-1 flex flex-col justify-between rounded-t-xl rounded-br-xl md:border p-2 shadow-xl'>
+      <div className='col-span-1 flex flex-col justify-between rounded-t-xl rounded-br-xl p-2 shadow-xl md:border'>
         <div className='mb-4 flex flex-col items-center justify-center'>
           <div className='w-full text-center'>
             <div className='mb-2 text-sm font-medium text-black'>
@@ -299,7 +301,7 @@ export const TourSearchResultItem: React.FC<Props> = ({
             </div>
             {euroPriceFormatted && (
               <div className='mb-1 flex items-center justify-center'>
-                <div className='rounded-t-lg rounded-tr-lg rounded-br-lg rounded-bl-none bg-orange-900 py-2 px-3'>
+                <div className='rounded-t-lg rounded-tr-lg rounded-br-lg rounded-bl-none bg-orange-900 px-3 py-2'>
                   <div className='flex items-start justify-center gap-2 text-3xl font-bold text-white md:text-5xl'>
                     {euroPriceFormatted}
                     {selectedTour.isDomestic && (
@@ -325,14 +327,11 @@ export const TourSearchResultItem: React.FC<Props> = ({
           </div>
         </div>
         <Link href={detailUrl}>
-        <div
-          className='w-full mb-3 p-2 py-3 rounded-tl-xl rounded-tr-xl rounded-b-xl rounded-bl-none bg-blue-600 text-lg font-extrabold text-white hover:bg-blue-800 md:text-3xl flex items-center justify-center'
-        >
-          
-                Turu İncele
-           </div>
-           </Link>
-       </div>
+          <div className='mb-3 flex w-full items-center justify-center rounded-tl-xl rounded-tr-xl rounded-b-xl rounded-bl-none bg-blue-600 p-2 py-3 text-lg font-extrabold text-white hover:bg-blue-800 md:text-3xl'>
+            Turu İncele
+          </div>
+        </Link>
+      </div>
     </div>
   )
 }

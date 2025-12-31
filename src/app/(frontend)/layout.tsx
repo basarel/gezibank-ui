@@ -39,11 +39,10 @@ export default async function RootLayout({
               <Header headerContent={globalHeader} />
             </div>
             <main className='grow'>{children}</main>
-           
-              <div className='shrink-0 grow-0 pt-4 md:pt-10'>
-                <Footer />
-              </div>
-             
+
+            <div className='shrink-0 grow-0 pt-4 md:pt-10'>
+              <Footer />
+            </div>
           </Providers>
         </MantineProvider>
       </ClientProviders>

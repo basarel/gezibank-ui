@@ -1,17 +1,26 @@
 import React from 'react'
 import { TableOfContents } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 import classes from './Toc.module.css'
-import { FaInfoCircle, FaBed, FaBus, FaCheckCircle, FaTimesCircle, FaPassport } from 'react-icons/fa'
+import {
+  FaInfoCircle,
+  FaBed,
+  FaBus,
+  FaCheckCircle,
+  FaTimesCircle,
+  FaPassport,
+} from 'react-icons/fa'
 import { BsLuggageFill } from 'react-icons/bs'
 import { IoClose } from 'react-icons/io5'
 
 type TourTableOfContentsProps = {
   onVisaClick?: () => void
+  isDomestic?: boolean
 }
 
 const getIconForTitle = (title: string) => {
   const titleLower = title.toLowerCase()
-  
+
   if (titleLower.includes('genel') || titleLower.includes('general')) {
     return <FaInfoCircle size={16} className='mr-2' />
   }
@@ -24,7 +33,10 @@ const getIconForTitle = (title: string) => {
   if (titleLower.includes('ulaşım') || titleLower.includes('transport')) {
     return <FaBus size={16} className='mr-2' />
   }
-  if (titleLower.includes('dahil olmayan') || titleLower.includes('not included')) {
+  if (
+    titleLower.includes('dahil olmayan') ||
+    titleLower.includes('not included')
+  ) {
     return <IoClose size={20} className='mr-2' />
   }
   if (titleLower.includes('dahil') || titleLower.includes('included')) {
@@ -33,14 +45,22 @@ const getIconForTitle = (title: string) => {
   if (titleLower.includes('vize') || titleLower.includes('visa')) {
     return <FaPassport size={16} className='mr-2' />
   }
-  
+
   return null
 }
 
-const TourTableOfContents: React.FC<TourTableOfContentsProps> = ({ onVisaClick }) => {
+const TourTableOfContents: React.FC<TourTableOfContentsProps> = ({
+  onVisaClick,
+  isDomestic = false,
+}) => {
+  const baseSelector = '#general, #hotel, #tour-program, #transport, #included-information, #not-included-information'
+  const selector = isDomestic 
+    ? baseSelector 
+    : `${baseSelector}, #visa-infos`
+
   return (
     <div
-      className='relative z-20 shadow-[-10px_10px_20px_0px_rgba(0,0,0,0.25)] rounded-lg bg-orange-900 text-white'
+      className='relative z-20 md:rounded-lg bg-orange-900 text-white shadow-[-10px_10px_20px_0px_rgba(0,0,0,0.25)]'
       style={{ pointerEvents: 'auto' }}
     >
       <div className='relative mx-auto max-w-6xl overflow-hidden'>
@@ -51,14 +71,16 @@ const TourTableOfContents: React.FC<TourTableOfContentsProps> = ({ onVisaClick }
             color='orange'
             size='sm'
             radius='xs'
+            py={0}
             scrollSpyOptions={{
-              selector:
-                ' #general, #hotel, #tour-program, #transport, #included-information, #not-included-information, #visa-infos',
+              selector,
             }}
             getControlProps={({ data }) => {
               const icon = getIconForTitle(data.value)
-              const isVisa = data.value.toLowerCase().includes('vize') || data.value.toLowerCase().includes('visa')
-              
+              const isVisa =
+                data.value.toLowerCase().includes('vize') ||
+                data.value.toLowerCase().includes('visa')
+
               if (isVisa && onVisaClick) {
                 return {
                   onClick: (e: React.MouseEvent) => {
@@ -82,7 +104,7 @@ const TourTableOfContents: React.FC<TourTableOfContentsProps> = ({ onVisaClick }
                   ),
                 }
               }
-              
+
               return {
                 onClick: () => {
                   const node = data.getNode()

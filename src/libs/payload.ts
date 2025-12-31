@@ -47,7 +47,8 @@ export type FooterLink = {
     id: string
     url: string
     alt?: string
-  }}
+  }
+}
 
 export type FooterNavigationColumn = {
   title?: string | null
@@ -258,7 +259,9 @@ export async function getCampaigns(categoryId?: string): Promise<Campaign[]> {
   }
 }
 
-export async function getCampaignBySlug(slug: string): Promise<Campaign | null> {
+export async function getCampaignBySlug(
+  slug: string
+): Promise<Campaign | null> {
   try {
     const payload = await getPayloadInstance()
     const result = await payload.find({
@@ -363,7 +366,7 @@ export async function getDetailByTourTitle(
     // Her kayıt için keywords kontrolü yap
     for (const detail of result.docs) {
       const detailData = detail as Detail
-      
+
       if (!detailData.keywords || !Array.isArray(detailData.keywords)) {
         continue
       }

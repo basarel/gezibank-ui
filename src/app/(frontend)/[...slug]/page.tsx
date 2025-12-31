@@ -60,11 +60,12 @@ type CMSWidgets = {
 }
 
 const searchEngineMap: Record<string, React.ComponentType<any>> = {
-     
   tur: TourSearchEngine,
-} 
+}
 
-function getSearchEngine(type?: string | null): React.ComponentType<any> | null {
+function getSearchEngine(
+  type?: string | null
+): React.ComponentType<any> | null {
   if (!type) return null
   return searchEngineMap[type] || null
 }
@@ -103,7 +104,9 @@ export async function generateMetadata({
   }
 
   // Pages'de bulunamadıysa, CMS içeriğinden metadata al
-  const data = (await getContent<CmsContent<CMSWidgets[], CmsParams>>(slugString))?.data
+  const data = (
+    await getContent<CmsContent<CMSWidgets[], CmsParams>>(slugString)
+  )?.data
 
   if (data) {
     return {
@@ -134,8 +137,9 @@ export default async function ContentPage({
     'gizlilik-politikasi',
     'kvkk',
   ]
-  const isInfoPage = infoPageSlugs.some((infoSlug) => 
-    slugString === infoSlug || slugString.startsWith(infoSlug + '/')
+  const isInfoPage = infoPageSlugs.some(
+    (infoSlug) =>
+      slugString === infoSlug || slugString.startsWith(infoSlug + '/')
   )
 
   if (page) {
@@ -150,7 +154,7 @@ export default async function ContentPage({
       return (
         <InfoPagesLayout>
           {showSearchEngine && SearchEngineComponent && (
-            <div className='relative border-b bg-orange-900 py-4 mb-4'>
+            <div className='relative mb-4 border-b bg-orange-900 py-4'>
               {backgroundImageUrl && (
                 <Image
                   src={backgroundImageUrl}
@@ -171,7 +175,7 @@ export default async function ContentPage({
 
           {blocks && Array.isArray(blocks) && blocks.length > 0 && (
             <RenderBlocks blocks={blocks} />
-          ) }
+          )}
         </InfoPagesLayout>
       )
     }

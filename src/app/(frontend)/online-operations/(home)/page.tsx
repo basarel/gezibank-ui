@@ -78,7 +78,7 @@ export default function OnlineOperationsPage() {
           md: 'h1',
         }}
       >
-        Seyahatinizi Görüntüleyin
+        Turunuzu Görüntüleyin
       </Title>
 
       <div className='text-md pt-4 pb-7 md:pt-6 md:pb-9 md:text-lg'>
@@ -94,7 +94,7 @@ export default function OnlineOperationsPage() {
         <div className='grid grid-cols-1 gap-3 sm:grid-cols-3'>
           <div>
             <TextInput
-              label='PNR No'
+              label='Voucher No'
               {...form.register('bookingCode')}
               error={form.formState.errors.bookingCode?.message}
               size={'md'}
