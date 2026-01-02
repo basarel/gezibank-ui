@@ -58,8 +58,7 @@ const TourDropdown: React.FC<IProps> = ({ data, onSelect, defaultItem }) => {
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-2'>
               <RxCalendar size={23} className='text-orange-700' />
-              {dayjs(defaultItem?.startDate).format(dateFormat)} {' - '}
-              {dayjs(defaultItem?.endDate).format(dateFormat)}
+              Diğer Tur Tarihleri <span className='text-sm text-gray-600'>({data.length})</span>
             </div>
             <BiChevronDown size={23} className='text-orange-700' />
           </div>

@@ -4,7 +4,7 @@ import React from 'react'
 import { TourDetailApiResponse } from '@/modules/tour/type'
 import { Button, Modal, Tooltip, UnstyledButton } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { FaBus, FaCheck } from 'react-icons/fa'
+import { FaBus, FaCheck, FaBed } from 'react-icons/fa'
 import { RiInformationLine, RiPlaneFill } from 'react-icons/ri'
 import { IoClose } from 'react-icons/io5'
 import Image from 'next/image'
@@ -274,15 +274,22 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
           <>
             <div className='flex flex-col gap-5'>
               <div className='grid items-center gap-3'>
-                <span
-                  id='hotel'
-                  className='text-lg font-semibold text-blue-600 md:text-2xl'
-                >
-                  Otel Bilgisi
-                </span>
+                <div className='flex items-center gap-2'>
+                   <span
+                    id='hotel'
+                    className='text-lg font-semibold text-blue-600 md:text-2xl'
+                  >
+                    Otel Bilgisi
+                  </span>
+                </div>
                 {data.package.hotelInformations.map(
                   (hotel, hotelIndex) =>
-                    hotel.name && <div key={hotelIndex}>{hotel.name}</div>
+                    hotel.name && (
+                      <div className='flex items-center gap-2' key={hotelIndex}>
+                        <FaBed size={24} className='shrink-0 text-blue-600' />
+                        <div className='text-base font-semibold text-orange-900 md:text-lg'>{hotel.name}</div>
+                      </div>
+                    )
                 )}
               </div>
             </div>

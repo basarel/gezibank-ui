@@ -1,6 +1,7 @@
 .list {
   border-bottom: none !important;
   border: none !important;
+  --tab-border-color: transparent !important;
 }
 
 .panel {
@@ -9,6 +10,7 @@
 
 .root {
   border: none !important;
+  --tab-border-color: transparent !important;
 }
 
 .tab {
@@ -17,6 +19,8 @@
   border-bottom: 8px solid transparent;
   transition: border-color 0.2s ease;
   border-radius: 18px 18px 0 0 !important;
+  --tab-border-color: transparent !important;
+  border-color: transparent !important;
 }
 
 .tab:hover {

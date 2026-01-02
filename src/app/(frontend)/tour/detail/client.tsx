@@ -649,8 +649,7 @@ const TourDetailClient = () => {
 
                         {transportTypeText && (
                           <div
-                            className='flex cursor-pointer items-center gap-2 transition-opacity hover:opacity-80'
-                            onClick={scrollToTransport}
+                            className='flex items-center gap-2'
                           >
                             {transportType === 1 ? (
                               <RiPlaneFill
@@ -659,17 +658,13 @@ const TourDetailClient = () => {
                               />
                             ) : (
                               <FaBus
-                                size={19}
+                                size={17}
                                 className='shrink-0 text-blue-700'
                               />
                             )}
-                            <span className='text-sm text-orange-900 md:text-base'>
+                            <span className='text-xs font-bold text-orange-900 md:text-base'>
                               {transportTypeText}
                             </span>
-                            <RiInformationLine
-                              size={18}
-                              className='shrink-0 text-blue-700'
-                            />
                           </div>
                         )}
 
@@ -681,7 +676,7 @@ const TourDetailClient = () => {
                           <div className='flex flex-col gap-1'>
                             <div className='flex items-center gap-2'>
                               <FaBed
-                                size={24}
+                                size={20}
                                 className='shrink-0 text-blue-700'
                               />
                               <span className='text-sm font-semibold text-orange-900 md:text-base'>
@@ -694,7 +689,7 @@ const TourDetailClient = () => {
                                         hotel.name && (
                                           <span
                                             key={hotelIndex}
-                                            className='text-xs text-orange-900 md:text-sm'
+                                            className='text-xs text-orange-900 md:text-base'
                                           >
                                             {hotel.name}
                                           </span>
@@ -842,23 +837,18 @@ const TourDetailClient = () => {
                       type="auto"
                       scrollbars="x"
                       scrollbarSize={0}
-                      className="md:block px-2 md:px-4 bg-orange-900 text-white rounded-lg shadow-[-10px_10px_20px_0px_rgba(0,0,0,0.25)] min-w-max md:min-w-0 [&>div]:border-none"
+                      className="md:block sticky top-0 z-10 md:px-4 bg-orange-900 text-white md:rounded-lg shadow-[-10px_10px_20px_0px_rgba(0,0,0,0.25)] min-w-max md:min-w-0 [&>div]:border-none"
                     >
                       <Tabs.List className="border-none">
-                        <Tabs.Tab value="program" className="flex-1 md:flex-1 py-3 md:py-4 text-sm md:text-base font-semibold whitespace-nowrap">
+                        <Tabs.Tab value="program" className="flex-1 pt-4 md:flex-1 text-sm md:text-lg font-semibold whitespace-nowrap">
                           Tur Programı
                         </Tabs.Tab>
-                        <Tabs.Tab value="info" className="flex-1 md:flex-1 py-3 md:py-4 text-sm md:text-base font-semibold whitespace-nowrap">
+                        <Tabs.Tab value="info" className="flex-1 pt-4 md:flex-1 text-sm md:text-lg font-semibold whitespace-nowrap">
                           Tur Bilgileri
                         </Tabs.Tab>
-                        <Tabs.Tab value="price" className="flex-1 md:flex-1 py-3 md:py-4 text-sm md:text-base font-semibold whitespace-nowrap">
+                        <Tabs.Tab value="price" className="flex-1 pt-4 md:flex-1 text-sm md:text-lg font-semibold whitespace-nowrap">
                           Rezervasyon Yap
                         </Tabs.Tab>
-                        {selectedCampaign && (
-                          <Tabs.Tab value="campaign" className="flex-1 md:flex-1 py-3 md:py-4 text-sm md:text-base font-semibold whitespace-nowrap">
-                            Kampanya Detayı
-                          </Tabs.Tab>
-                        )}
                       </Tabs.List>
                     </ScrollArea>
 
@@ -882,7 +872,7 @@ const TourDetailClient = () => {
 
                     <Tabs.Panel value="price" className="py-5">
                       <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-                        <div className="col-span-3">
+                        <div className="col-span-3 hidden md:block">
                           <ReservationDetailsCard
                             data={detailQuery.data}
                             startDate={startDate}
@@ -906,7 +896,7 @@ const TourDetailClient = () => {
                             isDomestic={detailQuery.data?.package.isDomestic ?? false}
                           />
                         </div>
-                          <div className="col-span-2 flex flex-col gap-4 p-5 bg-white rounded-lg shadow-md border border-gray-200">
+                          <div className="col-span-2 order-1 md:order-2 flex flex-col gap-4 p-5 bg-white rounded-lg shadow-md border border-gray-200">
                           <TourDetailPriceSection
                             calculatedTotalPrice={
                               addOrRemoveExtraServicesMutation.data?.data?.tlPrice?.value
@@ -927,14 +917,65 @@ const TourDetailClient = () => {
                               addOrRemoveExtraServicesMutation.isPending
                             }
                           />
-
+                          
+<Collapse
+                      in={
+                        !!calculateTotalPriceQuery.data &&
+                        !calculateTotalPriceQuery.data?.success &&
+                        !(
+                          extraServicesMutation.isPending ||
+                          calculateTotalPriceQuery.isPending
+                        )
+                      }
+                    >
+                      <Alert>
+                        <div className='flex flex-col gap-3 text-center text-sm font-bold text-red-800'>
+                          <div className='col-span-12 flex items-center gap-2 justify-start'>
+                            <FaInfoCircle size={20} />
+                            <span>
+                              Kriterlerinize uygun müsaitlik bulunamadı.
+                            </span>
+                          </div>
+                          <div>
+                            <Link
+                              className='text-orange-600 grid grid-cols-14 underline justify-start'
+                              href='/iletisim'
+                            >
+                              {' '}
+                              <CiMail
+                                className='col-span-1 justify-start'
+                                size={19}
+                              />
+                              <span className='col-span-12 justify-start text-start'>
+                                {' '}
+                                Çağrı merkezimizden bilgi alabilirsiniz.
+                              </span>
+                            </Link>
+                          </div>
+                          <div className='flex items-center gap-2 justify-start'>
+                            <Link
+                              className='text-orange-600 grid grid-cols-13 items-center gap-1 underline justify-start'
+                              href='tel:08508780400'
+                            >
+                              <MdOutlineLocalPhone
+                                className='col-span-1 justify-start shrink-0'
+                                size={19}
+                              />
+                              <span className='col-span-5'>0850 840 0 151</span>
+                            </Link>
+                          </div>
+                        </div>
+                      </Alert>
+                    </Collapse>
                           <Button
-                            className="bg-blue-600 text-white"
+                            className="bg-blue-600 text-white mt-8 hover:bg-blue-700 disabled:opacity-40"
                             fullWidth
                             size="lg"
                             disabled={
                               !calculateTotalPriceQuery.data?.success ||
-                              extraServicesMutation.isPending
+                              extraServicesMutation.isPending ||
+                              (!!calculateTotalPriceQuery.data &&
+                                !calculateTotalPriceQuery.data?.success)
                             }
                             loading={
                               extraServicesMutation.isPending ||

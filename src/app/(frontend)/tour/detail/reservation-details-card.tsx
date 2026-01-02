@@ -84,7 +84,7 @@ export const ReservationDetailsCard: React.FC<ReservationDetailsCardProps> = ({
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 mb-4">
+      <div className="flex flex-col gap-5 mb-4">
         {itineraryText && (
           <div className="flex items-center gap-2">
             <HiOutlineLocationMarker
@@ -110,28 +110,32 @@ export const ReservationDetailsCard: React.FC<ReservationDetailsCardProps> = ({
 
         <div className="flex items-center gap-2">
           <TbCalendarClock size={20} className="shrink-0 text-blue-700" />
-          <span className="text-sm uppercase">
+          <span className="text-sm">
             {totalNights === 0
-              ? 'GÜNÜBİRLİK'
-              : `${totalNights} GECE ${totalDays} GÜN`}{' '}
-            TURU
-          </span>
+              ? 'Günübirlik Tur'
+              : `${totalNights} Gece ${totalDays} Gün`}{' '}          </span>
         </div>
 
         <div className="flex items-center gap-2">
           <FaUsers size={18} className="shrink-0 text-blue-700" />
-          <span className="text-sm">
-            {passengers.adultCount.split(':')[0]} Yetişkin
-          </span>
+            <span className="text-sm">
+              {passengers.adultCount.split(':')[0]} Yetişkin
+            </span>
+            {passengers.childAge && passengers.childAge.length > 0 && (
+              <span className="text-sm">
+               , {passengers.childAge.length} Çocuk ({passengers.childAge.join(', ')} yaşında)
+              </span>
+            )}
+
         </div>
       </div>
         {filteredCampaigns.length > 0 && (
-          <div className="flex flex-col gap-2">
-            {filteredCampaigns.slice(0, 2).map((campaign) => (
+          <div className="grid md:grid-cols-2 gap-2">
+            {filteredCampaigns.slice(0, 4).map((campaign) => (
             <Link
               key={campaign.id}
               href={campaign.link as Route}
-              className="flex w-fit gap-5 items-center justify-between border shadow border-gray-200 rounded-md px-2 py-2 hover:bg-gray-200 transition-colors cursor-pointer text-left"
+              className="flex w-full gap-5 items-center justify-between border shadow border-gray-200 hover:border-blue-600 rounded-md px-2 py-2 hover:bg-gray-50 transition-colors cursor-pointer text-left"
             >
               <div className="flex items-center gap-2">
                 <FaTag size={16} className="text-blue-700 shrink-0" />
@@ -142,6 +146,7 @@ export const ReservationDetailsCard: React.FC<ReservationDetailsCardProps> = ({
           ))}
         </div>
       )}
+      <div className='text-dark-400 hidden text-xs md:flex mt-4'> Not : Çocuk kategorisi 7-12 yaşları arasıdır. Tur sirküsü yayımlandığı 02.01.2026 tarihinde geçerlidir. Aynı tura ait, daha sonraki bir tarihte yayımlanacak tur sirküsü bir öncekini geçersiz kılar. Zorunlu ek hizmetler fiyata dahildir. </div>
     </div>
   )
 }
