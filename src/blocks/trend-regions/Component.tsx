@@ -29,7 +29,7 @@ export const TrendRegionsBlock: React.FC<TrendRegionsBlockProps> = ({
   }
 
   return (
-    <div className='py-8'>
+    <div className='w-full'>
       {title && (
         <h2 className='relative mx-auto mb-8 w-fit border-blue-800 pb-3 text-center text-2xl font-bold text-blue-600 md:text-3xl'>
           {title}

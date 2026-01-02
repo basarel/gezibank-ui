@@ -1,6 +1,4 @@
-'use client'
-
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Container } from '@mantine/core'
 import { ThemeCardsBlock } from './theme-cards/Component'
 import { StorySliderBlock } from './story-slider/Component'
@@ -15,6 +13,7 @@ import { BottomSliderBlock } from './bottom-slider/Component'
 import { LandingGridBlock } from './landing-grid/Component'
 import { LandingContentBlock } from './landing-content/Component'
 import { LandingFaqBlock } from './landing-faq/Component'
+import { LatestBlogsBlock } from './latest-blogs/Component'
 type Block = {
   blockType: string
   [key: string]: any
@@ -38,6 +37,7 @@ const blockComponents: Record<string, React.ComponentType<any>> = {
   landingGrid: LandingGridBlock,
   landingContent: LandingContentBlock,
   landingFaq: LandingFaqBlock,
+  latestBlogs: LatestBlogsBlock,
 }
 
 export const RenderBlocks: React.FC<RenderBlocksProps> = ({ blocks }) => {
@@ -46,14 +46,14 @@ export const RenderBlocks: React.FC<RenderBlocksProps> = ({ blocks }) => {
   }
   const fullWidthBlocks = ['mainBanner', 'storySlider']
   return (
-    <Fragment>
+    <div className='flex flex-col gap-20'>
       {blocks.map((block, index) => {
         const blockId = block.id || `block-${index}`
         const { blockType, id, ...blockData } = block
 
         if (block && 'isActive' in block && block.isActive === false) {
           return null
-        } // burası var ama tabii cms e eklenmelı
+        } // cms e eklendı BY 
 
         if (blockType && blockType in blockComponents) {
           const BlockComponent = blockComponents[blockType]
@@ -71,6 +71,6 @@ export const RenderBlocks: React.FC<RenderBlocksProps> = ({ blocks }) => {
 
         return null
       })}
-    </Fragment>
+    </div>
   )
 }

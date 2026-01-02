@@ -1069,6 +1069,30 @@ const Pages = {
             },
           ],
         },
+        {
+          slug: 'latestBlogs',
+          labels: {
+            singular: 'Latest Blogs Block',
+            plural: 'Latest Blogs Blocks',
+          },
+          fields: [
+            {
+              name: 'title',
+              type: 'text',
+              label: 'Block Title',
+              required: false,
+              admin: {
+                description: 'e.g.: Son Blog Yazılarımız',
+              },
+            },
+            {
+              name: 'isActive',
+              type: 'checkbox',
+              label: 'Block Aktif',
+              defaultValue: true,
+            },
+          ],
+        },
       ],
     },
     {
@@ -1244,6 +1268,65 @@ const Campaigns = {
       defaultValue: true,
     },
   ],
+}
+
+const Blogs = {
+  slug: 'blogs',
+  admin: {
+    useAsTitle: 'title',
+    defaultColumns: ['title', 'active', 'createdAt'],
+  },
+  access: {
+    read: () => true,
+  },
+  fields: [
+    {
+      name: 'title',
+      type: 'text',
+      label: 'Blog Başlığı',
+      required: true,
+      admin: {
+        description: 'Blog başlığı (liste ve detay sayfasında gösterilir)',
+      },
+    },
+    {
+      name: 'slug',
+      type: 'text',
+      label: 'Slug',
+      required: true,
+      unique: true,
+      admin: {
+        description: 'URL için slug (e.g.: ilk-blog-yazim)',
+      },
+    },
+    {
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Blog Resmi',
+      required: true,
+      admin: {
+        description: 'Liste ve detay sayfasında gösterilecek resim',
+      },
+    },
+    {
+      name: 'description',
+      type: 'richText',
+      label: 'Blog İçeriği',
+      required: true,
+      editor: lexicalEditor({}),
+      admin: {
+        description: 'Blog detay açıklaması (detay sayfasında gösterilir)',
+      },
+    },
+    {
+      name: 'active',
+      type: 'checkbox',
+      label: 'Aktif',
+      defaultValue: true,
+    },
+  ],
+  timestamps: true,
 }
 
 const Search = {
@@ -1789,7 +1872,7 @@ export default buildConfig({
        },
     },
   },
-  collections: [Users, Media, Pages, CampaignCategories, Campaigns, Search, Detail],
+  collections: [Users, Media, Pages, CampaignCategories, Campaigns, Blogs, Search, Detail],
   globals: [Globals.header, Globals.footer],
   secret: process.env.PAYLOAD_SECRET || 'dev-secret',
   typescript: {

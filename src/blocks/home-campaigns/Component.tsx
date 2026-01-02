@@ -36,7 +36,8 @@ export const HomeCampaignsBlock: React.FC<HomeCampaignsBlockProps> = ({
       )}
       <SimpleGrid
         cols={{ base: 1, sm: 2, md: 4 }}
-        spacing={{ base: 'md', sm: 'lg' }}
+        spacing='lg'
+        verticalSpacing='lg'
       >
         {campaigns.map((campaign) => {
           if (!campaign.link) return null

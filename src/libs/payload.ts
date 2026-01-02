@@ -388,3 +388,169 @@ export async function getDetailByTourTitle(
     return null
   }
 }
+
+export type Blog = {
+  id: number
+  title: string
+  slug: string
+  image: string | { id: number; url?: string } | null
+  description: any
+  active: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+export async function getLatestBlogs(limit: number = 3): Promise<Blog[]> {
+  try {
+    const payload = await getPayloadInstance()
+    const result = await payload.find({
+      collection: 'blogs',
+      where: {
+        active: {
+          equals: true,
+        },
+      },
+      sort: '-createdAt',
+      limit,
+      depth: 2,
+    })
+
+    return (result.docs as Blog[]) || []
+  } catch (error) {
+    return []
+  }
+}
+
+export async function getAllBlogs(): Promise<Blog[]> {
+  try {
+    const payload = await getPayloadInstance()
+    const result = await payload.find({
+      collection: 'blogs',
+      where: {
+        active: {
+          equals: true,
+        },
+      },
+      sort: '-createdAt',
+      limit: 1000, // Yeterince büyük bir limit
+      depth: 2,
+    })
+
+    return (result.docs as Blog[]) || []
+  } catch (error) {
+    return []
+  }
+}
+
+export async function getBlogBySlug(slug: string): Promise<Blog | null> {
+  try {
+    const payload = await getPayloadInstance()
+    const result = await payload.find({
+      collection: 'blogs',
+      where: {
+        slug: {
+          equals: slug,
+        },
+        active: {
+          equals: true,
+        },
+      },
+      limit: 1,
+      depth: 2,
+    })
+
+    return (result.docs[0] as Blog) || null
+  } catch (error) {
+    return null
+  }
+}
+
+export async function getPreviousBlog(
+  currentBlogId: number
+): Promise<Blog | null> {
+  try {
+    const payload = await getPayloadInstance()
+    const currentBlog = await payload.findByID({
+      collection: 'blogs',
+      id: currentBlogId.toString(),
+      depth: 1,
+    })
+
+    if (!currentBlog || !currentBlog.createdAt) return null
+
+    const result = await payload.find({
+      collection: 'blogs',
+      where: {
+        and: [
+          {
+            active: {
+              equals: true,
+            },
+          },
+          {
+            id: {
+              not_equals: currentBlogId,
+            },
+          },
+          {
+            createdAt: {
+              less_than: currentBlog.createdAt,
+            },
+          },
+        ],
+      },
+      sort: '-createdAt',
+      limit: 1,
+      depth: 2,
+    })
+
+    return (result.docs[0] as Blog) || null
+  } catch (error) {
+    return null
+  }
+}
+
+export async function getNextBlog(
+  currentBlogId: number
+): Promise<Blog | null> {
+  try {
+    const payload = await getPayloadInstance()
+    const currentBlog = await payload.findByID({
+      collection: 'blogs',
+      id: currentBlogId.toString(),
+      depth: 1,
+    })
+
+    if (!currentBlog || !currentBlog.createdAt) return null
+
+    const result = await payload.find({
+      collection: 'blogs',
+      where: {
+        and: [
+          {
+            active: {
+              equals: true,
+            },
+          },
+          {
+            id: {
+              not_equals: currentBlogId,
+            },
+          },
+          {
+            createdAt: {
+              greater_than: currentBlog.createdAt,
+            },
+          },
+        ],
+      },
+      sort: 'createdAt',
+      limit: 1,
+      depth: 2,
+    })
+
+    return (result.docs[0] as Blog) || null
+  } catch (error) {
+    return null
+  }
+}

@@ -61,7 +61,7 @@ export const HolidayThemesBlock: React.FC<HolidayThemesBlockProps> = ({
   }
 
   return (
-    <div className='py-8'>
+    <div className='w-full'>
       {title && (
         <div className='mb-4 text-center'>
           <h2 className='relative mx-auto mb-8 w-fit border-blue-800 pb-3 text-center text-2xl font-bold text-blue-600 md:text-3xl'>
