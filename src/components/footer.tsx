@@ -6,20 +6,6 @@ import { Route } from 'next'
 import { CiLocationOn, CiMail } from 'react-icons/ci'
 import { MdOutlineLocalPhone } from 'react-icons/md'
 
-function getImageUrl(image: any): string | null {
-  if (!image) return null
-  if (typeof image === 'string') return image
-  if (typeof image === 'object') {
-    if (image.url) return image.url
-    if (image.filename) {
-      return typeof image.sizes !== 'undefined' && image.sizes?.large?.url
-        ? image.sizes.large.url
-        : image.url || null
-    }
-  }
-  return null
-}
-
 const Footer = async () => {
   const footerData = await getGlobalFooter()
 
@@ -27,7 +13,7 @@ const Footer = async () => {
     return null
   }
 
-  const logoUrl = getImageUrl(footerData.logo)
+  const logoUrl = footerData.logo?.url
 
   return (
     <footer className='bg-gray-100 pt-8 pb-6'>
@@ -41,8 +27,8 @@ const Footer = async () => {
                     src={logoUrl}
                     alt='GeziBank Logo'
                     width={200}
-                    height={200}
-                    className='object-contain'
+                    height={100}
+                    className='object-contain h-full'
                   />
                 </div>
                 <div className='mt-1 w-full border-b-2 border-blue-600'></div>
@@ -101,13 +87,13 @@ const Footer = async () => {
                     </div>
                   )}
                   <div>
-                    <div className='mb-2 flex flex-wrap items-center justify-center gap-3 md:items-start md:justify-start'>
+                    <div className='flex flex-wrap items-center justify-center gap-3 md:items-start md:justify-start'>
                       {column.links
                         .filter(
-                          (link) => getImageUrl(link.image) && !link.label
+                          (link) => link.image?.url && !link.label
                         )
                         .map((link, linkIndex) => {
-                          const linkImageUrl = getImageUrl(link.image)
+                          const linkImageUrl = link.image?.url
                           return (
                             <div key={`image-only-${linkIndex}`}>
                               {linkImageUrl && (
@@ -117,7 +103,7 @@ const Footer = async () => {
                                     alt='Image'
                                     width={32}
                                     height={32}
-                                    className='object-contain'
+                                    className='object-contain bg-gray-100'
                                   />
                                 </Link>
                               )}
@@ -131,7 +117,7 @@ const Footer = async () => {
                         .filter(
                           (link) =>
                             link.label ||
-                            (getImageUrl(link.image) && link.label)
+                              (link.image?.url && link.label)
                         )
                         .map((link, linkIndex) => {
                           return (
@@ -162,7 +148,7 @@ const Footer = async () => {
                                     alt={link.label || 'Image'}
                                     width={20}
                                     height={20}
-                                    className='object-contain'
+                                    className='object-contain bg-gray-100'
                                   />
                                   <span className='text-sm text-gray-600'>
                                     {link.label}

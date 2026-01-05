@@ -146,15 +146,7 @@ export const HelpPage = () => {
               error={formAction.formState.errors.mesaj?.message}
             />
           </div>
-          <div className='flex items-center justify-between py-4'>
-            <p className='text-sm text-gray-600'>
-              Kişisel verileriniz{' '}
-              <a href='#' className='text-blue-600 hover:underline'>
-                Aydınlatma Metni
-              </a>{' '}
-              kapsamında işlenmektedir.
-            </p>
-
+          <div className='flex items-center justify-end py-4 ms-auto'>
             <div className='text-end'>
               <Button
                 size='md'

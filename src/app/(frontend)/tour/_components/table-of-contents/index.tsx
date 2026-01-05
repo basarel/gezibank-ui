@@ -63,7 +63,7 @@ const TourTableOfContents: React.FC<TourTableOfContentsProps> = ({
       className='relative z-20 md:rounded-lg bg-orange-900 text-white shadow-[-10px_10px_20px_0px_rgba(0,0,0,0.25)]'
       style={{ pointerEvents: 'auto' }}
     >
-      <div className='relative mx-auto max-w-6xl overflow-hidden'>
+      <div className='relative mx-auto max-w-6xl overflow-x-auto overflow-y-hidden md:overflow-hidden'>
         <div className='w-full'>
           <TableOfContents
             classNames={classes}

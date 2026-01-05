@@ -19,6 +19,9 @@ export const HeaderMenu: React.FC<HeaderMenuProps> = ({ menuItems = [] }) => {
         <Skeleton height={20} width={80} radius='md' />
         <Skeleton height={20} width={100} radius='md' />
         <Skeleton height={20} width={90} radius='md' />
+        <Skeleton height={20} width={80} radius='md' />
+        <Skeleton height={20} width={100} radius='md' />
+        <Skeleton height={20} width={90} radius='md' />
       </div>
     )
   }

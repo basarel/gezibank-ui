@@ -122,11 +122,11 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
     )
   return (
     <div>
-      <div className='flex flex-col gap-20'>
-        <div className='grid items-center gap-3'>
+      <div className='flex flex-col md:gap-20 gap-10'>
+        <div className='flex flex-col gap-3'>
           <span
             id='included-information'
-            className='text-lg font-semibold text-blue-600 md:text-2xl'
+            className='text-lg font-semibold text-blue-600 md:text-xl'
           >
             Fiyata Dahil Hizmetler
           </span>
@@ -138,10 +138,10 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
           )}
         </div>
 
-        <div className='grid items-center gap-3'>
+        <div className='flex flex-col gap-3'>
           <span
             id='not-included-information'
-            className='text-lg font-semibold text-blue-600 md:text-2xl'
+            className='text-lg font-semibold text-blue-600 md:text-xl'
           >
             Fiyata Dahil Olmayan Hizmetler
           </span>
@@ -166,7 +166,7 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
               <div className='flex flex-col gap-5'>
                 <span
                   id='transport'
-                  className='text-lg font-semibold text-blue-600 md:text-2xl'
+                  className='text-lg font-semibold text-blue-600 md:text-xl'
                 >
                   Ulaşım Bilgisi
                 </span>
@@ -256,7 +256,7 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
               <div className='flex flex-col gap-5'>
                 <span
                   id='transport'
-                  className='text-lg font-semibold text-blue-600 md:text-2xl'
+                  className='text-lg font-semibold text-blue-600 md:text-xl'
                 >
                   Ulaşım Bilgisi
                 </span>
@@ -273,11 +273,11 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
         data.package.hotelInformations.length > 0 ? (
           <>
             <div className='flex flex-col gap-5'>
-              <div className='grid items-center gap-3'>
+              <div className='flex flex-col gap-3'>
                 <div className='flex items-center gap-2'>
                    <span
                     id='hotel'
-                    className='text-lg font-semibold text-blue-600 md:text-2xl'
+                    className='text-lg font-semibold text-blue-600 md:text-xl'
                   >
                     Otel Bilgisi
                   </span>
@@ -299,7 +299,7 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
             <div className='flex flex-col gap-5'>
               <span
                 id={isMobile ? undefined : 'hotel'}
-                className='text-lg font-semibold text-blue-600 md:text-2xl'
+                className='text-lg font-semibold text-blue-600 md:text-xl'
               >
                 Otel Bilgisi
               </span>
@@ -316,11 +316,11 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
         ) : null}
         {!data.package.isDomestic && (
           <Tooltip label='Vize bilgileri için tıklayınız'>
-            <div className='flex flex-col gap-3'>
+            <div className='flex flex-col w-fit gap-3'>
               <div className='flex items-center gap-3'>
                 <span
                   id='visa-infos'
-                  className='flex cursor-pointer items-center gap-2 text-lg font-semibold text-blue-600 md:text-2xl'
+                  className='flex cursor-pointer items-center gap-2 text-lg font-semibold text-blue-600 md:text-xl'
                   onClick={(e) => {
                     e.preventDefault()
                     open()
@@ -341,7 +341,7 @@ export const TourGeneralInformation: React.FC<IPrps> = ({
           opened={opened}
           onClose={close}
           title={
-            <span className='text-lg font-semibold text-blue-600 md:text-2xl'>
+            <span className='text-lg font-semibold text-blue-600 md:text-xl'>
               Vize Bilgileri
             </span>
           }

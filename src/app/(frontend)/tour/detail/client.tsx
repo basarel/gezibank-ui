@@ -10,8 +10,6 @@ import {
   Collapse,
   Alert,
   UnstyledButton,
-  Tabs,
-  ScrollArea,
 } from '@mantine/core'
 import { modals } from '@mantine/modals'
 import { CallForm } from '@/components/call-form'
@@ -31,12 +29,8 @@ import { ExtraServicePanel } from './extra-services'
 import { reservationParsers } from '@/app/(frontend)/reservation/searchParams'
 import { tourDetailPageParamParser } from '@/modules/tour/detailSearchParams'
 import { CruiseSearchEngine } from '@/modules/cruise'
-import { IoCalendarClearOutline } from 'react-icons/io5'
-import {
-  MdDownloading,
-  MdOutlineCameraAlt,
-  MdOutlineLocalPhone,
-} from 'react-icons/md'
+import { IoCalendarClearOutline, IoInformationCircle } from 'react-icons/io5'
+import { MdDownloading, MdOutlineCameraAlt, MdOutlineLocalPhone } from 'react-icons/md'
 import { TourMediaGallery } from '@/app/(frontend)/tour/_components/media-gallery/media-gallery'
 import TourTableOfContents from '@/app/(frontend)/tour/_components/table-of-contents'
 import jsPDF from 'jspdf'
@@ -52,7 +46,7 @@ import NotFound from '@/app/(frontend)/not-found'
 import { TourDetailSkeleton } from './tour-detail-skeleton'
 import Breadcrumb from '@/app/breadcrumb'
 import Link from 'next/link'
-import { FaInfoCircle, FaBus, FaBed, FaUsers } from 'react-icons/fa'
+import { FaInfoCircle, FaBus, FaBed } from 'react-icons/fa'
 import { HiOutlineLocationMarker } from 'react-icons/hi'
 import { TourGeneralInformation } from './tour-general-information'
 import { RiPlaneFill, RiWhatsappFill, RiInformationLine } from 'react-icons/ri'
@@ -60,14 +54,9 @@ import { TbCalendarClock } from 'react-icons/tb'
 import { SearchCampaign, Detail } from '@/libs/payload'
 import { Route } from 'next'
 import { TourDetailVideoModal } from './tour-detail-video-modal'
-import tourTabsClasses from './TourTabs.module.css'
-import { ReservationDetailsCard } from './reservation-details-card'
-
 const TourDetailClient = () => {
   const router = useTransitionRouter()
   const isMobile = useMediaQuery('(max-width: 768px)')
-  const [activeTab, setActiveTab] = useState<string>('program')
-  const [selectedCampaign, setSelectedCampaign] = useState<SearchCampaign | null>(null)
   const [
     isOpenExtraServicesModal,
     { open: openExtraServicesModal, close: closeExtraServicesModal },
@@ -113,28 +102,14 @@ const TourDetailClient = () => {
       const marginX = (pdfWidth - imgScaledWidth) / 2
       const marginY = (pdfHeight - imgScaledHeight) / 2
 
-      pdf.addImage(
-        imgData,
-        'PNG',
-        marginX,
-        marginY,
-        imgScaledWidth,
-        imgScaledHeight
-      )
+      pdf.addImage(imgData, 'PNG', marginX, marginY, imgScaledWidth, imgScaledHeight)
       let heightLeft = imgScaledHeight
       let position = marginY
 
       while (heightLeft >= pdfHeight) {
         position = heightLeft - pdfHeight + marginY
         pdf.addPage()
-        pdf.addImage(
-          imgData,
-          'PNG',
-          marginX,
-          -position,
-          imgScaledWidth,
-          imgScaledHeight
-        )
+        pdf.addImage(imgData, 'PNG', marginX, -position, imgScaledWidth, imgScaledHeight)
         heightLeft -= pdfHeight
       }
 
@@ -154,22 +129,18 @@ const TourDetailClient = () => {
   }, [])
 
   const detailQuery = useTourDetailQuery()
-  const [visaModalOpened, { open: openVisaModal, close: closeVisaModal }] =
-    useDisclosure(false)
-  const [videoModalOpened, { open: openVideoModal, close: closeVideoModal }] =
-    useDisclosure(false)
-
+  const [visaModalOpened, { open: openVisaModal, close: closeVisaModal }] = useDisclosure(false)
+  const [videoModalOpened, { open: openVideoModal, close: closeVideoModal }] = useDisclosure(false)
+ 
   // Tur başlığına göre video detayını çek
   const tourTitle = detailQuery.data?.package.title
   const { data: tourDetailVideo } = useQuery<Detail | null>({
     queryKey: ['tour-detail-video', tourTitle],
     queryFn: async () => {
       if (!tourTitle) return null
-
+ 
       try {
-        const response = await fetch(
-          `/api/detail-video?tourTitle=${encodeURIComponent(tourTitle)}`
-        )
+        const response = await fetch(`/api/detail-video?tourTitle=${encodeURIComponent(tourTitle)}`)
         if (!response.ok) {
           return null
         }
@@ -459,7 +430,6 @@ const TourDetailClient = () => {
     return ''
   }
   const itineraryText = formatItinerary()
-
   // Tarih formatı
   const formattedDateRange = startDate && endDate
     ? `${dayjsStartDate.format('DD MMMM YYYY')} - ${dayjsEndDate.format('DD MMMM YYYY')}`
@@ -532,10 +502,10 @@ const TourDetailClient = () => {
                       />
                     </figure>
                     {isMobile && images.length > 1 && (
-                      <div className='absolute right-3 bottom-3 flex items-center gap-1.5 rounded-lg bg-black/60 px-2.5 py-1.5 backdrop-blur-sm'>
+                      <div className='absolute bottom-3 right-3 flex items-center gap-1.5 rounded-lg bg-black/60 px-2.5 py-1.5 backdrop-blur-sm'>
                         <MdOutlineCameraAlt size={16} className='text-white' />
                         <span className='text-xs font-medium text-white'>
-                          Galeri ({images.length})
+                         Galeri ({images.length})
                         </span>
                       </div>
                     )}
@@ -601,7 +571,7 @@ const TourDetailClient = () => {
                   </div>
                 </div>
               </div>
-              <Container className='relative z-10 mx-auto rounded-xl bg-white md:p-6 text-black shadow-[-10px_10px_20px_0px_rgba(0,0,0,0.25)] md:-mt-14 md:-mt-20'>
+              <Container className='relative z-10 mx-auto rounded-xl bg-white p-6 text-black shadow-[-10px_10px_20px_0px_rgba(0,0,0,0.25)] md:-mt-14 md:-mt-20'>
                 <div className='mt-6 flex flex-col items-start justify-between gap-6 md:flex-row'>
                   <div className='flex flex-1 flex-col gap-4'>
                     <div className='flex items-start gap-3'>
@@ -649,7 +619,8 @@ const TourDetailClient = () => {
 
                         {transportTypeText && (
                           <div
-                            className='flex items-center gap-2'
+                            onClick={scrollToTransport}
+                            className='flex cursor-pointer items-center gap-2 ml-1'
                           >
                             {transportType === 1 ? (
                               <RiPlaneFill
@@ -665,6 +636,7 @@ const TourDetailClient = () => {
                             <span className='text-xs font-bold text-orange-900 md:text-base'>
                               {transportTypeText}
                             </span>
+                            <IoInformationCircle size={18} className='text-blue-700' />
                           </div>
                         )}
 
@@ -673,7 +645,7 @@ const TourDetailClient = () => {
                             0) ||
                         (detailQuery.data?.package.description &&
                           detailQuery.data.package.description.length > 0) ? (
-                          <div className='flex flex-col gap-1'>
+                          <div className='flex flex-col gap-1 ml-1'>
                             <div className='flex items-center gap-2'>
                               <FaBed
                                 size={20}
@@ -698,7 +670,7 @@ const TourDetailClient = () => {
                                   </div>
                                 ) : detailQuery.data?.package.description ? (
                                   <div
-                                    className='text-xs text-orange-900 md:text-sm'
+                                    className='text-xs text-orange-900 md:text-base'
                                     dangerouslySetInnerHTML={{
                                       __html:
                                         detailQuery.data.package.description,
@@ -711,11 +683,11 @@ const TourDetailClient = () => {
                         ) : null}
                       </div>
                       {tourCampaigns && tourCampaigns.length > 0 && (
-                        <div className='col-span-4 mt-4 flex flex-wrap gap-2 md:mt-10'>
+                        <div className='flex flex-col col-span-4 gap-2 md:mt-10 mt-4'>
                           {tourCampaigns
                             .filter((campaign) => {
                               if (campaign.active === false) return false
-
+                              
                               if (detailQuery.data?.package.isDomestic) {
                                 return campaign.viewCountry === '1'
                               } else {
@@ -727,46 +699,42 @@ const TourDetailClient = () => {
                                 key={campaign.id}
                                 href={campaign.link as Route}
                               >
-                                <div className='rounded-md bg-green-50 px-3 py-1.5 text-sm font-medium text-green-700 transition-all duration-200 hover:bg-green-100'>
+                                <div className='rounded-md bg-green-50 text-green-700 px-3 py-1.5 text-sm font-medium hover:bg-green-100 transition-all duration-200'>
                                   {campaign.text}
                                 </div>
                               </Link>
                             ))}
                         </div>
                       )}
-                    </div>
+                  </div>
                   </div>
 
-                  <div className='mt-2 flex w-full flex-col items-center gap-4 md:w-auto md:items-end'>
-                    {!detailQuery.data?.package.isDomestic &&
-                      euroPriceFormatted && (
-                        <div className='flex w-full flex-col items-center gap-2 md:w-auto md:items-end'>
-                          <div className='text-sm font-medium md:text-base'>
-                            Çift Kişilik Oda Kişi Başı
-                          </div>
-                          <div className='w-full rounded-lg bg-orange-900 px-4 py-3 md:w-auto md:px-6 md:py-3'>
-                            <div className='flex items-start justify-center gap-1 text-3xl font-bold text-white md:justify-start md:text-5xl'>
-                              {euroPriceFormatted}
-                              <span className='text-xl md:text-3xl'>€</span>
-                            </div>
-                          </div>
-                          <UnstyledButton
-                            onClick={downloadPDF}
-                            className='flex w-full items-center justify-center gap-1 rounded-md bg-orange-50 px-3 py-2 transition-colors hover:bg-orange-100 md:w-auto md:bg-transparent md:py-2'
-                          >
-                            <MdDownloading
-                              size={26}
-                              className='text-blue-600'
-                            />
-                            <span className='text-sm font-bold md:text-base'>
-                              Tur Programını İndir
-                            </span>
-                          </UnstyledButton>
+                  <div className='mt-auto flex w-full flex-col items-center gap-4 md:w-auto md:items-end'>
+                    {!detailQuery.data?.package.isDomestic && euroPriceFormatted && (
+                      <div className='flex w-full flex-col items-center gap-2 md:w-auto md:items-end'>
+                        <div className='md:text-base text-sm font-medium'>
+                          Çift Kişilik Oda Kişi Başı
                         </div>
-                      )}
+                        <div className='w-full rounded-lg bg-orange-900 px-4 py-3 md:w-auto md:px-6 md:py-3'>
+                          <div className='flex items-start justify-center gap-1 text-3xl font-bold text-white md:justify-start md:text-5xl'>
+                            {euroPriceFormatted}
+                            <span className='text-xl md:text-3xl'>€</span>
+                          </div>
+                        </div>
+                        <UnstyledButton
+                          onClick={downloadPDF}
+                          className='w-full md:w-auto flex items-center justify-center gap-1 rounded-md bg-orange-50 px-3 py-2 transition-colors hover:bg-orange-100 md:bg-transparent md:py-2'
+                        >
+                         <MdDownloading size={26} className='text-blue-600'/>
+                          <span className='text-sm font-bold md:text-base'>
+                           Tur Programını İndir
+                          </span>
+                        </UnstyledButton>
+                      </div>
+                    )}
                     {detailQuery.data?.package.isDomestic && (
                       <div className='flex w-full flex-col items-center gap-2 md:w-auto md:items-end'>
-                        <div className='text-sm font-medium md:text-base'>
+                        <div className='md:text-base text-sm font-medium'>
                           Çift Kişilik Oda Kişi Başı
                         </div>
                         <div className='w-full rounded-lg bg-orange-900 px-4 py-3 md:w-auto md:px-6 md:py-3'>
@@ -774,22 +742,23 @@ const TourDetailClient = () => {
                             {formatCurrency(
                               detailQuery.data.package.tlPrice.value
                             )}
-                          </div>
+                           </div>
                         </div>
                         <UnstyledButton
                           onClick={downloadPDF}
-                          className='flex w-full items-center justify-center gap-1 rounded-md bg-orange-50 px-3 py-2 transition-colors hover:bg-orange-100 md:w-auto md:bg-transparent md:py-2'
+                          className='w-full md:w-auto flex items-center justify-center gap-1 rounded-md bg-orange-50 px-3 py-2 transition-colors hover:bg-orange-100 md:bg-transparent md:py-2'
                         >
-                          <MdDownloading size={26} className='text-blue-600' />
+                         <MdDownloading size={26} className='text-blue-600'/>
                           <span className='text-sm font-bold md:text-base'>
-                            Tur Programını İndir
+                           Tur Programını İndir
                           </span>
                         </UnstyledButton>
                       </div>
                     )}
 
                     <div className='flex w-full flex-col gap-3 md:w-auto'>
-                      <div className='grid grid-cols-2 gap-2 md:flex md:flex-col md:rounded-lg pb-2 md:shadow-2xl md:shadow-lg'>
+                    
+                      <div className='grid grid-cols-2 gap-2 md:rounded-lg md:p-2 md:shadow-lg md:flex md:flex-col md:shadow-2xl'>
                         <Link
                           href='https://wa.me/08508400151'
                           className='flex items-center justify-center gap-2 rounded-md bg-green-50 px-3 py-2 transition-colors hover:bg-green-100 md:bg-transparent md:py-2'
@@ -809,7 +778,7 @@ const TourDetailClient = () => {
                               children: <CallForm />,
                             })
                           }}
-                          className='flex items-center justify-center gap-2 rounded-md bg-orange-50 py-2 transition-colors hover:bg-orange-100 md:bg-transparent md:px-3 md:py-2'
+                          className='flex items-center justify-center gap-2 rounded-md bg-orange-50 md:px-3 py-2 transition-colors hover:bg-orange-100 md:bg-transparent md:py-2'
                         >
                           <span className='text-sm font-medium md:text-base'>
                             Sizi Arayalım
@@ -826,39 +795,106 @@ const TourDetailClient = () => {
               </Container>
 
               <Container className='px-0'>
-                <div className="my-6">                  
-                  <Tabs 
-                    value={activeTab} 
-                    onChange={(value) => setActiveTab(value || 'program')}
-                    className="w-full" 
-                    classNames={tourTabsClasses}
-                  >
-                    <ScrollArea
-                      type="auto"
-                      scrollbars="x"
-                      scrollbarSize={0}
-                      className="md:block sticky top-0 z-10 md:px-4 bg-orange-900 text-white md:rounded-lg shadow-[-10px_10px_20px_0px_rgba(0,0,0,0.25)] min-w-max md:min-w-0 [&>div]:border-none"
-                    >
-                      <Tabs.List className="border-none">
-                        <Tabs.Tab value="program" className="flex-1 pt-4 md:flex-1 text-sm md:text-lg font-semibold whitespace-nowrap">
-                          Tur Programı
-                        </Tabs.Tab>
-                        <Tabs.Tab value="info" className="flex-1 pt-4 md:flex-1 text-sm md:text-lg font-semibold whitespace-nowrap">
-                          Tur Bilgileri
-                        </Tabs.Tab>
-                        <Tabs.Tab value="price" className="flex-1 pt-4 md:flex-1 text-sm md:text-lg font-semibold whitespace-nowrap">
-                          Rezervasyon Yap
-                        </Tabs.Tab>
-                      </Tabs.List>
-                    </ScrollArea>
+                <div className='sticky top-0 z-20 my-6 '>
+                  <TourTableOfContents onVisaClick={openVisaModal} />
+                </div>
 
-                    <Tabs.Panel value="program" className="mt-4 bg-white rounded-lg shadow-md border border-gray-200 border-t-0">
-                      <div ref={tourProgramRef}>
-                        <TourDetail data={detailQuery.data} />
-                      </div>
-                    </Tabs.Panel>
-
-                    <Tabs.Panel value="info" className="p-5 mt-4 bg-white rounded-lg shadow-md border border-gray-200 border-t-0">
+                <div className='flex flex-col gap-4 py-4 md:flex md:flex-row md:items-start md:gap-4 md:py-0'>
+                  <div ref={tourProgramRef} className='order-2 rounded-xl border md:order-0 md:flex-1 shadow-[-10px_10px_20px_0px_rgba(0,0,0,0.25)]'>
+                    <TourDetail data={detailQuery.data} />
+                  </div>
+                  <div className='flex flex-col gap-4 md:w-[400px] md:flex-shrink-0'>
+                    <div className='relative flex flex-col gap-5 overflow-hidden rounded-xl border p-5 shadow-[-10px_1px_10px_0px_rgba(0,0,0,0.25)]'>
+                      <TourDetailPriceSection
+                        calculatedTotalPrice={
+                          addOrRemoveExtraServicesMutation.data?.data?.tlPrice
+                            ?.value
+                            ? addOrRemoveExtraServicesMutation.data.data.tlPrice
+                                .value
+                            : calculateTotalPriceQuery.data?.success &&
+                                typeof calculateTotalPriceQuery.data?.data
+                                  ?.value.value === 'number'
+                              ? calculateTotalPriceQuery.data?.data?.value.value
+                              : 0
+                        }
+                        data={detailQuery.data}
+                        onPassengerChange={async (params) => {
+                          setPassengers(params)
+                          await calculateTotalPriceQuery.mutateAsync()
+                        }}
+                        loading={
+                          calculateTotalPriceQuery.isPending ||
+                          addOrRemoveExtraServicesMutation.isPending
+                        }
+                      />
+                      <Collapse
+                        in={
+                          !!calculateTotalPriceQuery.data &&
+                          !calculateTotalPriceQuery.data?.success &&
+                          !(
+                            extraServicesMutation.isPending ||
+                            calculateTotalPriceQuery.isPending
+                          )
+                        }
+                      >
+                        <Alert>
+                          <div className='flex flex-col gap-3 text-center text-sm font-bold text-red-800'>
+                            <div className='col-span-12 flex items-center gap-2'>
+                              <FaInfoCircle size={20} />
+                              <span>
+                                Kriterlerinize uygun müsaitlik bulunamadı.
+                              </span>
+                            </div>
+                            <div>
+                              <Link
+                                className='flex flex-row items-center gap-2 text-blue-800 underline'
+                                href='/iletisim'
+                              >
+                                <CiMail
+                                  size={19}
+                                />
+                                <span>
+                                  Çağrı merkezimizden bilgi alabilirsiniz.
+                                </span>
+                              </Link>
+                            </div>
+                            <div>
+                              <Link
+                                className='flex flex-row items-center gap-2 text-blue-800 underline'
+                                href='tel:08508780400'
+                              >
+                                <MdOutlineLocalPhone
+                                  size={19}
+                                />
+                                <span>
+                                  0850 840 01 51
+                                </span>
+                              </Link>
+                            </div>
+                          </div>
+                        </Alert>
+                      </Collapse>
+                      <Button
+                        className='bg-blue-600 text-white hover:bg-blue-700'
+                        type='button'
+                        fullWidth
+                        size={'lg'}
+                        disabled={
+                          !calculateTotalPriceQuery.data?.success ||
+                          extraServicesMutation.isPending
+                        }
+                        loading={
+                          extraServicesMutation.isPending ||
+                          calculateTotalPriceQuery.isPending
+                        }
+                        onClick={() => {
+                          extraServicesMutation.mutate()
+                        }}
+                      >
+                        Rezervasyon Yap
+                      </Button>
+                    </div>
+                    <div className='rounded-xl border p-5 shadow-[-10px_1px_10px_0px_rgba(0,0,0,0.25)]'>
                       <TourGeneralInformation
                         data={detailQuery.data}
                         transportTypeText={transportTypeText}
@@ -866,132 +902,10 @@ const TourDetailClient = () => {
                         visaModalOpened={visaModalOpened}
                         onVisaModalOpen={openVisaModal}
                         onVisaModalClose={closeVisaModal}
-                        isMobile={isMobile}
-                      />
-                    </Tabs.Panel>
-
-                    <Tabs.Panel value="price" className="py-5">
-                      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-                        <div className="col-span-3 hidden md:block">
-                          <ReservationDetailsCard
-                            data={detailQuery.data}
-                            startDate={startDate}
-                            endDate={endDate}
-                            totalNights={totalNights}
-                            totalDays={totalDays}
-                            itineraryText={itineraryText}
-                            transportType={transportType}
-                            transportTypeText={transportTypeText}
-                            passengers={passengers}
-                            calculatedTotalPrice={
-                              addOrRemoveExtraServicesMutation.data?.data?.tlPrice?.value
-                                ? addOrRemoveExtraServicesMutation.data.data.tlPrice.value
-                                : calculateTotalPriceQuery.data?.success &&
-                                  typeof calculateTotalPriceQuery.data?.data?.value.value ===
-                                    'number'
-                                ? calculateTotalPriceQuery.data.data.value.value
-                                : 0
-                            }
-                            tourCampaigns={tourCampaigns}
-                            isDomestic={detailQuery.data?.package.isDomestic ?? false}
-                          />
-                        </div>
-                          <div className="col-span-2 order-1 md:order-2 flex flex-col gap-4 p-5 bg-white rounded-lg shadow-md border border-gray-200">
-                          <TourDetailPriceSection
-                            calculatedTotalPrice={
-                              addOrRemoveExtraServicesMutation.data?.data?.tlPrice?.value
-                                ? addOrRemoveExtraServicesMutation.data.data.tlPrice.value
-                                : calculateTotalPriceQuery.data?.success &&
-                                  typeof calculateTotalPriceQuery.data?.data?.value.value ===
-                                    'number'
-                                ? calculateTotalPriceQuery.data.data.value.value
-                                : 0
-                            }
-                            data={detailQuery.data}
-                            onPassengerChange={async (params) => {
-                              setPassengers(params)
-                              await calculateTotalPriceQuery.mutateAsync()
-                            }}
-                            loading={
-                              calculateTotalPriceQuery.isPending ||
-                              addOrRemoveExtraServicesMutation.isPending
-                            }
-                          />
-                          
-<Collapse
-                      in={
-                        !!calculateTotalPriceQuery.data &&
-                        !calculateTotalPriceQuery.data?.success &&
-                        !(
-                          extraServicesMutation.isPending ||
-                          calculateTotalPriceQuery.isPending
-                        )
-                      }
-                    >
-                      <Alert>
-                        <div className='flex flex-col gap-3 text-center text-sm font-bold text-red-800'>
-                          <div className='col-span-12 flex items-center gap-2 justify-start'>
-                            <FaInfoCircle size={20} />
-                            <span>
-                              Kriterlerinize uygun müsaitlik bulunamadı.
-                            </span>
-                          </div>
-                          <div>
-                            <Link
-                              className='text-orange-600 grid grid-cols-14 underline justify-start'
-                              href='/iletisim'
-                            >
-                              {' '}
-                              <CiMail
-                                className='col-span-1 justify-start'
-                                size={19}
-                              />
-                              <span className='col-span-12 justify-start text-start'>
-                                {' '}
-                                Çağrı merkezimizden bilgi alabilirsiniz.
-                              </span>
-                            </Link>
-                          </div>
-                          <div className='flex items-center gap-2 justify-start'>
-                            <Link
-                              className='text-orange-600 grid grid-cols-13 items-center gap-1 underline justify-start'
-                              href='tel:08508780400'
-                            >
-                              <MdOutlineLocalPhone
-                                className='col-span-1 justify-start shrink-0'
-                                size={19}
-                              />
-                              <span className='col-span-5'>0850 840 0 151</span>
-                            </Link>
-                          </div>
-                        </div>
-                      </Alert>
-                    </Collapse>
-                          <Button
-                            className="bg-blue-600 text-white mt-8 hover:bg-blue-700 disabled:opacity-40"
-                            fullWidth
-                            size="lg"
-                            disabled={
-                              !calculateTotalPriceQuery.data?.success ||
-                              extraServicesMutation.isPending ||
-                              (!!calculateTotalPriceQuery.data &&
-                                !calculateTotalPriceQuery.data?.success)
-                            }
-                            loading={
-                              extraServicesMutation.isPending ||
-                              calculateTotalPriceQuery.isPending
-                            }
-                            onClick={() => extraServicesMutation.mutate()}
-                          >
-                            Rezervasyon Yap
-                          </Button>
-                        </div>
-
-                      </div>
-                    </Tabs.Panel>
-                  </Tabs>
+                       />
+                    </div>
+                  </div>
                 </div>
-
               </Container>
             </div>
           ) : (

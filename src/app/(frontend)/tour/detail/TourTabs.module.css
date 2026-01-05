@@ -16,11 +16,10 @@
 .tab {
   color: white !important;
   background-color: transparent !important;
-  border-bottom: 8px solid transparent;
-  transition: border-color 0.2s ease;
-  border-radius: 18px 18px 0 0 !important;
+  border: none !important;
+  border-radius: 9999px !important;
+  transition: all 0.2s ease !important;
   --tab-border-color: transparent !important;
-  border-color: transparent !important;
 }
 
 .tab:hover {
@@ -31,18 +30,12 @@
 .tab[data-active] {
   background-color: transparent !important;
   color: white !important;
-  border-bottom-color: #ff8c00 !important;
+  border: none !important;
 }
 
 @media (max-width: 768px) {
   .tab {
-    border-bottom: 6px solid transparent;
-    border-radius: 12px 12px 0 0 !important;
+    border-radius: 9999px !important;
     flex-shrink: 0;
   }
-  
-  .tab[data-active] {
-    border-bottom-color: #ff8c00 !important;
-  }
 }
-

@@ -278,8 +278,6 @@ const Pages = {
                   type: 'checkbox',
                   label: 'Aktif',
                   defaultValue: true,
-                  admin: {
-                  },
                 },
               ],
             },
@@ -346,8 +344,6 @@ const Pages = {
                   type: 'checkbox',
                   label: 'Aktif',
                   defaultValue: true,
-                  admin: {
-                  },
                 },
               ],
             },
@@ -405,8 +401,6 @@ const Pages = {
                   type: 'checkbox',
                   label: 'Aktif',
                   defaultValue: true,
-                  admin: {
-                  },
                 },
               ],
             },
@@ -476,8 +470,6 @@ const Pages = {
                   type: 'checkbox',
                   label: 'Aktif',
                   defaultValue: true,
-                  admin: {
-                  },
                 },
               ],
             },
@@ -538,7 +530,7 @@ const Pages = {
               name: 'isActive',
               type: 'checkbox',
               label: 'Block Aktif',
-              defaultValue: true, 
+              defaultValue: true,
             },
           ],
         },
@@ -618,8 +610,6 @@ const Pages = {
                       type: 'checkbox',
                       label: 'Aktif',
                       defaultValue: true,
-                      admin: {
-                      },
                     },
                   ],
                 },
@@ -628,8 +618,6 @@ const Pages = {
                   type: 'checkbox',
                   label: 'Aktif',
                   defaultValue: true,
-                  admin: {
-                  },
                 },
               ],
             },
@@ -754,7 +742,6 @@ const Pages = {
                   type: 'checkbox',
                   label: 'Aktif',
                   defaultValue: true,
-                  
                 },
               ],
             },
@@ -834,8 +821,6 @@ const Pages = {
                   type: 'checkbox',
                   label: 'Aktif',
                   defaultValue: true,
-                  admin: {
-                  },
                 },
               ],
             },
@@ -904,8 +889,6 @@ const Pages = {
                   type: 'checkbox',
                   label: 'Aktif',
                   defaultValue: true,
-                  admin: {
-                  },
                 },
               ],
             },
@@ -973,8 +956,6 @@ const Pages = {
                   type: 'checkbox',
                   label: 'Aktif',
                   defaultValue: true,
-                  admin: {
-                  },
                 },
               ],
             },
@@ -1056,8 +1037,6 @@ const Pages = {
                   type: 'checkbox',
                   label: 'Aktif',
                   defaultValue: true,
-                  admin: {
-                  },
                 },
               ],
             },
@@ -1093,6 +1072,253 @@ const Pages = {
             },
           ],
         },
+        {
+          slug: 'contactBlock',
+          labels: {
+            singular: 'Contact Block',
+            plural: 'Contact Blocks',
+          },
+          fields: [
+            {
+              name: 'showContactForm',
+              type: 'checkbox',
+              label: 'İletişim Formu Göster',
+              defaultValue: true,
+              admin: {
+                description: 'İletişim formu gösterilsin mi?',
+              },
+            },
+            {
+              name: 'showContactInfo',
+              type: 'checkbox',
+              label: 'İletişim Bilgileri Göster',
+              defaultValue: true,
+              admin: {
+                description: 'İletişim bilgileri gösterilsin mi?',
+              },
+            },
+            {
+              name: 'addressLabel',
+              type: 'text',
+              label: 'Adres Etiketi',
+              required: false,
+              admin: {
+                description: 'e.g.: Adres',
+              },
+            },
+            {
+              name: 'addressValue',
+              type: 'textarea',
+              label: 'Adres Değeri',
+              required: false,
+            },
+            {
+              name: 'callLabel',
+              type: 'text',
+              label: 'Telefon Etiketi',
+              required: false,
+              admin: {
+                description: 'e.g.: Telefon',
+              },
+            },
+            {
+              name: 'callValue',
+              type: 'text',
+              label: 'Telefon Değeri',
+              required: false,
+              admin: {
+                description: 'e.g.: 0850 840 01 51',
+              },
+            },
+            {
+              name: 'faxLabel',
+              type: 'text',
+              label: 'Faks Etiketi',
+              required: false,
+              admin: {
+                description: 'e.g.: Faks',
+              },
+            },
+            {
+              name: 'faxValue',
+              type: 'text',
+              label: 'Faks Değeri',
+              required: false,
+            },
+            {
+              name: 'emailLabel',
+              type: 'text',
+              label: 'E-posta Etiketi',
+              required: false,
+              admin: {
+                description: 'e.g.: E-posta',
+              },
+            },
+            {
+              name: 'emailValue',
+              type: 'text',
+              label: 'E-posta Değeri',
+              required: false,
+              admin: {
+                description: 'e.g.: info@gezibank.com',
+              },
+            },
+            {
+              name: 'mapHtml',
+              type: 'textarea',
+              label: 'Harita HTML',
+              required: false,
+              admin: {
+                description: 'Google Maps embed HTML kodu',
+              },
+            },
+            {
+              name: 'isActive',
+              type: 'checkbox',
+              label: 'Block Aktif',
+              defaultValue: true,
+            },
+          ],
+        },
+        {
+          slug: 'tourCalendarBlock',
+          labels: {
+            singular: 'Tour Calendar Block',
+            plural: 'Tour Calendar Blocks',
+          },
+          fields: [
+            {
+              name: 'tours',
+              type: 'array',
+              label: 'Turlar',
+              minRows: 1,
+              fields: [
+                {
+                  name: 'image',
+                  type: 'upload',
+                  relationTo: 'media',
+                  label: 'Tur Resmi',
+                  required: false,
+                  admin: {
+                    description: 'Tur kartında gösterilecek resim',
+                  },
+                },
+                {
+                  name: 'title',
+                  type: 'text',
+                  label: 'Tur Başlığı',
+                  required: true,
+                },
+                {
+                  name: 'tag',
+                  type: 'text',
+                  label: 'Tag (Çıkış Yeri)',
+                  required: false,
+                  admin: {
+                    description: 'Örn: Ankara Çıkışlı, İstanbul Çıkışlı',
+                  },
+                },
+                {
+                  name: 'startDate',
+                  type: 'text',
+                  label: 'Giriş Tarihi',
+                  required: true,
+                  admin: {
+                    description: 'Format: DD MMMM YYYY (örn: 15 Mart 2026)',
+                  },
+                },
+                {
+                  name: 'endDate',
+                  type: 'text',
+                  label: 'Çıkış Tarihi',
+                  required: true,
+                  admin: {
+                    description: 'Format: DD MMMM YYYY (örn: 18 Mart 2026)',
+                  },
+                },
+                {
+                  name: 'url',
+                  type: 'text',
+                  label: 'Tur URL',
+                  required: false,
+                  admin: {
+                    description:
+                      'Kartın tıklanınca gideceği URL (örn: /tur/detail/kapadokya)',
+                  },
+                },
+                {
+                  name: 'addButton',
+                  type: 'checkbox',
+                  label: 'Buton Ekle',
+                  defaultValue: false,
+                  admin: {
+                    description: 'Bu tur için buton eklemek istiyor musunuz?',
+                  },
+                },
+                {
+                  name: 'buttons',
+                  type: 'array',
+                  label: 'Butonlar',
+                  admin: {
+                    condition: (data, siblingData) => {
+                      return siblingData?.addButton === true
+                    },
+                  },
+                  fields: [
+                    {
+                      name: 'label',
+                      type: 'text',
+                      label: 'Buton Metni',
+                      required: true,
+                    },
+                    {
+                      name: 'url',
+                      type: 'text',
+                      label: 'Buton URL',
+                      required: true,
+                      admin: {
+                        description: 'Örn: /tur veya https://example.com',
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: 'isActive',
+              type: 'checkbox',
+              label: 'Block Aktif',
+              defaultValue: true,
+            },
+          ],
+        },
+        {
+          slug: 'emptyContent',
+          labels: {
+            singular: 'Empty Content',
+            plural: 'Empty Contents',
+          },
+          fields: [
+            {
+              name: 'title',
+              type: 'text',
+              label: 'Başlık',
+              required: false,
+            },
+            {
+              name: 'description',
+              type: 'textarea',
+              label: 'Açıklama',
+              required: false,
+            },
+            {
+              name: 'isActive',
+              type: 'checkbox',
+              label: 'Block Aktif',
+              defaultValue: true,
+            },
+          ],
+        },
       ],
     },
     {
@@ -1110,6 +1336,10 @@ const Pages = {
 
 const CampaignCategories = {
   slug: 'campaign-categories',
+  labels: {
+    singular: 'Campaign Category Title',
+    plural: 'Campaign Categories Titles',
+  },
   admin: {
     useAsTitle: 'title',
   },
@@ -1157,6 +1387,10 @@ const CampaignCategories = {
 
 const Campaigns = {
   slug: 'campaigns',
+  labels: {
+    singular: 'Campaign Content',
+    plural: 'Campaign Contents',
+  },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'category', 'active', 'ordering'],
@@ -1399,8 +1633,7 @@ const Search = {
           type: 'checkbox',
           label: 'Aktif',
           defaultValue: true,
-          admin: {
-          },
+          admin: {},
         },
       ],
     },
@@ -1453,8 +1686,7 @@ const Search = {
           type: 'checkbox',
           label: 'Aktif',
           defaultValue: true,
-          admin: {
-          },
+          admin: {},
         },
       ],
     },
@@ -1467,8 +1699,12 @@ const Search = {
   ],
 }
 
-const Detail = {
+const TourDetail = {
   slug: 'detail',
+  labels: {
+    singular: 'Tour Detail',
+    plural: 'Tour Details',
+  },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'isActive'],
@@ -1503,12 +1739,14 @@ const Detail = {
           label: 'Anahtar Kelime',
           required: true,
           admin: {
-            description: 'Tur adında aranacak anahtar kelime (küçük harfli ve sade girilmelidir)',
+            description:
+              'Tur adında aranacak anahtar kelime (küçük harfli ve sade girilmelidir)',
           },
         },
       ],
       admin: {
-        description: 'Tur adında aranacak anahtar kelimeler (örn: kapadokya, balkan, italya)',
+        description:
+          'Tur adında aranacak anahtar kelimeler (örn: kapadokya, balkan, italya)',
       },
     },
     {
@@ -1517,7 +1755,8 @@ const Detail = {
       label: 'YouTube Video URL',
       required: false,
       admin: {
-        description: 'YouTube embed edilebilir video linki (boş bırakılırsa video render edilmez)',
+        description:
+          'YouTube embed edilebilir video linki (boş bırakılırsa video render edilmez)',
       },
     },
     {
@@ -1561,7 +1800,8 @@ const Globals = {
             label: 'Slug',
             required: false,
             admin: {
-              description: 'Menu item\'a tıklandığında gidilecek sayfa slug\'ı (opsiyonel). Eğer slug varsa, dropdown açılmaz ve direkt sayfaya gider.',
+              description:
+                "Menu item'a tıklandığında gidilecek sayfa slug'ı (opsiyonel). Eğer slug varsa, dropdown açılmaz ve direkt sayfaya gider.",
             },
           },
           {
@@ -1580,7 +1820,8 @@ const Globals = {
             minRows: 1,
             maxRows: 4,
             admin: {
-              description: 'İlk kolon sol tarafta, diğer 3 kolon sağ tarafta gösterilir (toplam 4 kolon: 1 sol + 3 sağ)',
+              description:
+                'İlk kolon sol tarafta, diğer 3 kolon sağ tarafta gösterilir (toplam 4 kolon: 1 sol + 3 sağ)',
             },
             fields: [
               {
@@ -1634,7 +1875,8 @@ const Globals = {
             required: false,
             maxRows: 4,
             admin: {
-              description: 'Alt kısımda gösterilecek içerikler (maksimum 4 adet)',
+              description:
+                'Alt kısımda gösterilecek içerikler (maksimum 4 adet)',
             },
             fields: [
               {
@@ -1772,7 +2014,8 @@ const Globals = {
             label: 'Kolon Başlığı',
             required: false,
             admin: {
-              description: 'Örn: Bilgi Sayfaları, Kurumsal, Sosyal Medya (opsiyonel)',
+              description:
+                'Örn: Bilgi Sayfaları, Kurumsal, Sosyal Medya (opsiyonel)',
             },
           },
           {
@@ -1796,7 +2039,7 @@ const Globals = {
                 label: 'URL',
                 required: false,
                 admin: {
-                  description: 'Link URL\'si (opsiyonel)',
+                  description: "Link URL'si (opsiyonel)",
                 },
               },
               {
@@ -1843,7 +2086,8 @@ const Globals = {
         label: 'Telif Hakkı Metni',
         required: false,
         admin: {
-          description: 'Örn: Gezibank bir Blk Group markasıdır © 2025 Tüm hakları saklıdır.',
+          description:
+            'Örn: Gezibank bir Blk Group markasıdır © 2025 Tüm hakları saklıdır.',
         },
       },
       {
@@ -1869,10 +2113,19 @@ export default buildConfig({
     components: {
       graphics: {
         Logo: '@/components/Admin/logo#Logo',
-       },
+      },
     },
   },
-  collections: [Users, Media, Pages, CampaignCategories, Campaigns, Blogs, Search, Detail],
+  collections: [
+    Users,
+    Media,
+    Pages,
+    CampaignCategories,
+    Campaigns,
+    Blogs,
+    Search,
+    TourDetail,
+  ],
   globals: [Globals.header, Globals.footer],
   secret: process.env.PAYLOAD_SECRET || 'dev-secret',
   typescript: {
