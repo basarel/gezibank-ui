@@ -5,7 +5,7 @@ import { Link } from 'next-view-transitions'
 import { AspectRatio, Box, Button, Image, Skeleton, Text } from '@mantine/core'
 import { Carousel, CarouselSlide } from '@mantine/carousel'
 import Autoplay from 'embla-carousel-autoplay'
-import aspectRatioClasses from '@/components/home/storyitems.module.css'
+import aspectRatioClasses from '@/blocks/story-slider/storyitems.module.css'
 import { useRef, useState, useEffect } from 'react'
 import { FaArrowRightLong } from 'react-icons/fa6'
 

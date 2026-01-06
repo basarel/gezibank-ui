@@ -33,9 +33,7 @@ import { IoCalendarClearOutline, IoInformationCircle } from 'react-icons/io5'
 import { MdDownloading, MdOutlineCameraAlt, MdOutlineLocalPhone } from 'react-icons/md'
 import { TourMediaGallery } from '@/app/(frontend)/tour/_components/media-gallery/media-gallery'
 import TourTableOfContents from '@/app/(frontend)/tour/_components/table-of-contents'
-import jsPDF from 'jspdf'
-import html2canvas from 'html2canvas'
-import { FaDownload } from 'react-icons/fa'
+import { generateTourPDF } from './tour-pdf-generator'
 
 import dayjs from 'dayjs'
 import { CiMail } from 'react-icons/ci'
@@ -81,39 +79,9 @@ const TourDetailClient = () => {
     }
   }
   const downloadPDF = async () => {
-    if (!tourProgramRef.current) return
-
+    if (!detailQuery.data) return
     try {
-      const canvas = await html2canvas(tourProgramRef.current, {
-        scale: 2,
-        useCORS: true,
-        logging: false,
-      })
-
-      const imgData = canvas.toDataURL('image/png')
-      const pdf = new jsPDF('p', 'mm', 'a4')
-      const pdfWidth = pdf.internal.pageSize.getWidth()
-      const pdfHeight = pdf.internal.pageSize.getHeight()
-      const imgWidth = canvas.width
-      const imgHeight = canvas.height
-      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight)
-      const imgScaledWidth = imgWidth * ratio
-      const imgScaledHeight = imgHeight * ratio
-      const marginX = (pdfWidth - imgScaledWidth) / 2
-      const marginY = (pdfHeight - imgScaledHeight) / 2
-
-      pdf.addImage(imgData, 'PNG', marginX, marginY, imgScaledWidth, imgScaledHeight)
-      let heightLeft = imgScaledHeight
-      let position = marginY
-
-      while (heightLeft >= pdfHeight) {
-        position = heightLeft - pdfHeight + marginY
-        pdf.addPage()
-        pdf.addImage(imgData, 'PNG', marginX, -position, imgScaledWidth, imgScaledHeight)
-        heightLeft -= pdfHeight
-      }
-
-      pdf.save('tur-programi.pdf')
+      await generateTourPDF(detailQuery.data)
     } catch (error) {
       console.error('PDF oluşturma hatası:', error)
     }
@@ -572,21 +540,21 @@ const TourDetailClient = () => {
                 </div>
               </div>
               <Container className='relative z-10 mx-auto rounded-xl bg-white p-6 text-black shadow-[-10px_10px_20px_0px_rgba(0,0,0,0.25)] md:-mt-14 md:-mt-20'>
-                <div className='mt-6 flex flex-col items-start justify-between gap-6 md:flex-row'>
+                <div className='flex flex-col items-start justify-between gap-6 md:flex-row'>
                   <div className='flex flex-1 flex-col gap-4'>
-                    <div className='flex items-start gap-3'>
+                    <div className='flex items-center gap-3'>
                       <div className='h-full min-h-[60px] w-2 rounded bg-blue-500'></div>
-                      <Title className='text-xl font-bold text-black md:text-2xl'>
+                      <Title className='text-md font-bold text-black md:text-2xl'>
                         {detailQuery.data.package.title}
                       </Title>
                     </div>
                     <div className='grid items-center gap-2 md:grid-cols-12 md:justify-start'>
-                      <div className='col-span-8 flex flex-col gap-6 pt-5 font-medium'>
+                      <div className='col-span-8 flex flex-col gap-6 md:pt-5 font-medium'>
                         
 {formattedDateRange && (
                           <div className='flex gap-2'>
                             <IoCalendarClearOutline
-                              size={24}
+                              size={isMobile ? 18 : 24}
                               className='shrink-0 text-blue-700'
                             />
                             <span className='text-sm md:text-base'>
@@ -596,7 +564,7 @@ const TourDetailClient = () => {
                         )}
                         <div className='flex items-center gap-2'>
                           <TbCalendarClock
-                            size={24}
+                            size={isMobile ? 18 : 24}
                             className='shrink-0 text-blue-700'
                           />
                           <span className='text-sm md:text-base'>
@@ -608,7 +576,7 @@ const TourDetailClient = () => {
                         {itineraryText && (
                           <div className='flex gap-2'>
                             <HiOutlineLocationMarker
-                              size={24}
+                              size={isMobile ? 18 : 24}
                               className='shrink-0 text-blue-700'
                             />
                             <span className='text-sm md:text-base'>
@@ -624,12 +592,12 @@ const TourDetailClient = () => {
                           >
                             {transportType === 1 ? (
                               <RiPlaneFill
-                                size={24}
+                                size={isMobile ? 18 : 24}
                                 className='shrink-0 text-blue-700'
                               />
                             ) : (
                               <FaBus
-                                size={17}
+                                size={isMobile ? 14 : 17}
                                 className='shrink-0 text-blue-700'
                               />
                             )}
@@ -648,7 +616,7 @@ const TourDetailClient = () => {
                           <div className='flex flex-col gap-1 ml-1'>
                             <div className='flex items-center gap-2'>
                               <FaBed
-                                size={20}
+                                size={isMobile ? 16 : 20}
                                 className='shrink-0 text-blue-700'
                               />
                               <span className='text-sm font-semibold text-orange-900 md:text-base'>
@@ -683,7 +651,7 @@ const TourDetailClient = () => {
                         ) : null}
                       </div>
                       {tourCampaigns && tourCampaigns.length > 0 && (
-                        <div className='flex flex-col col-span-4 gap-2 md:mt-10 mt-4'>
+                        <div className='flex flex-col col-span-12 md:col-span-4 gap-2 md:mt-10 mt-4'>
                           {tourCampaigns
                             .filter((campaign) => {
                               if (campaign.active === false) return false
@@ -709,7 +677,7 @@ const TourDetailClient = () => {
                   </div>
                   </div>
 
-                  <div className='mt-auto flex w-full flex-col items-center gap-4 md:w-auto md:items-end'>
+                  <div className='md:mt-5 flex w-full flex-col items-center gap-4 md:w-auto md:items-end'>
                     {!detailQuery.data?.package.isDomestic && euroPriceFormatted && (
                       <div className='flex w-full flex-col items-center gap-2 md:w-auto md:items-end'>
                         <div className='md:text-base text-sm font-medium'>

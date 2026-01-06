@@ -145,8 +145,7 @@ export const TourSearchResultItem: React.FC<Props> = ({
     : null
 
   const isMobile = useMediaQuery('(max-width: 62em)')
-  console.log(campaignContents)
-  return (
+   return (
     <div className='grid grid-cols-1 rounded-lg bg-white p-3 shadow-md hover:shadow-2xl md:grid-cols-4'>
       <div className='col-span-1 flex flex-col gap-3 md:gap-4 md:col-span-3'>
         <div className='grid grid-cols-1 items-stretch gap-3 md:grid-cols-2'>
@@ -219,7 +218,7 @@ export const TourSearchResultItem: React.FC<Props> = ({
               />
             </div>
             {itineraryText && (
-              <div className='flex items-start gap-1 text-sm'>
+              <div className='flex items-start gap-2 text-sm'>
                 <HiOutlineLocationMarker
                   size={23}
                   className='shrink-0 text-blue-700'
@@ -229,7 +228,7 @@ export const TourSearchResultItem: React.FC<Props> = ({
             )}
 
             {totalNights > 0 ? (
-              <div className='flex items-center gap-1 text-sm'>
+              <div className='flex items-center gap-2 text-sm'>
                 <TbCalendarClock size={20} className='shrink-0 text-blue-700' />
                 <span>
                   {totalNights} Gece {totalDays} Gün - {totalNights} Gece
@@ -237,7 +236,7 @@ export const TourSearchResultItem: React.FC<Props> = ({
                 </span>
               </div>
             ) : (
-              <div className='flex items-center gap-1 text-sm'>
+              <div className='flex items-center gap-2 text-sm'>
                 <CiSun size={25} className='shrink-0 text-blue-700' />
                 <Text className='text-sm'>Günübirlik Tur</Text>
               </div>
@@ -266,7 +265,7 @@ export const TourSearchResultItem: React.FC<Props> = ({
           </div>
         </div>
 
-        <div className='md:flex grid items-center md:gap-5 gap-3 md:pt-2 text-sm'>
+        <div className='md:flex grid tezt-sm items-center md:gap-5 gap-3 md:pt-2 text-sm'>
           {transportTypeText && (
             <div className='flex items-center gap-2'>
               {transportType === 1 && (
@@ -278,7 +277,7 @@ export const TourSearchResultItem: React.FC<Props> = ({
               {transportType === 3 && (
                 <RiTrainFill size={isMobile ? 18 : 22} className='text-blue-700 md:text-orange-700' />
               )}
-              <span className='text-base'>
+              <span className='text-sm'>
                 Gidiş-Dönüş: {transportTypeText} ile
               </span>
             </div>

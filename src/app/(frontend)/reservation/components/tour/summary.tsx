@@ -1,5 +1,5 @@
 import { CheckoutCard } from '@/components/card'
-import { cdnImageUrl, cdnSiteImageUrl } from '@/libs/cms-data'
+import { cdnSiteImageUrl } from '@/libs/cms-data'
 import { formatCurrency, validateUrl } from '@/libs/util'
 import {
   ProductPassengerApiResponseModel,
@@ -18,16 +18,6 @@ const TourSummary: React.FC<IProps> = ({ data }) => {
   const tourData = data.SummaryViewDataResponser
     .summaryResponse as TourSummaryViewData
   const tourDay = tourData.package.tourTime + 1
-
-  console.log('=== Tour Summary Data ===')
-  console.log('flightInformation:', tourData.detail.flightInformation)
-  console.log('flightInformation type:', typeof tourData.detail.flightInformation)
-  console.log('flightInformation isArray:', Array.isArray(tourData.detail.flightInformation))
-  console.log('flightInformation length:', tourData.detail.flightInformation?.length)
-  console.log('hotelInformations:', tourData.package.hotelInformations)
-  console.log('hotelInformations length:', tourData.package.hotelInformations?.length)
-  console.log('hotelInformations length:', tourData)
-  console.log('================================')
 
   return (
     <CheckoutCard>

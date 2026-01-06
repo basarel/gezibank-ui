@@ -155,94 +155,6 @@ export const Header: React.FC<HeaderProps> = ({ headerContent }) => {
                     title='Menü Aç/Kapat'
                   />
                 </div>
-
-                {/* <Box className='hidden flex-1 items-center md:flex'>
-              <div className='ms-auto flex items-center gap-7 font-medium'>
-                {widgets.isLoading ? (
-                  <div className='flex gap-2'>
-                    <Skeleton h={20} className='size-30 grow' />
-                  </div>
-                ) : (
-                  <>
-                    {' '}
-                    <a
-                      href='tel:08508400151'
-                      className='flex items-center gap-1 hover:underline'
-                    >
-                      <FiPhone />
-                      0850 840 01 51
-                    </a>
-                  </>
-                )}
-                {session.status === 'authenticated' ? (
-                  <Menu>
-                    <Menu.Target>
-                      <div>
-                        <Button
-                          size='sm'
-                          variant='outline'
-                          leftSection={<FaUser />}
-                          className='truncate rounded-lg bg-blue-800 text-start text-xs font-medium text-white'
-                        >
-                          {/* <Avatar src={session.data.user.image} />  
-                          <div>{session?.data.user.name}</div>
-                        </Button>
-                      </div>
-                    </Menu.Target>
-                    <Menu.Dropdown>
-                      <Menu.Label>{session.data?.user.name}</Menu.Label>
-                      <Menu.Item component={Link} href={'/account' as Route}>
-                        Hesabım
-                      </Menu.Item>
-                      <Menu.Item
-                        onClick={async () => {
-                          signOut()
-                        }}
-                        className='text-red-500'
-                        leftSection={<IoIosLogOut size={18} />}
-                      >
-                        Oturumu Kapatın
-                      </Menu.Item>
-                    </Menu.Dropdown>
-                  </Menu>
-                ) : (
-                  <div className='flex items-center gap-3'>
-                    <Button
-                      variant='outline'
-                      radius='xl'
-                      leftSection={<FaRegUserCircle />}
-                      loading={session.status === 'loading'}
-                      onClick={() => {
-                        modals.open({
-                          title: (
-                            <Title order={3} className='text-center'>
-                              Giriş Yap
-                            </Title>
-                          ),
-                          children: <LoginForm />,
-                        })
-                      }}
-                    >
-                      Giriş Yap
-                    </Button>
-                    {widgets.isLoading ? (
-                      <Skeleton h={20} className='size-20 grow' />
-                    ) : (
-                      <>
-                        <UnstyledButton
-                          className='text-blue-800'
-                          component={Link}
-                          href={'/auth/register' as Route}
-                        >
-                          Üye Ol
-                        </UnstyledButton>
-                      </>
-                    )}
-                  </div>
-                )}
-              </div>
-            </Box> */}
-
                 <Drawer
                   opened={drawerOpened}
                   onClose={toggleDrawer}
@@ -350,7 +262,7 @@ export const Header: React.FC<HeaderProps> = ({ headerContent }) => {
               </Box>
             </div>
           </div>
-          <div className='hidden items-center justify-between gap-5 md:grid'>
+          <div className='hidden items-center justify-between gap-5 md:grid ms-auto'>
             {session.status === 'authenticated' ? (
               <>
               <div className='absolute top-0 right-50 flex flex-col items-center gap-2'>

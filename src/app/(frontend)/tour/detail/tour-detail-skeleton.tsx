@@ -22,7 +22,7 @@ export const TourDetailSkeleton = () => {
       <Container className='relative z-10 mx-auto rounded-xl bg-white p-6 text-black shadow-[-10px_10px_20px_0px_rgba(0,0,0,0.25)] md:-mt-14 md:-mt-20'>
         <div className='mt-6 flex flex-col items-start justify-between gap-6 md:flex-row'>
           <div className='flex flex-1 flex-col gap-4'>
-            <div className='flex items-start gap-3'>
+            <div className='flex items-center gap-3'>
               <Skeleton className='h-16 w-2' radius='md' />
               <Skeleton className='h-8 w-3/4' radius='md' />
             </div>

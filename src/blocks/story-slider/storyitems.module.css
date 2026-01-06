@@ -16,10 +16,9 @@
       )
       border-box;
   transition:
-    transform 0.4s ease-in-out,
+    transform 0.3s ease,
     border 0.3s ease;
 }
-
-.root:hover {
-  transform: scale(1.2);
+.root {
+  transition: transform 0.4s ease-in-out;
 }

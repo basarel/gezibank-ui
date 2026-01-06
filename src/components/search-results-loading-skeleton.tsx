@@ -8,7 +8,7 @@ type SearchResultsLoadingSkeletonProps = {
 }
 
 export function SearchResultsLoadingSkeleton({
-  itemCount = 10,
+  itemCount = 4,
   showFilterSkeleton = true,
   filterColumnClassName = 'lg:col-span-3',
   resultsColumnClassName = 'lg:col-span-9',
@@ -19,7 +19,7 @@ export function SearchResultsLoadingSkeleton({
         <div className='grid grid-cols-1 gap-6 lg:grid-cols-12'>
           {showFilterSkeleton && (
             <div className={filterColumnClassName}>
-              <div className='hidden rounded-lg bg-white p-2 md:block'>
+              <div className='hidden rounded-lg bg-white p-2 md:block border'>
                 <Skeleton h={24} w='50%' className='mb-4' />
 
                 <div className='mt-3 mb-6'>
@@ -59,7 +59,7 @@ export function SearchResultsLoadingSkeleton({
               showFilterSkeleton ? resultsColumnClassName : 'lg:col-span-12'
             }
           >
-            <div className='space-b-4'>
+            <div className='space-y-4'>
               {Array.from({ length: itemCount }).map((_, index) => (
                 <div
                   key={index}

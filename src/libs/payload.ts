@@ -305,6 +305,10 @@ export type Search = {
   title: string
   campaigns: SearchCampaign[]
   loaderBanners?: SearchLoaderBanner[]
+  copyText?: string | null
+  copyDescription?: string | null
+  copyImage?: { id: number; url?: string; filename?: string; sizes?: any }
+
   active: boolean
 }
 
@@ -510,9 +514,7 @@ export async function getPreviousBlog(
   }
 }
 
-export async function getNextBlog(
-  currentBlogId: number
-): Promise<Blog | null> {
+export async function getNextBlog(currentBlogId: number): Promise<Blog | null> {
   try {
     const payload = await getPayloadInstance()
     const currentBlog = await payload.findByID({

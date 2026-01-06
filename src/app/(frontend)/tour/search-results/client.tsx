@@ -49,6 +49,7 @@ import Breadcrumb from '@/app/breadcrumb'
 import { SearchResultsLoadingSkeleton } from '@/components/search-results-loading-skeleton'
 import { NotFoundForm } from '@/app/(frontend)/hotel/(detail)/[slug]/_components/no-rooms-form'
 import { LoaderBanner } from './loader-banner'
+import { SearchCopyCode } from '@/components/search-copy-code'
 
 const TourSearchResultClient = () => {
   const { searchResultsQuery, searchParamsQuery, searchParams } =
@@ -292,15 +293,6 @@ const TourSearchResultClient = () => {
     return (
       <Container pt={rem(20)}>
         <NotFoundForm moduleName='tur' />
-        {/* <Button
-          className='mx-auto mt-3 w-50'
-          radius='lg'
-          onClick={() => {
-            searchParamsQuery.refetch()
-          }}
-        >
-          Yeniden Sorgula
-        </Button> */}
       </Container>
     )
   }
@@ -320,13 +312,13 @@ const TourSearchResultClient = () => {
     <>
       <div className='border-b py-0 md:p-5'>
         <Container>
-          <div className='relative flex items-center gap-2 py-2 text-sm md:hidden'>
+          <div className='relative flex items-center gap-2 py-1 text-sm md:hidden'>
             <button
               className='absolute start-0 end-0 top-0 bottom-0 z-10'
               onClick={toggleSearchEngineVisibility}
             />
-            <div className='grid items-center gap-1'>
-              <div className='font-medium'>
+            <div className='flex items-center gap-1'>
+              <div className='font-medium text-lg'>
                 {destinationInfoQuery.data.find(
                   (destination) =>
                     destination?.Result?.Slug?.toLowerCase() ===
@@ -334,9 +326,7 @@ const TourSearchResultClient = () => {
                 )?.Result.Name ?? searchParams.destinationSlug}
               </div>
               <div>
-                {dayjs(searchParams.checkinDate).format('DD MMM YYYY')} -{' '}
-                {dayjs(searchParams.checkoutDate).format('DD MMM YYYY')}
-              </div>
+               </div>
             </div>
             <div className='z-0 ms-auto rounded-md bg-blue-100 p-2'>
               <IoSearchSharp size={24} className='text-blue-800' />
@@ -694,6 +684,7 @@ const TourSearchResultClient = () => {
             </Transition>
           </div>
           <div className='grid gap-2 sm:col-span-8 lg:col-span-9'>
+            {searchDataPayload && <SearchCopyCode data={searchDataPayload} />}
             <div className='px-3 md:rounded-lg md:border md:bg-white md:p-3'>
               <Skeleton visible={searchRequestIsLoading || !filteredData}>
                 <div className='flex items-center gap-3'>

@@ -1,7 +1,7 @@
 'use client'
 
 import { Carousel, CarouselSlide } from '@mantine/carousel'
-import { Box } from '@mantine/core'
+import { AspectRatio, Box } from '@mantine/core'
 import Image from 'next/image'
 import { Link } from 'next-view-transitions'
 import { Route } from 'next'
@@ -46,7 +46,7 @@ export const BottomSliderBlock: React.FC<BottomSliderBlockProps> = ({
     <div className='w-full'>
       <div className='grid grid-cols-1 gap-4 md:grid-cols-4'>
         {videoUrl && (
-          <div className='relative h-[350px] w-full md:h-[350px]'>
+          <div className='relative h-[350px] w-full md:h-[350px] hidden md:block'>
             {videoUrl ? (
               <div className='relative h-full w-full overflow-hidden rounded-2xl'>
                 <video
@@ -90,14 +90,17 @@ export const BottomSliderBlock: React.FC<BottomSliderBlockProps> = ({
                       className='group relative block h-full w-full overflow-hidden rounded-2xl'
                     >
                       {item.image?.url && (
+                         
                         <Image
                           src={item.image.url}
                           alt={item.image.alt || 'Carousel image'}
                           fill
                           className='rounded-2xl object-cover'
-                          sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
+                           
                         />
+                        
                       )}
+                      
                     </Box>
                   </CarouselSlide>
                 )

@@ -130,7 +130,7 @@ const TourMediaGallery = ({ images, title, opened, onClose }: Props) => {
                 dragFree: false,
                 align: 'center',
               }}
-              className='h-full w-full'
+              className='md:w-full md:h-full'
             >
               {images.map((img, idx) => (
                 <Carousel.Slide

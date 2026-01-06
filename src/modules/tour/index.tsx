@@ -108,7 +108,7 @@ const TourSearchEngine: React.FC<Partial<TourSearchEngineSchemaType>> = ({
 
   if (!mounted) {
     return (
-      <div className='grid grid-cols-12 gap-3 md:grid-cols-3 md:gap-3'>
+      <div className='grid gap-3 grid-cols-1 md:grid-cols-3 md:gap-3'>
         <Skeleton height={40} radius={'lg'} />
         <Skeleton height={40} radius={'lg'} />
         <Skeleton height={40} radius={'lg'} />

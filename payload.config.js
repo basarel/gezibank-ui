@@ -1691,6 +1691,35 @@ const Search = {
       ],
     },
     {
+      name: 'copyText',
+      type: 'text',
+      label: 'Kopyalanacak Metin',
+      required: false,
+      admin: {
+        description: 'Kopyalanacak kampanya kodu veya metni',
+      },
+    },
+    {
+      name: 'copyDescription',
+      type: 'textarea',
+      label: 'Açıklama (HTML)',
+      required: false,
+      admin: {
+        description:
+          'Kopyalama alanının yanında gösterilecek açıklama metni (HTML destekler)',
+      },
+    },
+    {
+      name: 'copyImage',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Kopyalama Alanı Görseli',
+      required: false,
+      admin: {
+        description: 'Kopyalama alanında gösterilecek görsel',
+      },
+    },
+    {
       name: 'active',
       type: 'checkbox',
       label: 'Aktif',
