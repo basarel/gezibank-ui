@@ -154,7 +154,7 @@ export default async function ContentPage({
       return (
         <InfoPagesLayout>
           {showSearchEngine && SearchEngineComponent && (
-            <div className='relative mb-4 border-b bg-orange-900 py-4'>
+            <div className='relative mb-4 border-b bg-orange-900 py-10'>
               {backgroundImageUrl && (
                 <Image
                   src={backgroundImageUrl}

@@ -75,8 +75,9 @@ export const TourCalendarBlock: React.FC<TourCalendarBlockProps> = ({
           const tourUrl = tour.url || '#'
           return (
             <GridCol key={index} span={{ base: 12, sm: 6, md: 4 }}>
-              <Link href={tourUrl as Route} className='block h-full'>
-                <div className='h-full cursor-pointer overflow-hidden rounded-md border border-gray-200 shadow-xl transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl'>
+              <div className='h-full cursor-pointer overflow-hidden rounded-md border border-gray-200 shadow-xl '>
+              <Link href={tourUrl as Route}>
+                <div className=''>
                   {imageUrl && (
                     <div className='relative aspect-[4/3] w-full overflow-hidden rounded-t-md'>
                       <Image
@@ -88,8 +89,8 @@ export const TourCalendarBlock: React.FC<TourCalendarBlockProps> = ({
                       />
                     </div>
                   )}
-                  <div className='p-4'>
-                    <div className='pb-3'>
+                   
+                    <div className='p-4'>
                       <Text
                         size='xl'
                         fw={600}
@@ -103,7 +104,7 @@ export const TourCalendarBlock: React.FC<TourCalendarBlockProps> = ({
                         </div>
                       )}
                     </div>
-                    <div className='my-3 grid items-center justify-between rounded-md border border-gray-200 p-2 md:flex'>
+                    <div className='mt-3 mb-1 p-4 grid items-center justify-between rounded-md border border-gray-200 md:flex'>
                       <div className='flex items-center justify-start gap-2 text-sm text-gray-600'>
                         <Text size='sm' className='text-gray-700'>
                           {tour.startDate}
@@ -126,10 +127,12 @@ export const TourCalendarBlock: React.FC<TourCalendarBlockProps> = ({
                         </Badge>
                       </div>
                     </div>
+                    </div>
+                    </Link>
                     {tour.addButton &&
                       tour.buttons &&
                       tour.buttons.length > 0 && (
-                        <div className='flex flex-wrap items-center justify-center gap-2'>
+                        <div className='flex flex-wrap items-center justify-center gap-2 p-4'>
                           {tour.buttons.map((button, btnIndex) => (
                             <div
                               key={btnIndex}
@@ -140,21 +143,21 @@ export const TourCalendarBlock: React.FC<TourCalendarBlockProps> = ({
                               }}
                               className='inline-block cursor-pointer'
                             >
-                              <Badge
-                                size='md'
+                              <Button
+                                size='sm'
                                 radius='xl'
-                                variant='light'
-                                className='bg-gray-100 px-3 py-1 text-gray-700 hover:bg-gray-200'
+                                variant='outline'
+                                component={Link}
+                                href={button.url as Route}
+                                className='px-3 text-gray-700'
                               >
                                 {button.label}
-                              </Badge>
+                              </Button>
                             </div>
                           ))}
                         </div>
-                      )}
-                  </div>
-                </div>
-              </Link>
+                      )}  
+                      </div>
             </GridCol>
           )
         })}

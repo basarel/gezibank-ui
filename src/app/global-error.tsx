@@ -172,40 +172,10 @@ export default function GlobalError({
                     }}
                   >
                     <Link
-                      href='/otel'
-                      style={{ color: '#374151', textDecoration: 'none' }}
-                    >
-                      Otel
-                    </Link>
-                    <Link
-                      href='/ucak'
-                      style={{ color: '#374151', textDecoration: 'none' }}
-                    >
-                      Uçak
-                    </Link>
-                    <Link
-                      href='/arac'
-                      style={{ color: '#374151', textDecoration: 'none' }}
-                    >
-                      Araç
-                    </Link>
-                    <Link
                       href='/tur'
                       style={{ color: '#374151', textDecoration: 'none' }}
                     >
                       Tur
-                    </Link>
-                    <Link
-                      href='/otobus'
-                      style={{ color: '#374151', textDecoration: 'none' }}
-                    >
-                      Otobüs
-                    </Link>
-                    <Link
-                      href='/transfer'
-                      style={{ color: '#374151', textDecoration: 'none' }}
-                    >
-                      Transfer
                     </Link>
                   </div>
                   <a

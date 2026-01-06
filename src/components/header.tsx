@@ -77,7 +77,7 @@ export const Header: React.FC<HeaderProps> = ({ headerContent }) => {
     <>
       <header className='border-b bg-white'>
         <Container>
-          <div className='grid items-center justify-between'>
+          <div className='md:grid items-center justify-between'>
             <div className='ms-auto mt-2 hidden items-center gap-5 text-sm font-medium md:flex'>
               <Link
                 href='https://www.whatsapp.com/channel/0029Vau83EmCRs1qIYPnNO0a'
@@ -101,7 +101,7 @@ export const Header: React.FC<HeaderProps> = ({ headerContent }) => {
                 Sizi Arayalım
               </div>
             </div>
-            <div className='flex items-center gap-2'>
+            <div className='flex items-center justify-between gap-2 md:justify-start'>
               <Box className='flex items-center pb-2'>
                 <Link href='/'>
                   <Image
@@ -115,46 +115,51 @@ export const Header: React.FC<HeaderProps> = ({ headerContent }) => {
                 <div className='hidden md:block'>
                   <HeaderMenu menuItems={headerContent?.menuItems} />
                 </div>
-                <Drawer opened={opened} onClose={close} className='md:hidden'>
-                  <div className='flex flex-col gap-2'>
-                    <div>
-                      <PersonLetters />
-                    </div>
-                    <div className='rounded-md border p-2 shadow'>
-                      <AccountSideNav insideClose={close} />
-                    </div>
-                  </div>
-                </Drawer>
-                <div className='ml-auto flex items-center gap-1 md:hidden'>
-                  {session.status === 'authenticated' ? (
-                    <Button
-                      onClick={open}
-                      className='rounded-full bg-blue-800 text-start text-xs font-medium text-white'
-                    >
-                      {session?.data.user.name
-                        ? `${session.data.user.name}`
-                        : ''}
-                    </Button>
-                  ) : (
-                    <Button
-                      variant='outline'
-                      size='xs'
-                      className='p-2'
-                      radius={'xl'}
-                      component={Link}
-                      href={'/auth/login' as Route}
-                    >
-                      <FaUser />
-                    </Button>
-                  )}
+              </Box>
+              <div className='flex items-center gap-1 md:hidden'>
+                {session.status === 'authenticated' ? (
+                  <Button
+                    onClick={open}
+                    className='rounded-full bg-blue-800 text-start text-xs font-medium text-white'
+                  >
+                    {session?.data.user.name
+                      ? `${session.data.user.name}`
+                      : ''}
+                  </Button>
+                ) : (
+                  <Button
+                    variant='outline'
+                    size='xs'
+                    className='p-2'
+                    radius={'xl'}
+                    onClick={() => {
+                      modals.open({
+                        title: 'Üye Girişi',
+                        children: <LoginForm />,
+                      })
+                    }}
+                  >
+                    <FaUser />
+                  </Button>
+                )}
 
-                  <Burger
-                    opened={drawerOpened}
-                    onClick={toggleDrawer}
-                    size='sm'
-                    title='Menü Aç/Kapat'
-                  />
+                <Burger
+                  opened={drawerOpened}
+                  onClick={toggleDrawer}
+                  size='sm'
+                  title='Menü Aç/Kapat'
+                />
+              </div>
+              <Drawer opened={opened} onClose={close} className='md:hidden'>
+                <div className='flex flex-col gap-2'>
+                  <div>
+                    <PersonLetters />
+                  </div>
+                  <div className='rounded-md border p-2 shadow'>
+                    <AccountSideNav insideClose={close} />
+                  </div>
                 </div>
+              </Drawer>
                 <Drawer
                   opened={drawerOpened}
                   onClose={toggleDrawer}
@@ -166,7 +171,7 @@ export const Header: React.FC<HeaderProps> = ({ headerContent }) => {
                   }}
                   title={
                     <div className='gap-lg flex items-center justify-end'>
-                      <Link onClick={toggleDrawer} href='/'>
+                      <Link href='/'>
                         <Image
                           src='/logo.png'
                           width={118}
@@ -195,9 +200,12 @@ export const Header: React.FC<HeaderProps> = ({ headerContent }) => {
                             variant='outline'
                             radius='xl'
                             leftSection={<FaRegUserCircle />}
-                            component={Link}
-                            onClick={toggleDrawer}
-                            href={'/auth/login' as Route}
+                            onClick={() => {
+                              modals.open({
+                                title: 'Üye Girişi',
+                                children: <LoginForm />,
+                              })
+                            }}
                             loading={session.status === 'loading'}
                           >
                             Giriş Yap
@@ -259,7 +267,6 @@ export const Header: React.FC<HeaderProps> = ({ headerContent }) => {
                     </Grid.Col>
                   </Grid>
                 </Drawer>
-              </Box>
             </div>
           </div>
           <div className='ms-auto hidden items-center justify-between gap-5 md:grid'>

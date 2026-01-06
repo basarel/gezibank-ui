@@ -74,6 +74,17 @@ const Pages = {
       },
     },
     {
+      name: 'searchEngineBackgroundImage',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Arama Motoru Arka Plan Resmi',
+      required: false,
+      admin: {
+        condition: (data) => data.showSearchEngine === true,
+        description: 'Arama motorunun arka planında gösterilecek resim',
+      },
+    },
+    {
       name: 'searchEngineType',
       type: 'select',
       label: 'Arama Motoru Tipi',
@@ -92,17 +103,6 @@ const Pages = {
           value: 'tur',
         },
       ],
-    },
-    {
-      name: 'searchEngineBackgroundImage',
-      type: 'upload',
-      relationTo: 'media',
-      label: 'Arama Motoru Arka Plan Resmi',
-      required: false,
-      admin: {
-        condition: (data) => data.showSearchEngine === true,
-        description: 'Arama motorunun arka planında gösterilecek resim',
-      },
     },
     {
       name: 'layout',
