@@ -30,7 +30,9 @@ export const SearchCopyCode = ({ data }: IProps) => {
                 <div className='mx-auto text-[10px] font-normal md:text-sm'>
                   Kodu Kopyala
                 </div>
-                <div className='text-sm font-bold md:text-2xl'>{data.copyText}</div>
+                <div className='text-sm font-bold md:text-2xl'>
+                  {data.copyText}
+                </div>
               </div>
             )}
           </Button>

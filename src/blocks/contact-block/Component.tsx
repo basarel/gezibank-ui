@@ -33,7 +33,7 @@ export const ContactBlock: React.FC<ContactBlockProps> = ({
   return (
     <>
       {showContactForm && <HelpPage />}
-      
+
       {showContactInfo && (
         <div>
           <div className='mb-5 rounded-md border p-3'>
@@ -45,12 +45,8 @@ export const ContactBlock: React.FC<ContactBlockProps> = ({
               {addressLabel && addressValue && (
                 <div className='flex items-start gap-3'>
                   <div className='flex items-center gap-2'>
-                    <strong className='text-gray-800'>
-                      {addressLabel}
-                    </strong>
-                    <div className='text-gray-600'>
-                      {addressValue}
-                    </div>
+                    <strong className='text-gray-800'>{addressLabel}</strong>
+                    <div className='text-gray-600'>{addressValue}</div>
                   </div>
                 </div>
               )}
@@ -107,4 +103,3 @@ export const ContactBlock: React.FC<ContactBlockProps> = ({
     </>
   )
 }
-

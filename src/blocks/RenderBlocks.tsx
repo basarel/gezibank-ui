@@ -59,7 +59,7 @@ export const RenderBlocks: React.FC<RenderBlocksProps> = ({ blocks }) => {
 
         if (block && 'isActive' in block && block.isActive === false) {
           return null
-        } // cms e eklendı BY 
+        } // cms e eklendı BY
 
         if (blockType && blockType in blockComponents) {
           const BlockComponent = blockComponents[blockType]

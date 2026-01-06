@@ -124,7 +124,8 @@ function NotFoundForm({ moduleName }: IProps) {
               c='blue'
               className='cursor-pointer text-lg hover:underline'
             >
-info@gezibank.com            </Text>{' '}
+              info@gezibank.com{' '}
+            </Text>{' '}
             adresine mail atabilir ya da aşağıdaki formu doldurabilirsiniz.
             Yetkililerimiz en kısa zamanda size ulaşacaktır.
           </Text>

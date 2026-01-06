@@ -16,7 +16,7 @@ export const EmptyContentBlock: React.FC<EmptyContentBlockProps> = ({
   }
 
   return (
-    <div className='w-full py-8'>
+    <div className='w-full py-6'>
       <Container size='lg'>
         {title && (
           <Title order={2} size='h2' className='mb-4 text-center text-gray-800'>
@@ -32,4 +32,3 @@ export const EmptyContentBlock: React.FC<EmptyContentBlockProps> = ({
     </div>
   )
 }
-

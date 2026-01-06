@@ -49,7 +49,7 @@ export const LatestBlogsBlock: React.FC<LatestBlogsBlockProps> = async ({
   limit = 3,
 }) => {
   const blogs = await getLatestBlogs(limit)
-  
+
   if (!blogs || blogs.length === 0) {
     return null
   }
@@ -168,7 +168,7 @@ export const LatestBlogsBlock: React.FC<LatestBlogsBlockProps> = async ({
 
                   {/* Tarih */}
                   {blog.createdAt && (
-                    <div className='mt-auto flex items-center gap-2 pt-2 border-t border-gray-100'>
+                    <div className='mt-auto flex items-center gap-2 border-t border-gray-100 pt-2'>
                       <svg
                         className='h-4 w-4 text-gray-400'
                         fill='none'
@@ -182,7 +182,7 @@ export const LatestBlogsBlock: React.FC<LatestBlogsBlockProps> = async ({
                           d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'
                         />
                       </svg>
-                      <Text size='xs' className='text-gray-500 font-medium'>
+                      <Text size='xs' className='font-medium text-gray-500'>
                         {formatDate(blog.createdAt)}
                       </Text>
                     </div>
@@ -196,4 +196,3 @@ export const LatestBlogsBlock: React.FC<LatestBlogsBlockProps> = async ({
     </div>
   )
 }
-

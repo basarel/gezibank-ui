@@ -102,7 +102,7 @@ export default async function BlogListPage() {
   }
 
   return (
-    <div className='md:mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8'>
+    <div className='max-w-7xl px-4 py-8 sm:px-6 md:mx-auto lg:px-8'>
       <div className='mb-8'>
         <h1 className='relative mx-auto w-fit border-blue-800 pb-3 text-center text-3xl font-bold text-blue-600 md:text-4xl'>
           Blog Yazıları
@@ -110,7 +110,7 @@ export default async function BlogListPage() {
       </div>
 
       {blogs.length === 0 ? (
-        <div className='text-center py-12'>
+        <div className='py-12 text-center'>
           <Text size='lg' className='text-gray-500'>
             Henüz blog yazısı bulunmamaktadır.
           </Text>
@@ -163,7 +163,7 @@ export default async function BlogListPage() {
 
                     {/* Tarih */}
                     {blog.createdAt && (
-                      <div className='mt-auto flex items-center gap-2 pt-2 border-t border-gray-100'>
+                      <div className='mt-auto flex items-center gap-2 border-t border-gray-100 pt-2'>
                         <svg
                           className='h-4 w-4 text-gray-400'
                           fill='none'
@@ -177,7 +177,7 @@ export default async function BlogListPage() {
                             d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'
                           />
                         </svg>
-                        <Text size='xs' className='text-gray-500 font-medium'>
+                        <Text size='xs' className='font-medium text-gray-500'>
                           {formatDate(blog.createdAt)}
                         </Text>
                       </div>
@@ -192,4 +192,3 @@ export default async function BlogListPage() {
     </div>
   )
 }
-

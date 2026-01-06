@@ -75,21 +75,25 @@ const TourSummary: React.FC<IProps> = ({ data }) => {
         {((tourData.package.hotelInformations !== undefined &&
           tourData.package.hotelInformations !== null &&
           tourData.package.hotelInformations.length > 0) ||
-          tourData.detail.flightInformation !== undefined &&
-          tourData.detail.flightInformation !== null &&
-          (Array.isArray(tourData.detail.flightInformation)
-            ? tourData.detail.flightInformation.length > 0
-            : String(tourData.detail.flightInformation).trim().length > 0)) && (
+          (tourData.detail.flightInformation !== undefined &&
+            tourData.detail.flightInformation !== null &&
+            (Array.isArray(tourData.detail.flightInformation)
+              ? tourData.detail.flightInformation.length > 0
+              : String(tourData.detail.flightInformation).trim().length >
+                0))) && (
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-1'>
               {tourData.package.hotelInformations !== undefined &&
                 tourData.package.hotelInformations !== null &&
-                tourData.package.hotelInformations.length > 0 && <div>Otel</div>}
+                tourData.package.hotelInformations.length > 0 && (
+                  <div>Otel</div>
+                )}
               {tourData.detail.flightInformation !== undefined &&
                 tourData.detail.flightInformation !== null &&
                 (Array.isArray(tourData.detail.flightInformation)
                   ? tourData.detail.flightInformation.length > 0
-                  : String(tourData.detail.flightInformation).trim().length > 0) && (
+                  : String(tourData.detail.flightInformation).trim().length >
+                    0) && (
                   <div>
                     {tourData.package.hotelInformations !== undefined &&
                     tourData.package.hotelInformations !== null &&
@@ -100,53 +104,61 @@ const TourSummary: React.FC<IProps> = ({ data }) => {
                   </div>
                 )}
             </div>
-            {(
-                <Tooltip openDelay={100} closeDelay={100} position='bottom' withArrow
-                  label={
-                    <div className='grid gap-3'>
-                      
-                        <div className='text-sm'>
-                          <div className='font-semibold mb-2'>Ulaşım Bilgisi:</div>
-                          {Array.isArray(tourData.detail.flightInformation)
-                            ? (
-                              <div className='space-y-1'>
-                                {tourData.detail.flightInformation.map((item, index) => (
-                                  <div key={index}>• {item}</div>
-                                ))}
-                              </div>
+            {
+              <Tooltip
+                openDelay={100}
+                closeDelay={100}
+                position='bottom'
+                withArrow
+                label={
+                  <div className='grid gap-3'>
+                    <div className='text-sm'>
+                      <div className='mb-2 font-semibold'>Ulaşım Bilgisi:</div>
+                      {Array.isArray(tourData.detail.flightInformation) ? (
+                        <div className='space-y-1'>
+                          {tourData.detail.flightInformation.map(
+                            (item, index) => (
+                              <div key={index}>• {item}</div>
                             )
-                            : (
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html: String(tourData.detail.flightInformation),
-                                }}
-                              />
-                            )}
+                          )}
                         </div>
-                      
-                      {tourData.package.hotelInformations &&
-                        tourData.package.hotelInformations !== null &&
-                        tourData.package.hotelInformations.length > 0 && (
-                          <div className='text-sm'>
-                            <div className='font-semibold mb-2'>Otel Bilgisi:</div>
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html: tourData.package.hotelInformations[0].name,
-                              }}
-                            />
-                            <div className='mt-2 text-xs text-gray-400'>
-                              (Data: {JSON.stringify(tourData.package.hotelInformations)})
-                            </div>
-                          </div>
-                        )}
+                      ) : (
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: String(tourData.detail.flightInformation),
+                          }}
+                        />
+                      )}
                     </div>
-                  }
-                >
-                  <div className='cursor-pointer font-bold text-blue-800'>
-                    Detaylı Bilgi
+
+                    {tourData.package.hotelInformations &&
+                      tourData.package.hotelInformations !== null &&
+                      tourData.package.hotelInformations.length > 0 && (
+                        <div className='text-sm'>
+                          <div className='mb-2 font-semibold'>
+                            Otel Bilgisi:
+                          </div>
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html:
+                                tourData.package.hotelInformations[0].name,
+                            }}
+                          />
+                          <div className='mt-2 text-xs text-gray-400'>
+                            (Data:{' '}
+                            {JSON.stringify(tourData.package.hotelInformations)}
+                            )
+                          </div>
+                        </div>
+                      )}
                   </div>
-                </Tooltip>
-              )}
+                }
+              >
+                <div className='cursor-pointer font-bold text-blue-800'>
+                  Detaylı Bilgi
+                </div>
+              </Tooltip>
+            }
           </div>
         )}
         <div className='flex items-center justify-between gap-2 border-t pt-3 font-semibold'>

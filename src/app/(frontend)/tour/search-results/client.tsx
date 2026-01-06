@@ -318,15 +318,14 @@ const TourSearchResultClient = () => {
               onClick={toggleSearchEngineVisibility}
             />
             <div className='flex items-center gap-1'>
-              <div className='font-medium text-lg'>
+              <div className='text-lg font-medium'>
                 {destinationInfoQuery.data.find(
                   (destination) =>
                     destination?.Result?.Slug?.toLowerCase() ===
                     searchParams.destinationSlug?.toLowerCase()
                 )?.Result.Name ?? searchParams.destinationSlug}
               </div>
-              <div>
-               </div>
+              <div></div>
             </div>
             <div className='z-0 ms-auto rounded-md bg-blue-100 p-2'>
               <IoSearchSharp size={24} className='text-blue-800' />

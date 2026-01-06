@@ -19,7 +19,7 @@ export function SearchResultsLoadingSkeleton({
         <div className='grid grid-cols-1 gap-6 lg:grid-cols-12'>
           {showFilterSkeleton && (
             <div className={filterColumnClassName}>
-              <div className='hidden rounded-lg bg-white p-2 md:block border'>
+              <div className='hidden rounded-lg border bg-white p-2 md:block'>
                 <Skeleton h={24} w='50%' className='mb-4' />
 
                 <div className='mt-3 mb-6'>

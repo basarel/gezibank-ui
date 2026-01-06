@@ -53,14 +53,13 @@ const TourTableOfContents: React.FC<TourTableOfContentsProps> = ({
   onVisaClick,
   isDomestic = false,
 }) => {
-  const baseSelector = '#general, #hotel, #tour-program, #transport, #included-information, #not-included-information'
-  const selector = isDomestic 
-    ? baseSelector 
-    : `${baseSelector}, #visa-infos`
+  const baseSelector =
+    '#general, #hotel, #tour-program, #transport, #included-information, #not-included-information'
+  const selector = isDomestic ? baseSelector : `${baseSelector}, #visa-infos`
 
   return (
     <div
-      className='relative z-20 md:rounded-lg bg-orange-900 text-white shadow-[-10px_10px_20px_0px_rgba(0,0,0,0.25)]'
+      className='relative z-20 bg-orange-900 text-white shadow-[-10px_10px_20px_0px_rgba(0,0,0,0.25)] md:rounded-lg'
       style={{ pointerEvents: 'auto' }}
     >
       <div className='relative mx-auto max-w-6xl overflow-x-auto overflow-y-hidden md:overflow-hidden'>

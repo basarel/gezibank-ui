@@ -1,4 +1,3 @@
-
 import { notFound } from 'next/navigation'
 import { InfoPagesLayout } from '@/components/info-pages-layout'
 import { getPageBySlug } from '@/libs/payload'

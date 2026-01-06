@@ -262,64 +262,65 @@ export const Header: React.FC<HeaderProps> = ({ headerContent }) => {
               </Box>
             </div>
           </div>
-          <div className='hidden items-center justify-between gap-5 md:grid ms-auto'>
+          <div className='ms-auto hidden items-center justify-between gap-5 md:grid'>
             {session.status === 'authenticated' ? (
               <>
-              <div className='absolute top-0 right-50 flex flex-col items-center gap-2'>
-                <div className='relative w-full h-[58px]'>
-                  <Image
-                    src='/container-header.png'
-                    alt='Header Container'
-                    width={295}
-                    height={285}
-                    className='h-full object-cover object-top'
-                    style={{ marginTop: '-0.5px' }}
-                    priority
-                  />
-                  <div className='absolute top-2 left-1/2 border border-blue-600 rounded-full -translate-x-1/2 flex items-center gap-3 text-white'>
-                    <Menu>
-                      <Menu.Target>
-                        <div
-                          className='flex items-center gap-2 text-white cursor-pointer px-2 py-1 hover:text-blue-600'
-                        >
-                          <div>
-                            <FaUser size={16} className='text-blue-600' />
+                <div className='absolute top-0 right-50 flex flex-col items-center gap-2'>
+                  <div className='relative h-[58px] w-full'>
+                    <Image
+                      src='/container-header.png'
+                      alt='Header Container'
+                      width={295}
+                      height={285}
+                      className='h-full object-cover object-top'
+                      style={{ marginTop: '-0.5px' }}
+                      priority
+                    />
+                    <div className='absolute top-2 left-1/2 flex -translate-x-1/2 items-center gap-3 rounded-full border border-blue-600 text-white'>
+                      <Menu>
+                        <Menu.Target>
+                          <div className='flex cursor-pointer items-center gap-2 px-2 py-1 text-white hover:text-blue-600'>
+                            <div>
+                              <FaUser size={16} className='text-blue-600' />
+                            </div>
+                            <div className='hidden text-base font-medium md:block'>
+                              {session.data?.user?.name}
+                            </div>
                           </div>
-                          <div className='hidden text-base font-medium md:block'>
-                            {session.data?.user?.name}
-                          </div>
-                        </div>
-                      </Menu.Target>
-                      <Menu.Dropdown>
-                        <Menu.Label>{session.data?.user?.name}</Menu.Label>
-                        <Menu.Item component={Link} href={'/account' as Route}>
-                          Hesabım
-                        </Menu.Item>
-                        <Menu.Item
-                          onClick={async () => {
-                            signOut()
-                          }}
-                          className='text-red-500'
-                          leftSection={<IoIosLogOut size={18} />}
-                        >
-                          Oturumu Kapatın
-                        </Menu.Item>
-                      </Menu.Dropdown>
-                    </Menu>
+                        </Menu.Target>
+                        <Menu.Dropdown>
+                          <Menu.Label>{session.data?.user?.name}</Menu.Label>
+                          <Menu.Item
+                            component={Link}
+                            href={'/account' as Route}
+                          >
+                            Hesabım
+                          </Menu.Item>
+                          <Menu.Item
+                            onClick={async () => {
+                              signOut()
+                            }}
+                            className='text-red-500'
+                            leftSection={<IoIosLogOut size={18} />}
+                          >
+                            Oturumu Kapatın
+                          </Menu.Item>
+                        </Menu.Dropdown>
+                      </Menu>
+                    </div>
                   </div>
+                  <Link
+                    href='/iletisim'
+                    className='flex items-center gap-1 text-sm font-medium text-gray-600'
+                  >
+                    <CiCircleInfo size={16} />
+                    Yardım
+                  </Link>
                 </div>
-                <Link
-                      href='/iletisim'
-                      className='flex items-center gap-1 text-sm font-medium text-gray-600'
-                    >
-                      <CiCircleInfo size={16} />
-                      Yardım
-                    </Link>
-              </div>
               </>
             ) : (
               <div className='absolute top-0 right-50 flex flex-col items-center gap-2'>
-                <div className='relative w-full h-[58px]'>
+                <div className='relative h-[58px] w-full'>
                   <Image
                     src='/container-header.png'
                     alt='Header Container'

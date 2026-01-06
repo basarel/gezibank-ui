@@ -145,9 +145,9 @@ export const TourSearchResultItem: React.FC<Props> = ({
     : null
 
   const isMobile = useMediaQuery('(max-width: 62em)')
-   return (
+  return (
     <div className='grid grid-cols-1 rounded-lg bg-white p-3 shadow-md hover:shadow-2xl md:grid-cols-4'>
-      <div className='col-span-1 flex flex-col gap-3 md:gap-4 md:col-span-3'>
+      <div className='col-span-1 flex flex-col gap-3 md:col-span-3 md:gap-4'>
         <div className='grid grid-cols-1 items-stretch gap-3 md:grid-cols-2'>
           <Box
             className='relative col-span-1 h-full w-full'
@@ -196,13 +196,13 @@ export const TourSearchResultItem: React.FC<Props> = ({
 
           <div className='col-span-1 flex flex-col gap-3'>
             <div className='relative'>
-              <div className='absolute md:block hidden start-0 top-0 bottom-0 w-2 rounded ml-1.5 bg-blue-500'></div>
-              <Title order={1} className='text-xl font-bold text-black px-5'>
+              <div className='absolute start-0 top-0 bottom-0 ml-1.5 hidden w-2 rounded bg-blue-500 md:block'></div>
+              <Title order={1} className='px-5 text-xl font-bold text-black'>
                 {selectedTour.title.split('|')[0]}
               </Title>
               {selectedTour.departurePoints &&
                 selectedTour.departurePoints.length > 0 && (
-                  <div className='my-2 text-base font-medium text-black px-5'>
+                  <div className='my-2 px-5 text-base font-medium text-black'>
                     {selectedTour.departurePoints
                       .map((departurePoint) => departurePoint.title)
                       .join(', ')}{' '}
@@ -210,7 +210,7 @@ export const TourSearchResultItem: React.FC<Props> = ({
                   </div>
                 )}
             </div>
-            <div className='md:my-3 mb-3 items-center gap-2 md:hidden'>
+            <div className='mb-3 items-center gap-2 md:my-3 md:hidden'>
               <TourDropdown
                 data={availableItems}
                 onSelect={setSelectedTour}
@@ -242,7 +242,7 @@ export const TourSearchResultItem: React.FC<Props> = ({
               </div>
             )}
             {campaignContents && campaignContents.length > 0 && (
-              <div className='md:flex flex-wrap gap-2 hidden'>
+              <div className='hidden flex-wrap gap-2 md:flex'>
                 {campaignContents
                   .filter((campaign) => {
                     if (campaign.active === false) return false
@@ -265,44 +265,53 @@ export const TourSearchResultItem: React.FC<Props> = ({
           </div>
         </div>
 
-        <div className='md:flex grid tezt-sm items-center md:gap-5 gap-3 md:pt-2 text-sm'>
+        <div className='tezt-sm grid items-center gap-3 text-sm md:flex md:gap-5 md:pt-2'>
           {transportTypeText && (
             <div className='flex items-center gap-2'>
               {transportType === 1 && (
-                <RiPlaneFill size={isMobile ? 18 : 22} className='text-blue-700 md:text-orange-700' />
+                <RiPlaneFill
+                  size={isMobile ? 18 : 22}
+                  className='text-blue-700 md:text-orange-700'
+                />
               )}
               {transportType === 2 && (
-                <FaBus size={isMobile ? 18 : 22} className='text-blue-700 md:text-orange-700' />
+                <FaBus
+                  size={isMobile ? 18 : 22}
+                  className='text-blue-700 md:text-orange-700'
+                />
               )}
               {transportType === 3 && (
-                <RiTrainFill size={isMobile ? 18 : 22} className='text-blue-700 md:text-orange-700' />
+                <RiTrainFill
+                  size={isMobile ? 18 : 22}
+                  className='text-blue-700 md:text-orange-700'
+                />
               )}
               <span className='text-sm'>
                 Gidiş-Dönüş: {transportTypeText} ile
               </span>
             </div>
           )}
-              {campaignContents && campaignContents.length > 0 && (
-              <div className='grid gap-2 md:hidden'>
-                {campaignContents
-                  .filter((campaign) => {
-                    if (campaign.active === false) return false
+          {campaignContents && campaignContents.length > 0 && (
+            <div className='grid gap-2 md:hidden'>
+              {campaignContents
+                .filter((campaign) => {
+                  if (campaign.active === false) return false
 
-                    if (selectedTour.isDomestic) {
-                      return campaign.viewCountry === '1'
-                    } else {
-                      return campaign.viewCountry === '0'
-                    }
-                  })
-                  .map((campaign) => (
-                    <Link key={campaign.id} href={campaign.link as Route}>
-                      <div className='rounded-md bg-green-50 px-3 py-1.5 text-sm font-medium text-green-700 transition-all duration-200 hover:bg-green-100'>
-                        {campaign.text}
-                      </div>
-                    </Link>
-                  ))}
-              </div>
-            )}
+                  if (selectedTour.isDomestic) {
+                    return campaign.viewCountry === '1'
+                  } else {
+                    return campaign.viewCountry === '0'
+                  }
+                })
+                .map((campaign) => (
+                  <Link key={campaign.id} href={campaign.link as Route}>
+                    <div className='rounded-md bg-green-50 px-3 py-1.5 text-sm font-medium text-green-700 transition-all duration-200 hover:bg-green-100'>
+                      {campaign.text}
+                    </div>
+                  </Link>
+                ))}
+            </div>
+          )}
           <div className='hidden items-center gap-2 md:flex'>
             <TourDropdown
               data={availableItems}
@@ -347,7 +356,7 @@ export const TourSearchResultItem: React.FC<Props> = ({
           </div>
         </div>
         <Link href={detailUrl}>
-          <div className='mb-3 flex w-full items-center justify-center rounded-tl-xl rounded-tr-xl rounded-b-xl md:rounded-bl-none rounded-bl-xl bg-blue-600 p-2 text-lg font-extrabold text-white hover:bg-blue-800 md:text-3xl'>
+          <div className='mb-3 flex w-full items-center justify-center rounded-tl-xl rounded-tr-xl rounded-b-xl rounded-bl-xl bg-blue-600 p-2 text-lg font-extrabold text-white hover:bg-blue-800 md:rounded-bl-none md:text-3xl'>
             Turu İncele
           </div>
         </Link>

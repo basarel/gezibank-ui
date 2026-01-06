@@ -10,7 +10,7 @@ export default async function Home() {
   const page = await getPageBySlug('home')
   const blocks = page?.layout || []
   return (
-    <div className='flex flex-col md:gap-20 gap-10'>
+    <div className='flex flex-col gap-10 md:gap-20'>
       <div className='relative'>
         <Image
           src='/engine-bg.png'
@@ -22,7 +22,7 @@ export default async function Home() {
             clipPath: 'ellipse(90% 90% at 50% 00%)',
           }}
         />
-        <div 
+        <div
           className='absolute top-0 left-0 -z-40 hidden h-full w-full bg-black/30 md:block'
           style={{
             clipPath: 'ellipse(90% 90% at 50% 00%)',
@@ -33,7 +33,7 @@ export default async function Home() {
         </div>
         <div>
           <Container className='px-0 md:px-4 md:pt-[208px]'>
-          <Title
+            <Title
               className='hidden text-center font-medium text-white md:mb-20 md:block'
               style={{
                 fontSize: '36px',

@@ -28,7 +28,7 @@ const Footer = async () => {
                     alt='GeziBank Logo'
                     width={200}
                     height={100}
-                    className='object-contain h-full'
+                    className='h-full object-contain'
                   />
                 </div>
                 <div className='mt-1 w-full border-b-2 border-blue-600'></div>
@@ -89,9 +89,7 @@ const Footer = async () => {
                   <div>
                     <div className='flex flex-wrap items-center justify-center gap-3 md:items-start md:justify-start'>
                       {column.links
-                        .filter(
-                          (link) => link.image?.url && !link.label
-                        )
+                        .filter((link) => link.image?.url && !link.label)
                         .map((link, linkIndex) => {
                           const linkImageUrl = link.image?.url
                           return (
@@ -103,7 +101,7 @@ const Footer = async () => {
                                     alt='Image'
                                     width={32}
                                     height={32}
-                                    className='object-contain bg-gray-100'
+                                    className='bg-gray-100 object-contain'
                                   />
                                 </Link>
                               )}
@@ -116,8 +114,7 @@ const Footer = async () => {
                       {column.links
                         .filter(
                           (link) =>
-                            link.label ||
-                              (link.image?.url && link.label)
+                            link.label || (link.image?.url && link.label)
                         )
                         .map((link, linkIndex) => {
                           return (
@@ -148,7 +145,7 @@ const Footer = async () => {
                                     alt={link.label || 'Image'}
                                     width={20}
                                     height={20}
-                                    className='object-contain bg-gray-100'
+                                    className='bg-gray-100 object-contain'
                                   />
                                   <span className='text-sm text-gray-600'>
                                     {link.label}

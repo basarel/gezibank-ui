@@ -30,7 +30,11 @@ import { reservationParsers } from '@/app/(frontend)/reservation/searchParams'
 import { tourDetailPageParamParser } from '@/modules/tour/detailSearchParams'
 import { CruiseSearchEngine } from '@/modules/cruise'
 import { IoCalendarClearOutline, IoInformationCircle } from 'react-icons/io5'
-import { MdDownloading, MdOutlineCameraAlt, MdOutlineLocalPhone } from 'react-icons/md'
+import {
+  MdDownloading,
+  MdOutlineCameraAlt,
+  MdOutlineLocalPhone,
+} from 'react-icons/md'
 import { TourMediaGallery } from '@/app/(frontend)/tour/_components/media-gallery/media-gallery'
 import TourTableOfContents from '@/app/(frontend)/tour/_components/table-of-contents'
 import { generateTourPDF } from './tour-pdf-generator'
@@ -97,18 +101,22 @@ const TourDetailClient = () => {
   }, [])
 
   const detailQuery = useTourDetailQuery()
-  const [visaModalOpened, { open: openVisaModal, close: closeVisaModal }] = useDisclosure(false)
-  const [videoModalOpened, { open: openVideoModal, close: closeVideoModal }] = useDisclosure(false)
- 
+  const [visaModalOpened, { open: openVisaModal, close: closeVisaModal }] =
+    useDisclosure(false)
+  const [videoModalOpened, { open: openVideoModal, close: closeVideoModal }] =
+    useDisclosure(false)
+
   // Tur başlığına göre video detayını çek
   const tourTitle = detailQuery.data?.package.title
   const { data: tourDetailVideo } = useQuery<Detail | null>({
     queryKey: ['tour-detail-video', tourTitle],
     queryFn: async () => {
       if (!tourTitle) return null
- 
+
       try {
-        const response = await fetch(`/api/detail-video?tourTitle=${encodeURIComponent(tourTitle)}`)
+        const response = await fetch(
+          `/api/detail-video?tourTitle=${encodeURIComponent(tourTitle)}`
+        )
         if (!response.ok) {
           return null
         }
@@ -399,9 +407,10 @@ const TourDetailClient = () => {
   }
   const itineraryText = formatItinerary()
   // Tarih formatı
-  const formattedDateRange = startDate && endDate
-    ? `${dayjsStartDate.format('DD MMMM YYYY')} - ${dayjsEndDate.format('DD MMMM YYYY')}`
-    : null
+  const formattedDateRange =
+    startDate && endDate
+      ? `${dayjsStartDate.format('DD MMMM YYYY')} - ${dayjsEndDate.format('DD MMMM YYYY')}`
+      : null
 
   const euroPriceValue = !detailQuery.data?.package.isDomestic
     ? detailQuery.data?.package.priceInformations?.priceForDouble?.value
@@ -470,10 +479,10 @@ const TourDetailClient = () => {
                       />
                     </figure>
                     {isMobile && images.length > 1 && (
-                      <div className='absolute bottom-3 right-3 flex items-center gap-1.5 rounded-lg bg-black/60 px-2.5 py-1.5 backdrop-blur-sm'>
+                      <div className='absolute right-3 bottom-3 flex items-center gap-1.5 rounded-lg bg-black/60 px-2.5 py-1.5 backdrop-blur-sm'>
                         <MdOutlineCameraAlt size={16} className='text-white' />
                         <span className='text-xs font-medium text-white'>
-                         Galeri ({images.length})
+                          Galeri ({images.length})
                         </span>
                       </div>
                     )}
@@ -549,9 +558,8 @@ const TourDetailClient = () => {
                       </Title>
                     </div>
                     <div className='grid items-center gap-2 md:grid-cols-12 md:justify-start'>
-                      <div className='col-span-8 flex flex-col gap-6 md:pt-5 font-medium'>
-                        
-{formattedDateRange && (
+                      <div className='col-span-8 flex flex-col gap-6 font-medium md:pt-5'>
+                        {formattedDateRange && (
                           <div className='flex gap-2'>
                             <IoCalendarClearOutline
                               size={isMobile ? 18 : 24}
@@ -588,7 +596,7 @@ const TourDetailClient = () => {
                         {transportTypeText && (
                           <div
                             onClick={scrollToTransport}
-                            className='flex cursor-pointer items-center gap-2 ml-1'
+                            className='ml-1 flex cursor-pointer items-center gap-2'
                           >
                             {transportType === 1 ? (
                               <RiPlaneFill
@@ -604,7 +612,10 @@ const TourDetailClient = () => {
                             <span className='text-xs font-bold text-orange-900 md:text-base'>
                               {transportTypeText}
                             </span>
-                            <IoInformationCircle size={18} className='text-blue-700' />
+                            <IoInformationCircle
+                              size={18}
+                              className='text-blue-700'
+                            />
                           </div>
                         )}
 
@@ -613,7 +624,7 @@ const TourDetailClient = () => {
                             0) ||
                         (detailQuery.data?.package.description &&
                           detailQuery.data.package.description.length > 0) ? (
-                          <div className='flex flex-col gap-1 ml-1'>
+                          <div className='ml-1 flex flex-col gap-1'>
                             <div className='flex items-center gap-2'>
                               <FaBed
                                 size={isMobile ? 16 : 20}
@@ -651,11 +662,11 @@ const TourDetailClient = () => {
                         ) : null}
                       </div>
                       {tourCampaigns && tourCampaigns.length > 0 && (
-                        <div className='flex flex-col col-span-12 md:col-span-4 gap-2 md:mt-10 mt-4'>
+                        <div className='col-span-12 mt-4 flex flex-col gap-2 md:col-span-4 md:mt-10'>
                           {tourCampaigns
                             .filter((campaign) => {
                               if (campaign.active === false) return false
-                              
+
                               if (detailQuery.data?.package.isDomestic) {
                                 return campaign.viewCountry === '1'
                               } else {
@@ -667,42 +678,46 @@ const TourDetailClient = () => {
                                 key={campaign.id}
                                 href={campaign.link as Route}
                               >
-                                <div className='rounded-md bg-green-50 text-green-700 px-3 py-1.5 text-sm font-medium hover:bg-green-100 transition-all duration-200'>
+                                <div className='rounded-md bg-green-50 px-3 py-1.5 text-sm font-medium text-green-700 transition-all duration-200 hover:bg-green-100'>
                                   {campaign.text}
                                 </div>
                               </Link>
                             ))}
                         </div>
                       )}
-                  </div>
+                    </div>
                   </div>
 
-                  <div className='md:mt-5 flex w-full flex-col items-center gap-4 md:w-auto md:items-end'>
-                    {!detailQuery.data?.package.isDomestic && euroPriceFormatted && (
-                      <div className='flex w-full flex-col items-center gap-2 md:w-auto md:items-end'>
-                        <div className='md:text-base text-sm font-medium'>
-                          Çift Kişilik Oda Kişi Başı
-                        </div>
-                        <div className='w-full rounded-lg bg-orange-900 px-4 py-3 md:w-auto md:px-6 md:py-3'>
-                          <div className='flex items-start justify-center gap-1 text-3xl font-bold text-white md:justify-start md:text-5xl'>
-                            {euroPriceFormatted}
-                            <span className='text-xl md:text-3xl'>€</span>
+                  <div className='flex w-full flex-col items-center gap-4 md:mt-5 md:w-auto md:items-end'>
+                    {!detailQuery.data?.package.isDomestic &&
+                      euroPriceFormatted && (
+                        <div className='flex w-full flex-col items-center gap-2 md:w-auto md:items-end'>
+                          <div className='text-sm font-medium md:text-base'>
+                            Çift Kişilik Oda Kişi Başı
                           </div>
+                          <div className='w-full rounded-lg bg-orange-900 px-4 py-3 md:w-auto md:px-6 md:py-3'>
+                            <div className='flex items-start justify-center gap-1 text-3xl font-bold text-white md:justify-start md:text-5xl'>
+                              {euroPriceFormatted}
+                              <span className='text-xl md:text-3xl'>€</span>
+                            </div>
+                          </div>
+                          <UnstyledButton
+                            onClick={downloadPDF}
+                            className='flex w-full items-center justify-center gap-1 rounded-md bg-orange-50 px-3 py-2 transition-colors hover:bg-orange-100 md:w-auto md:bg-transparent md:py-2'
+                          >
+                            <MdDownloading
+                              size={26}
+                              className='text-blue-600'
+                            />
+                            <span className='text-sm font-bold md:text-base'>
+                              Tur Programını İndir
+                            </span>
+                          </UnstyledButton>
                         </div>
-                        <UnstyledButton
-                          onClick={downloadPDF}
-                          className='w-full md:w-auto flex items-center justify-center gap-1 rounded-md bg-orange-50 px-3 py-2 transition-colors hover:bg-orange-100 md:bg-transparent md:py-2'
-                        >
-                         <MdDownloading size={26} className='text-blue-600'/>
-                          <span className='text-sm font-bold md:text-base'>
-                           Tur Programını İndir
-                          </span>
-                        </UnstyledButton>
-                      </div>
-                    )}
+                      )}
                     {detailQuery.data?.package.isDomestic && (
                       <div className='flex w-full flex-col items-center gap-2 md:w-auto md:items-end'>
-                        <div className='md:text-base text-sm font-medium'>
+                        <div className='text-sm font-medium md:text-base'>
                           Çift Kişilik Oda Kişi Başı
                         </div>
                         <div className='w-full rounded-lg bg-orange-900 px-4 py-3 md:w-auto md:px-6 md:py-3'>
@@ -710,23 +725,22 @@ const TourDetailClient = () => {
                             {formatCurrency(
                               detailQuery.data.package.tlPrice.value
                             )}
-                           </div>
+                          </div>
                         </div>
                         <UnstyledButton
                           onClick={downloadPDF}
-                          className='w-full md:w-auto flex items-center justify-center gap-1 rounded-md bg-orange-50 px-3 py-2 transition-colors hover:bg-orange-100 md:bg-transparent md:py-2'
+                          className='flex w-full items-center justify-center gap-1 rounded-md bg-orange-50 px-3 py-2 transition-colors hover:bg-orange-100 md:w-auto md:bg-transparent md:py-2'
                         >
-                         <MdDownloading size={26} className='text-blue-600'/>
+                          <MdDownloading size={26} className='text-blue-600' />
                           <span className='text-sm font-bold md:text-base'>
-                           Tur Programını İndir
+                            Tur Programını İndir
                           </span>
                         </UnstyledButton>
                       </div>
                     )}
 
                     <div className='flex w-full flex-col gap-3 md:w-auto'>
-                    
-                      <div className='grid grid-cols-2 gap-2 md:rounded-lg md:p-2 md:shadow-lg md:flex md:flex-col md:shadow-2xl'>
+                      <div className='grid grid-cols-2 gap-2 md:flex md:flex-col md:rounded-lg md:p-2 md:shadow-2xl md:shadow-lg'>
                         <Link
                           href='https://wa.me/08508400151'
                           className='flex items-center justify-center gap-2 rounded-md bg-green-50 px-3 py-2 transition-colors hover:bg-green-100 md:bg-transparent md:py-2'
@@ -746,7 +760,7 @@ const TourDetailClient = () => {
                               children: <CallForm />,
                             })
                           }}
-                          className='flex items-center justify-center gap-2 rounded-md bg-orange-50 md:px-3 py-2 transition-colors hover:bg-orange-100 md:bg-transparent md:py-2'
+                          className='flex items-center justify-center gap-2 rounded-md bg-orange-50 py-2 transition-colors hover:bg-orange-100 md:bg-transparent md:px-3 md:py-2'
                         >
                           <span className='text-sm font-medium md:text-base'>
                             Sizi Arayalım
@@ -763,12 +777,15 @@ const TourDetailClient = () => {
               </Container>
 
               <Container className='px-0'>
-                <div className='sticky top-0 z-20 my-6 '>
+                <div className='sticky top-0 z-20 my-6'>
                   <TourTableOfContents onVisaClick={openVisaModal} />
                 </div>
 
                 <div className='flex flex-col gap-4 py-4 md:flex md:flex-row md:items-start md:gap-4 md:py-0'>
-                  <div ref={tourProgramRef} className='order-2 rounded-xl border md:order-0 md:flex-1 shadow-[-10px_10px_20px_0px_rgba(0,0,0,0.25)]'>
+                  <div
+                    ref={tourProgramRef}
+                    className='order-2 rounded-xl border shadow-[-10px_10px_20px_0px_rgba(0,0,0,0.25)] md:order-0 md:flex-1'
+                  >
                     <TourDetail data={detailQuery.data} />
                   </div>
                   <div className='flex flex-col gap-4 md:w-[400px] md:flex-shrink-0'>
@@ -818,9 +835,7 @@ const TourDetailClient = () => {
                                 className='flex flex-row items-center gap-2 text-blue-800 underline'
                                 href='/iletisim'
                               >
-                                <CiMail
-                                  size={19}
-                                />
+                                <CiMail size={19} />
                                 <span>
                                   Çağrı merkezimizden bilgi alabilirsiniz.
                                 </span>
@@ -831,12 +846,8 @@ const TourDetailClient = () => {
                                 className='flex flex-row items-center gap-2 text-blue-800 underline'
                                 href='tel:08508780400'
                               >
-                                <MdOutlineLocalPhone
-                                  size={19}
-                                />
-                                <span>
-                                  0850 840 01 51
-                                </span>
+                                <MdOutlineLocalPhone size={19} />
+                                <span>0850 840 01 51</span>
                               </Link>
                             </div>
                           </div>
@@ -870,7 +881,7 @@ const TourDetailClient = () => {
                         visaModalOpened={visaModalOpened}
                         onVisaModalOpen={openVisaModal}
                         onVisaModalClose={closeVisaModal}
-                       />
+                      />
                     </div>
                   </div>
                 </div>

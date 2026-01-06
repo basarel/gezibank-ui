@@ -57,20 +57,24 @@ export const ReservationDetailsCard: React.FC<ReservationDetailsCardProps> = ({
   })
 
   return (
-    <div className="p-5 bg-white rounded-lg shadow-md border border-gray-200">
-      <Title order={3} fz={'h2'} className="mb-4 font-bold text-blue-600 md:text-2xl">
+    <div className='rounded-lg border border-gray-200 bg-white p-5 shadow-md'>
+      <Title
+        order={3}
+        fz={'h2'}
+        className='mb-4 font-bold text-blue-600 md:text-2xl'
+      >
         Rezervasyon Detayları
       </Title>
-      <div className="grid grid-cols-2 gap-4 mb-4">
+      <div className='mb-4 grid grid-cols-2 gap-4'>
         <div>
-          <div className="text-sm text-gray-600 mb-1">Hareket Tarihi</div>
-          <div className="text-base font-medium">
+          <div className='mb-1 text-sm text-gray-600'>Hareket Tarihi</div>
+          <div className='text-base font-medium'>
             {startDate ? dayjsStartDate.format('DD MMM YYYY ddd') : '-'}
           </div>
         </div>
         <div>
-          <div className="text-sm text-gray-600 mb-1">Tur Süresi</div>
-          <div className="text-base font-medium">
+          <div className='mb-1 text-sm text-gray-600'>Tur Süresi</div>
+          <div className='text-base font-medium'>
             {totalNights === 0
               ? 'Günübirlik'
               : `${totalNights} Gece ${totalDays} Gün`}
@@ -78,76 +82,82 @@ export const ReservationDetailsCard: React.FC<ReservationDetailsCardProps> = ({
         </div>
       </div>
 
-      <div className="mb-4">
-        <div className="text-base font-medium text-gray-900">
+      <div className='mb-4'>
+        <div className='text-base font-medium text-gray-900'>
           {data?.package.title}
         </div>
       </div>
 
-      <div className="flex flex-col gap-5 mb-4">
+      <div className='mb-4 flex flex-col gap-5'>
         {itineraryText && (
-          <div className="flex items-center gap-2">
+          <div className='flex items-center gap-2'>
             <HiOutlineLocationMarker
               size={20}
-              className="shrink-0 text-blue-700"
+              className='shrink-0 text-blue-700'
             />
-            <span className="text-sm">{itineraryText}</span>
+            <span className='text-sm'>{itineraryText}</span>
           </div>
         )}
 
         {transportTypeText && (
-          <div className="flex items-center gap-2">
+          <div className='flex items-center gap-2'>
             {transportType === 1 ? (
-              <RiPlaneFill size={20} className="shrink-0 text-blue-700" />
+              <RiPlaneFill size={20} className='shrink-0 text-blue-700' />
             ) : (
-              <FaBus size={18} className="shrink-0 text-blue-700" />
+              <FaBus size={18} className='shrink-0 text-blue-700' />
             )}
-            <span className="text-sm">
+            <span className='text-sm'>
               Gidiş-Dönüş: {transportTypeText.replace(' Tur', '')}
             </span>
           </div>
         )}
 
-        <div className="flex items-center gap-2">
-          <TbCalendarClock size={20} className="shrink-0 text-blue-700" />
-          <span className="text-sm">
+        <div className='flex items-center gap-2'>
+          <TbCalendarClock size={20} className='shrink-0 text-blue-700' />
+          <span className='text-sm'>
             {totalNights === 0
               ? 'Günübirlik Tur'
-              : `${totalNights} Gece ${totalDays} Gün`}{' '}          </span>
+              : `${totalNights} Gece ${totalDays} Gün`}{' '}
+          </span>
         </div>
 
-        <div className="flex items-center gap-2">
-          <FaUsers size={18} className="shrink-0 text-blue-700" />
-            <span className="text-sm">
-              {passengers.adultCount.split(':')[0]} Yetişkin
+        <div className='flex items-center gap-2'>
+          <FaUsers size={18} className='shrink-0 text-blue-700' />
+          <span className='text-sm'>
+            {passengers.adultCount.split(':')[0]} Yetişkin
+          </span>
+          {passengers.childAge && passengers.childAge.length > 0 && (
+            <span className='text-sm'>
+              , {passengers.childAge.length} Çocuk (
+              {passengers.childAge.join(', ')} yaşında)
             </span>
-            {passengers.childAge && passengers.childAge.length > 0 && (
-              <span className="text-sm">
-               , {passengers.childAge.length} Çocuk ({passengers.childAge.join(', ')} yaşında)
-              </span>
-            )}
-
+          )}
         </div>
       </div>
-        {filteredCampaigns.length > 0 && (
-          <div className="grid md:grid-cols-2 gap-2">
-            {filteredCampaigns.slice(0, 4).map((campaign) => (
+      {filteredCampaigns.length > 0 && (
+        <div className='grid gap-2 md:grid-cols-2'>
+          {filteredCampaigns.slice(0, 4).map((campaign) => (
             <Link
               key={campaign.id}
               href={campaign.link as Route}
-              className="flex w-full gap-5 items-center justify-between border shadow border-gray-200 hover:border-blue-600 rounded-md px-2 py-2 hover:bg-gray-50 transition-colors cursor-pointer text-left"
+              className='flex w-full cursor-pointer items-center justify-between gap-5 rounded-md border border-gray-200 px-2 py-2 text-left shadow transition-colors hover:border-blue-600 hover:bg-gray-50'
             >
-              <div className="flex items-center gap-2">
-                <FaTag size={16} className="text-blue-700 shrink-0" />
-                <span className="text-sm text-gray-700">{campaign.text}</span>
+              <div className='flex items-center gap-2'>
+                <FaTag size={16} className='shrink-0 text-blue-700' />
+                <span className='text-sm text-gray-700'>{campaign.text}</span>
               </div>
-              <RiInformationLine size={18} className="text-gray-500 shrink-0" />
+              <RiInformationLine size={18} className='shrink-0 text-gray-500' />
             </Link>
           ))}
         </div>
       )}
-      <div className='text-dark-400 hidden text-xs md:flex mt-4'> Not : Çocuk kategorisi 7-12 yaşları arasıdır. Tur sirküsü yayımlandığı 02.01.2026 tarihinde geçerlidir. Aynı tura ait, daha sonraki bir tarihte yayımlanacak tur sirküsü bir öncekini geçersiz kılar. Zorunlu ek hizmetler fiyata dahildir. </div>
+      <div className='text-dark-400 mt-4 hidden text-xs md:flex'>
+        {' '}
+        Not : Çocuk kategorisi 7-12 yaşları arasıdır. Tur sirküsü yayımlandığı
+        02.01.2026 tarihinde geçerlidir. Aynı tura ait, daha sonraki bir tarihte
+        yayımlanacak tur sirküsü bir öncekini geçersiz kılar. Zorunlu ek
+        hizmetler fiyata dahildir.{' '}
+      </div>
     </div>
   )
 }
-

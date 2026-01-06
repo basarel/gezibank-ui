@@ -887,7 +887,10 @@ export const PaymentPageSection = () => {
         size={isMobile ? '100%' : '80%'}
         title='Mesafeli Satış Sözleşmesi'
       >
-        <div className='relative flex flex-col' style={{ maxHeight: 'calc(100vh - 200px)' }}>
+        <div
+          className='relative flex flex-col'
+          style={{ maxHeight: 'calc(100vh - 200px)' }}
+        >
           <div className='flex-1 overflow-y-auto pb-20'>
             <Box>
               {(() => {
@@ -901,7 +904,10 @@ export const PaymentPageSection = () => {
               })()}
             </Box>
           </div>
-          <Group justify='flex-end' className='sticky bottom-0 mt-4 border-t pt-4 bg-white pb-2'>
+          <Group
+            justify='flex-end'
+            className='sticky bottom-0 mt-4 border-t bg-white pt-4 pb-2'
+          >
             <Button
               onClick={() => {
                 formMethods.setValue('agreementAccepted', true)
@@ -922,13 +928,19 @@ export const PaymentPageSection = () => {
         size={isMobile ? '100%' : '80%'}
         title='Gizlilik Sözleşmesi'
       >
-        <div className='relative flex flex-col' style={{ maxHeight: 'calc(100vh - 200px)' }}>
+        <div
+          className='relative flex flex-col'
+          style={{ maxHeight: 'calc(100vh - 200px)' }}
+        >
           <div className='flex-1 overflow-y-auto pb-20'>
             <Box>
               <PrivacyAgreementContent />
             </Box>
           </div>
-          <Group justify='flex-end' className='sticky bottom-0 mt-4 border-t pt-4 bg-white pb-2'>
+          <Group
+            justify='flex-end'
+            className='sticky bottom-0 mt-4 border-t bg-white pt-4 pb-2'
+          >
             <Button
               onClick={() => {
                 formMethods.setValue('privacyAccepted', true)

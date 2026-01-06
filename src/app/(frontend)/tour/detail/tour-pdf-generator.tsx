@@ -158,20 +158,18 @@ const TourPDFDocument: React.FC<{ data: TourDetailApiResponse }> = ({
   const flightInfo =
     data.package.detail.flightInformation || data.detail.flightInformation
   const departureInfo =
-    data.package.detail.departureInformation ||
-    data.detail.departureInformation
+    data.package.detail.departureInformation || data.detail.departureInformation
 
   const hotelInformations = data.package.hotelInformations
   const hotelDescription = data.package.description
 
-  const tourProgram =
-    data.package.detail.tourProgram || data.detail.tourProgram
+  const tourProgram = data.package.detail.tourProgram || data.detail.tourProgram
 
   return (
     <Document>
-      <Page size="A4" style={styles.page}>
+      <Page size='A4' style={styles.page}>
         {/* Logo */}
-        <Image src="/logo.png" style={styles.logo} cache={false} />
+        <Image src='/logo.png' style={styles.logo} cache={false} />
 
         {/* Tour Title */}
         <Text style={styles.title}>{data.package.title}</Text>
@@ -186,9 +184,7 @@ const TourPDFDocument: React.FC<{ data: TourDetailApiResponse }> = ({
 
         {/* Tour Itinerary */}
         {formattedCities.length > 0 && (
-          <Text style={styles.subtitle}>
-            {formattedCities.join(' – ')}
-          </Text>
+          <Text style={styles.subtitle}>{formattedCities.join(' – ')}</Text>
         )}
 
         {/* Included Services */}
@@ -205,9 +201,7 @@ const TourPDFDocument: React.FC<{ data: TourDetailApiResponse }> = ({
             <Text style={styles.sectionTitle}>
               Fiyata Dahil Olmayan Hizmetler
             </Text>
-            <Text style={styles.sectionText}>
-              {stripHtml(notIncludedInfo)}
-            </Text>
+            <Text style={styles.sectionText}>{stripHtml(notIncludedInfo)}</Text>
           </>
         )}
 
@@ -247,9 +241,7 @@ const TourPDFDocument: React.FC<{ data: TourDetailApiResponse }> = ({
               <Text style={styles.sectionText}>{transportTypeText}</Text>
             )}
             {departureInfo && departureInfo.trim() && (
-              <Text style={styles.sectionText}>
-                {stripHtml(departureInfo)}
-              </Text>
+              <Text style={styles.sectionText}>{stripHtml(departureInfo)}</Text>
             )}
           </>
         )}
@@ -279,14 +271,15 @@ const TourPDFDocument: React.FC<{ data: TourDetailApiResponse }> = ({
           </>
         )}
 
-         {tourProgram && tourProgram.length > 0 && (
+        {tourProgram && tourProgram.length > 0 && (
           <>
             <Text style={styles.sectionTitle}>Tur Programı</Text>
             {tourProgram.map((program, index) => (
               <View key={index}>
                 {program.title && (
                   <Text style={styles.dayTitle}>
-                  {!program.title && index + 1 ? `${index + 1}. Gün: ` : ''} {program.title}
+                    {!program.title && index + 1 ? `${index + 1}. Gün: ` : ''}{' '}
+                    {program.title}
                   </Text>
                 )}
                 {program.description && (
@@ -360,4 +353,3 @@ export const generateTourPDF = async (
     throw error
   }
 }
-

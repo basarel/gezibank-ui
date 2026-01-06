@@ -66,7 +66,7 @@ const BlogDetailPage: React.FC<PageProps> = async ({
         ? blog.image
         : ''
 
-   let descriptionHtml = ''
+  let descriptionHtml = ''
   if (blog.description) {
     if (typeof blog.description === 'object') {
       descriptionHtml = lexicalToHtml(blog.description)
@@ -75,33 +75,31 @@ const BlogDetailPage: React.FC<PageProps> = async ({
     }
   }
 
-   const previousBlog = await getPreviousBlog(blog.id)
+  const previousBlog = await getPreviousBlog(blog.id)
   const nextBlog = await getNextBlog(blog.id)
 
-   const formattedDate = blog.createdAt
+  const formattedDate = blog.createdAt
     ? dayjs(blog.createdAt).format('DD MMMM YYYY')
     : ''
 
   return (
-    <div className='md:mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8'>
+    <div className='max-w-7xl px-4 py-8 sm:px-6 md:mx-auto lg:px-8'>
       <div className='rounded-lg border p-3 shadow md:p-6'>
-         <div className='md:flex gap-3 mb-3 justify-between items-center'>
-         {formattedDate && (
-            <div className='  md:hidden block mb-2 md:mb-0  w-fit   text-sm font-medium'>
+        <div className='mb-3 items-center justify-between gap-3 md:flex'>
+          {formattedDate && (
+            <div className='mb-2 block w-fit text-sm font-medium md:mb-0 md:hidden'>
               {formattedDate}
             </div>
           )}
-        <Title className='text-2xl md:text-3xl'>
-          {blog.title}
-        </Title>
-           {formattedDate && (
-            <div className='  hidden md:block mb-2 md:mb-0 w-fit text-sm font-medium'>
+          <Title className='text-2xl md:text-3xl'>{blog.title}</Title>
+          {formattedDate && (
+            <div className='mb-2 hidden w-fit text-sm font-medium md:mb-0 md:block'>
               {formattedDate}
             </div>
           )}
-          </div>
+        </div>
 
-         <div className='relative mb-5 w-full'>
+        <div className='relative mb-5 w-full'>
           {imageUrl && (
             <div className='relative h-[300px] w-full overflow-hidden rounded-lg'>
               <Image
@@ -114,12 +112,11 @@ const BlogDetailPage: React.FC<PageProps> = async ({
               />
             </div>
           )}
-        
         </div>
 
-         {descriptionHtml && (
+        {descriptionHtml && (
           <div
-            className='prose prose-lg text-left mb-5'
+            className='prose prose-lg mb-5 text-left'
             dir='rtl'
             dangerouslySetInnerHTML={{
               __html: descriptionHtml,
@@ -127,12 +124,12 @@ const BlogDetailPage: React.FC<PageProps> = async ({
           />
         )}
 
-         <div className='mt-8 grid grid-cols-2 gap-2 md:gap-7'>
-           <div className='flex-1'>
+        <div className='mt-8 grid grid-cols-2 gap-2 md:gap-7'>
+          <div className='flex-1'>
             {previousBlog ? (
               <Link
                 href={`/blog/${previousBlog.slug}` as Route}
-                className='group flex items-center gap-2 rounded-lg border md:p-4 p-1 transition-all hover:bg-gray-50'
+                className='group flex items-center gap-2 rounded-lg border p-1 transition-all hover:bg-gray-50 md:p-4'
               >
                 <FaArrowLeft className='text-gray-500 transition-colors group-hover:text-blue-600' />
                 <div className='flex-1'>
@@ -148,7 +145,7 @@ const BlogDetailPage: React.FC<PageProps> = async ({
                 </div>
               </Link>
             ) : (
-              <div className='flex items-center gap-2 rounded-lg border p-4 opacity-50 h-full'>
+              <div className='flex h-full items-center gap-2 rounded-lg border p-4 opacity-50'>
                 <FaArrowLeft className='text-gray-400' />
                 <div>
                   <Text size='sm' className='text-gray-400'>
@@ -159,11 +156,11 @@ const BlogDetailPage: React.FC<PageProps> = async ({
             )}
           </div>
 
-           <div className='flex-1'>
+          <div className='flex-1'>
             {nextBlog ? (
               <Link
                 href={`/blog/${nextBlog.slug}` as Route}
-                className='group flex items-center gap-2 rounded-lg border transition-all hover:bg-gray-50 md:p-4 p-1'
+                className='group flex items-center gap-2 rounded-lg border p-1 transition-all hover:bg-gray-50 md:p-4'
               >
                 <div className='flex-1 text-right'>
                   <Text size='sm' className='text-gray-500'>
@@ -179,7 +176,7 @@ const BlogDetailPage: React.FC<PageProps> = async ({
                 <FaArrowRight className='text-gray-500 transition-colors group-hover:text-blue-600' />
               </Link>
             ) : (
-              <div className='flex items-center justify-end gap-2 rounded-lg border p-4 opacity-50 h-full'>
+              <div className='flex h-full items-center justify-end gap-2 rounded-lg border p-4 opacity-50'>
                 <div className='text-right'>
                   <Text size='sm' className='text-gray-400'>
                     Sonraki Blog
@@ -196,4 +193,3 @@ const BlogDetailPage: React.FC<PageProps> = async ({
 }
 
 export default BlogDetailPage
-

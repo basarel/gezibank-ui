@@ -48,16 +48,16 @@ export const TourDetailSkeleton = () => {
         {/* Tab Skeleton */}
         <div className='my-6'>
           {/* Tab List Skeleton */}
-          <div className='px-2 md:px-4 bg-orange-900 rounded-lg shadow-[-10px_10px_20px_0px_rgba(0,0,0,0.25)] py-4'>
+          <div className='rounded-lg bg-orange-900 px-2 py-4 shadow-[-10px_10px_20px_0px_rgba(0,0,0,0.25)] md:px-4'>
             <div className='flex gap-2 md:gap-4'>
-              <Skeleton className='h-8 w-24 md:w-32 bg-white/20' radius='md' />
-              <Skeleton className='h-8 w-24 md:w-32 bg-white/20' radius='md' />
-              <Skeleton className='h-8 w-32 md:w-40 bg-white/20' radius='md' />
+              <Skeleton className='h-8 w-24 bg-white/20 md:w-32' radius='md' />
+              <Skeleton className='h-8 w-24 bg-white/20 md:w-32' radius='md' />
+              <Skeleton className='h-8 w-32 bg-white/20 md:w-40' radius='md' />
             </div>
           </div>
 
           {/* Tab Panel Skeleton */}
-          <div className='mt-4 bg-white rounded-lg shadow-md border border-gray-200 p-5'>
+          <div className='mt-4 rounded-lg border border-gray-200 bg-white p-5 shadow-md'>
             <Skeleton className='mb-6 h-8 w-48' radius='md' />
             <div className='flex flex-col gap-6'>
               {[1, 2, 3].map((item) => (

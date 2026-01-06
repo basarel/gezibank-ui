@@ -146,7 +146,7 @@ export const HelpPage = () => {
               error={formAction.formState.errors.mesaj?.message}
             />
           </div>
-          <div className='flex items-center justify-end py-4 ms-auto'>
+          <div className='ms-auto flex items-center justify-end py-4'>
             <div className='text-end'>
               <Button
                 size='md'
