@@ -491,7 +491,7 @@ const TourDetailClient = () => {
 
                 <div className='static hidden w-full flex-col gap-4 md:flex md:w-[60%]'>
                   <div className='grid grid-cols-2 gap-4'>
-                    {images?.slice(1, 3).map((image, imageIndex) => (
+                    {images?.slice(2, 5).map((image, imageIndex) => (
                       <div
                         key={imageIndex}
                         onClick={() => setGalleryOpened(true)}
