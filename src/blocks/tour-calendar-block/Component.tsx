@@ -75,21 +75,21 @@ export const TourCalendarBlock: React.FC<TourCalendarBlockProps> = ({
           const tourUrl = tour.url || '#'
           return (
             <GridCol key={index} span={{ base: 12, sm: 6, md: 4 }}>
-              <div className='h-full cursor-pointer overflow-hidden rounded-md border border-gray-200 shadow-xl '>
-              <Link href={tourUrl as Route}>
-                <div className=''>
-                  {imageUrl && (
-                    <div className='relative aspect-[4/3] w-full overflow-hidden rounded-t-md'>
-                      <Image
-                        src={imageUrl}
-                        alt={tour.title}
-                        fill
-                        className='object-cover'
-                        sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-                      />
-                    </div>
-                  )}
-                   
+              <div className='h-full cursor-pointer overflow-hidden rounded-md border border-gray-200 shadow-xl'>
+                <Link href={tourUrl as Route}>
+                  <div className=''>
+                    {imageUrl && (
+                      <div className='relative aspect-[4/3] w-full overflow-hidden rounded-t-md'>
+                        <Image
+                          src={imageUrl}
+                          alt={tour.title}
+                          fill
+                          className='object-cover'
+                          sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+                        />
+                      </div>
+                    )}
+
                     <div className='p-4'>
                       <Text
                         size='xl'
@@ -104,7 +104,7 @@ export const TourCalendarBlock: React.FC<TourCalendarBlockProps> = ({
                         </div>
                       )}
                     </div>
-                    <div className='mt-3 mb-1 p-4 grid items-center justify-between rounded-md border border-gray-200 md:flex'>
+                    <div className='mt-3 mb-1 grid items-center justify-between rounded-md border border-gray-200 p-4 md:flex'>
                       <div className='flex items-center justify-start gap-2 text-sm text-gray-600'>
                         <Text size='sm' className='text-gray-700'>
                           {tour.startDate}
@@ -127,37 +127,35 @@ export const TourCalendarBlock: React.FC<TourCalendarBlockProps> = ({
                         </Badge>
                       </div>
                     </div>
-                    </div>
-                    </Link>
-                    {tour.addButton &&
-                      tour.buttons &&
-                      tour.buttons.length > 0 && (
-                        <div className='flex flex-wrap items-center justify-center gap-2 p-4'>
-                          {tour.buttons.map((button, btnIndex) => (
-                            <div
-                              key={btnIndex}
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                e.preventDefault()
-                                window.location.href = button.url
-                              }}
-                              className='inline-block cursor-pointer'
-                            >
-                              <Button
-                                size='sm'
-                                radius='xl'
-                                variant='outline'
-                                component={Link}
-                                href={button.url as Route}
-                                className='px-3 text-gray-700'
-                              >
-                                {button.label}
-                              </Button>
-                            </div>
-                          ))}
-                        </div>
-                      )}  
+                  </div>
+                </Link>
+                {tour.addButton && tour.buttons && tour.buttons.length > 0 && (
+                  <div className='flex flex-wrap items-center justify-center gap-2 p-4'>
+                    {tour.buttons.map((button, btnIndex) => (
+                      <div
+                        key={btnIndex}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          e.preventDefault()
+                          window.location.href = button.url
+                        }}
+                        className='inline-block cursor-pointer'
+                      >
+                        <Button
+                          size='sm'
+                          radius='xl'
+                          variant='outline'
+                          component={Link}
+                          href={button.url as Route}
+                          className='px-3 text-gray-700'
+                        >
+                          {button.label}
+                        </Button>
                       </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </GridCol>
           )
         })}

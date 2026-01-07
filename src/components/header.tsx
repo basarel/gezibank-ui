@@ -77,7 +77,7 @@ export const Header: React.FC<HeaderProps> = ({ headerContent }) => {
     <>
       <header className='border-b bg-white'>
         <Container>
-          <div className='md:grid items-center justify-between'>
+          <div className='items-center justify-between md:grid'>
             <div className='ms-auto mt-2 hidden items-center gap-5 text-sm font-medium md:flex'>
               <Link
                 href='https://www.whatsapp.com/channel/0029Vau83EmCRs1qIYPnNO0a'
@@ -122,9 +122,7 @@ export const Header: React.FC<HeaderProps> = ({ headerContent }) => {
                     onClick={open}
                     className='rounded-full bg-blue-800 text-start text-xs font-medium text-white'
                   >
-                    {session?.data.user.name
-                      ? `${session.data.user.name}`
-                      : ''}
+                    {session?.data.user.name ? `${session.data.user.name}` : ''}
                   </Button>
                 ) : (
                   <Button
@@ -160,113 +158,113 @@ export const Header: React.FC<HeaderProps> = ({ headerContent }) => {
                   </div>
                 </div>
               </Drawer>
-                <Drawer
-                  opened={drawerOpened}
-                  onClose={toggleDrawer}
-                  padding='md'
-                  styles={{
-                    header: {
-                      boxShadow: '0 0 2px 0 gray',
-                    },
-                  }}
-                  title={
-                    <div className='gap-lg flex items-center justify-end'>
-                      <Link href='/'>
-                        <Image
-                          src='/logo.png'
-                          width={118}
-                          height={41}
-                          alt='GeziBank'
-                          priority
-                        />
-                      </Link>
+              <Drawer
+                opened={drawerOpened}
+                onClose={toggleDrawer}
+                padding='md'
+                styles={{
+                  header: {
+                    boxShadow: '0 0 2px 0 gray',
+                  },
+                }}
+                title={
+                  <div className='gap-lg flex items-center justify-end'>
+                    <Link href='/'>
+                      <Image
+                        src='/logo.png'
+                        width={118}
+                        height={41}
+                        alt='GeziBank'
+                        priority
+                      />
+                    </Link>
 
-                      <div>
-                        {session.status === 'authenticated' ? (
-                          <Button
-                            variant='outline'
-                            radius='xl'
-                            onClick={toggleDrawer}
-                            leftSection={<FaRegUserCircle />}
-                            component={Link}
-                            href={'/account' as Route}
-                          >
-                            <span className='block truncate text-xs font-medium'>
-                              {session.data?.user.name}
-                            </span>
-                          </Button>
-                        ) : (
-                          <Button
-                            variant='outline'
-                            radius='xl'
-                            leftSection={<FaRegUserCircle />}
-                            onClick={() => {
-                              modals.open({
-                                title: 'Üye Girişi',
-                                children: <LoginForm />,
-                              })
-                            }}
-                            loading={session.status === 'loading'}
-                          >
-                            Giriş Yap
-                          </Button>
-                        )}
-                      </div>
+                    <div>
+                      {session.status === 'authenticated' ? (
+                        <Button
+                          variant='outline'
+                          radius='xl'
+                          onClick={toggleDrawer}
+                          leftSection={<FaRegUserCircle />}
+                          component={Link}
+                          href={'/account' as Route}
+                        >
+                          <span className='block truncate text-xs font-medium'>
+                            {session.data?.user.name}
+                          </span>
+                        </Button>
+                      ) : (
+                        <Button
+                          variant='outline'
+                          radius='xl'
+                          leftSection={<FaRegUserCircle />}
+                          onClick={() => {
+                            modals.open({
+                              title: 'Üye Girişi',
+                              children: <LoginForm />,
+                            })
+                          }}
+                          loading={session.status === 'loading'}
+                        >
+                          Giriş Yap
+                        </Button>
+                      )}
                     </div>
-                  }
-                  size='sm'
-                >
-                  <div className='mt-4 flex flex-col gap-4'>
-                    {headerData &&
-                      headerData.params.main_menu.menus.map((item) => {
-                        const IconComponent = iconMap[item.title as IconKey]
-                        return (
-                          <Anchor
-                            className={
-                              item.title == 'Kampanyalar'
-                                ? 'border-t border-gray-400 pt-4'
-                                : ''
-                            }
-                            onClick={toggleDrawer}
-                            component={Link}
-                            href={item.url as Route}
-                            key={item.id}
-                            c={'dark'}
-                          >
-                            {IconComponent && (
-                              <IconComponent
-                                size={18}
-                                className='me-3 inline-block'
-                              />
-                            )}
-                            {item.title}
-                          </Anchor>
-                        )
-                      })}
                   </div>
-                  <Grid gutter={'md'} className='mt-4'>
-                    <Grid.Col span={12}>
-                      <Anchor
-                        component={Link}
-                        onClick={toggleDrawer}
-                        href='/online-operations'
-                        c={'dark'}
-                      >
-                        Turunuzu Görüntüleyin
-                      </Anchor>
-                    </Grid.Col>
-                    <Grid.Col span={12}>
-                      <Anchor
-                        onClick={toggleDrawer}
-                        component={Link}
-                        href='/iletisim'
-                        c={'dark'}
-                      >
-                        Yardım
-                      </Anchor>
-                    </Grid.Col>
-                  </Grid>
-                </Drawer>
+                }
+                size='sm'
+              >
+                <div className='mt-4 flex flex-col gap-4'>
+                  {headerData &&
+                    headerData.params.main_menu.menus.map((item) => {
+                      const IconComponent = iconMap[item.title as IconKey]
+                      return (
+                        <Anchor
+                          className={
+                            item.title == 'Kampanyalar'
+                              ? 'border-t border-gray-400 pt-4'
+                              : ''
+                          }
+                          onClick={toggleDrawer}
+                          component={Link}
+                          href={item.url as Route}
+                          key={item.id}
+                          c={'dark'}
+                        >
+                          {IconComponent && (
+                            <IconComponent
+                              size={18}
+                              className='me-3 inline-block'
+                            />
+                          )}
+                          {item.title}
+                        </Anchor>
+                      )
+                    })}
+                </div>
+                <Grid gutter={'md'} className='mt-4'>
+                  <Grid.Col span={12}>
+                    <Anchor
+                      component={Link}
+                      onClick={toggleDrawer}
+                      href='/online-operations'
+                      c={'dark'}
+                    >
+                      Turunuzu Görüntüleyin
+                    </Anchor>
+                  </Grid.Col>
+                  <Grid.Col span={12}>
+                    <Anchor
+                      onClick={toggleDrawer}
+                      component={Link}
+                      href='/iletisim'
+                      c={'dark'}
+                    >
+                      Yardım
+                    </Anchor>
+                  </Grid.Col>
+                </Grid>
+              </Drawer>
             </div>
           </div>
           <div className='ms-auto hidden items-center justify-between gap-5 md:grid'>

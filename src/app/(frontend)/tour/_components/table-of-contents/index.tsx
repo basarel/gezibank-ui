@@ -62,7 +62,7 @@ const TourTableOfContents: React.FC<TourTableOfContentsProps> = ({
       className='relative z-20 bg-orange-900 text-white shadow-[-10px_10px_20px_0px_rgba(0,0,0,0.25)] md:rounded-lg'
       style={{ pointerEvents: 'auto' }}
     >
-      <div className='relative mx-auto max-w-6xl overflow-x-auto overflow-y-hidden md:overflow-hidden justify-center'>
+      <div className='relative mx-auto max-w-6xl justify-center overflow-x-auto overflow-y-hidden md:overflow-hidden'>
         <div className='w-full'>
           <TableOfContents
             classNames={classes}
@@ -96,7 +96,7 @@ const TourTableOfContents: React.FC<TourTableOfContentsProps> = ({
                   },
                   href: '#',
                   children: (
-                    <span className='flex items-center text-center justify-center'>
+                    <span className='flex items-center justify-center text-center'>
                       {icon}
                       {data.value}
                     </span>
@@ -114,7 +114,7 @@ const TourTableOfContents: React.FC<TourTableOfContentsProps> = ({
                   }
                 },
                 children: (
-                  <span className='flex items-center text-center justify-center'>
+                  <span className='flex items-center justify-center text-center'>
                     {icon}
                     {data.value}
                   </span>
