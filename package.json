@@ -8,7 +8,7 @@
     "dev-https": "next dev --experimental-https -p 3000",
     "build": "next build --webpack",
     "start": "next start -p 3000",
-    "prepare": "pnpm run theme",
+    "prepare": "pnpm run theme && pnpm run generate:importmap",
     "test:watch": "vitest",
     "test:staged": "vitest --run",
     "lint": "eslint",
@@ -20,7 +20,11 @@
     "prettier:write": "prettier --write \"**/*.{ts,tsx}\"",
     "theme": "pnpm dlx tailwind-preset-mantine src/styles/mantine/index.ts -o src/styles/theme.css",
     "email:nodemon": "nodemon --watch src/emails --ext ts,tsx,js,json --exec \"email dev --port 3001 --dir src/emails\"",
-    "email": "email dev --dir ./src/emails/ --port 3001"
+    "email": "email dev --dir ./src/emails/ --port 3001",
+    "generate:importmap": "payload generate:importmap",
+    "generate:types": "payload generate:types",
+    "generate:db-schema": "payload generate:db-schema",
+    "setup": "pnpm install && pnpm run generate:importmap && pnpm run generate:types"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

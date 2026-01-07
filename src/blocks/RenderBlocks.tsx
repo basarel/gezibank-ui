@@ -52,7 +52,7 @@ export const RenderBlocks: React.FC<RenderBlocksProps> = ({ blocks }) => {
   }
   const fullWidthBlocks = ['mainBanner', 'storySlider', 'tourCalendarBlock']
   return (
-    <div className='flex flex-col gap-10'>
+    <div className='flex flex-col gap-20'>
       {blocks.map((block, index) => {
         const blockId = block.id || `block-${index}`
         const { blockType, id, ...blockData } = block

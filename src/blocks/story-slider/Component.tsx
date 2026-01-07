@@ -53,15 +53,16 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
 }) => {
   const autoplay = useRef(
     Autoplay({
-      delay: 3000,
+      delay: 4000,
       stopOnInteraction: false,
-      stopOnMouseEnter: false,
+      stopOnMouseEnter: true, // Hover'da autoplay'i durdur
     })
   )
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [isTouchDevice, setIsTouchDevice] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const [isLargeScreen, setIsLargeScreen] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
 
   useEffect(() => {
     const checkDevice = () => {
@@ -84,7 +85,7 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
   }
 
   return (
-    <div className='w-full overflow-x-hidden pb-8'>
+    <div className='w-full overflow-x-hidden'>
       {title && (
         <h2 className='relative mx-auto my-8 border-blue-800 py-3 text-center text-2xl font-bold text-blue-600 md:text-3xl'>
           {title}
@@ -107,16 +108,31 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
           }}
           emblaOptions={{
             loop: true,
-            align: 'start',
-            dragFree: true,
+            align: isLargeScreen ? 'start' : 'center',
+            dragFree: !isLargeScreen, // Büyük ekranlarda dragFree kapalı (touch scroll devre dışı)
           }}
-          plugins={[autoplay.current]}
+          plugins={isHovered && isLargeScreen ? [] : [autoplay.current]} // Hover'da autoplay kapalı
+          onMouseEnter={() => {
+            if (isLargeScreen) {
+              setIsHovered(true)
+              autoplay.current?.stop()
+            }
+          }}
+          onMouseLeave={() => {
+            if (isLargeScreen) {
+              setIsHovered(false)
+              autoplay.current?.play()
+            }
+          }}
+          style={{
+            touchAction: isLargeScreen ? 'none' : 'auto', // Büyük ekranlarda touch event'leri devre dışı
+          }}
         >
           {items.map((item, index) => {
             return (
               <CarouselSlide key={item.id} className='flex overflow-visible'>
                 <div
-                  className={`relative flex h-full items-start justify-start overflow-visible transition-all duration-400 ease-in-out ${
+                  className={`relative flex h-full items-start justify-start overflow-visible transition-all duration-500 ease-in-out ${
                     isLargeScreen && hoveredIndex === index ? 'mr-[350px]' : ''
                   }`}
                   onMouseEnter={() => isLargeScreen && setHoveredIndex(index)}
@@ -127,7 +143,7 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
                     href={item.link as Route}
                     className='z-10 block h-full'
                   >
-                    <div className='relative flex h-full min-h-[220px] w-[110px] flex-col md:min-h-[280px] md:w-[160px]'>
+                    <div className='relative flex h-full min-h-[220px] w-[110px] flex-col md:min-h-[280px] md:w-[180px]'>
                       {item.image?.url && (
                         <AspectRatio
                           classNames={aspectRatioClasses}
@@ -140,16 +156,20 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
                           />
                         </AspectRatio>
                       )}
-                      <div className='leading-md flex-1 px-1 py-4 text-center text-sm'>
+                      <div className={`leading-md flex-1 px-0 py-4 text-center text-sm transition-opacity duration-400 ${
+                        isLargeScreen && hoveredIndex === index ? 'opacity-0' : 'opacity-100'
+                      }`}>
                         <Text lineClamp={3} component='div'>
                           {item.title}
                         </Text>
                       </div>
-                      <div className='absolute bottom-0 left-1/2 h-[5px] w-[69px] -translate-x-1/2 rounded bg-blue-200 opacity-100 transition-opacity duration-400' />
+                      <div className={`absolute bottom-0 left-1/2 h-[5px] w-[69px] -translate-x-1/2 rounded bg-blue-200 transition-opacity duration-400 ${
+                        isLargeScreen && hoveredIndex === index ? 'opacity-0' : 'opacity-100'
+                      }`} />
                     </div>
                   </Box>
                   <div
-                    className={`absolute top-0 left-27 z-0 mt-7 w-[400px] overflow-visible transition-opacity duration-300 ease-in-out ${
+                    className={`absolute top-0 left-27 z-0 mt-5 w-[400px] overflow-visible transition-opacity duration-500 ease-in-out ${
                       isLargeScreen && hoveredIndex === index
                         ? 'pointer-events-auto opacity-100'
                         : 'pointer-events-none opacity-0'
@@ -158,14 +178,14 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
                       transform:
                         isLargeScreen && hoveredIndex === index
                           ? 'translateX(0)'
-                          : 'translateX(-10px)',
+                          : 'translateX(0)',
                       transition:
                         'opacity 300ms ease-in-out, transform 300ms ease-in-out',
                     }}
                     onMouseEnter={() => isLargeScreen && setHoveredIndex(index)}
                   >
                     <div
-                      className='block h-[136px] items-center justify-center rounded-r-xl bg-orange-50 px-4 py-3 pl-10 text-center shadow-lg'
+                      className='block h-[170px] items-center justify-center rounded-r-xl bg-orange-50 p-4 pl-20 text-center shadow-lg'
                       onMouseEnter={() =>
                         isLargeScreen && setHoveredIndex(index)
                       }
@@ -190,7 +210,7 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
                           item.link && (
                             <Link
                               href={item.link as Route}
-                              className='mt-auto inline-flex items-center text-sm text-blue-600 transition-colors hover:text-blue-800 md:text-base'
+                              className='mt-auto inline-flex pb-1 items-center text-sm text-blue-600 transition-colors hover:text-blue-800 md:text-base'
                             >
                               {item.buttonText}{' '}
                               <FaArrowRightLong

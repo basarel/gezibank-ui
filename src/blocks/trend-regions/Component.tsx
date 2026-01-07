@@ -36,7 +36,7 @@ export const TrendRegionsBlock: React.FC<TrendRegionsBlockProps> = ({
           <div className='absolute bottom-0 left-1/2 h-2 w-12 -translate-x-1/2 rounded-full bg-blue-600'></div>
         </h2>
       )}
-      <div className='grid grid-cols-2 gap-2 md:auto-rows-[200px] md:grid-cols-12 md:gap-5'>
+      <div className='grid grid-cols-2 gap-2 auto-rows-[200px] md:grid-cols-12 md:gap-5'>
         {items.map((item, index) => {
           let colWidth = 'md:col-span-3'
           let rowLength = ''

@@ -98,7 +98,7 @@ export const MainBannerBlock: React.FC<MainBannerBlockProps> = ({
     <div className='relative w-full gap-5 py-8' data-testid='main-banner-block'>
       {(title || subtitle) && (
         <Container className='mb-6'>
-          <h2 className='text-3xl leading-tight font-bold text-black'>
+          <h2 className='text-3xl text-center md:text-left leading-tight font-bold text-blue-600'>
             {title && <span>{title}</span>}
             {subtitle && (
               <span className='text-gray font-normal'> {subtitle}</span>

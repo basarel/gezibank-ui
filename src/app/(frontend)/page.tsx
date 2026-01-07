@@ -10,7 +10,7 @@ export default async function Home() {
   const page = await getPageBySlug('home')
   const blocks = page?.layout || []
   return (
-    <div className='flex flex-col gap-10 md:gap-20'>
+    <div className='flex flex-col gap-20'>
       <div className='relative'>
         <Image
           src='/engine-bg.png'
