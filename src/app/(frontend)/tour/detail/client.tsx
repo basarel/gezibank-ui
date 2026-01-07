@@ -469,7 +469,7 @@ const TourDetailClient = () => {
                     <figure className='h-full w-full'>
                       <Image
                         fallbackSrc=''
-                        className='h-full w-full rounded object-cover shadow-lg'
+                        className='h-full w-full hover:scale-101 transition-all duration-300 rounded-md object-cover shadow-lg'
                         src={
                           validateUrl(images?.at(0))
                             ? images?.at(0)
@@ -491,7 +491,7 @@ const TourDetailClient = () => {
 
                 <div className='static hidden w-full flex-col gap-4 md:flex md:w-[60%]'>
                   <div className='grid grid-cols-2 gap-4'>
-                    {images?.slice(2, 5).map((image, imageIndex) => (
+                    {images?.slice(2, 4).map((image, imageIndex) => (
                       <div
                         key={imageIndex}
                         onClick={() => setGalleryOpened(true)}
@@ -505,7 +505,7 @@ const TourDetailClient = () => {
                                 : cdnSiteImageUrl(image)
                             }
                             alt={detailQuery.data?.package.title}
-                            className='h-full w-full rounded object-cover shadow-lg'
+                            className='h-full w-full hover:scale-101 transition-all duration-300 rounded-md shadow-lg object-cover'
                           />
                         </figure>
                       </div>
@@ -527,7 +527,7 @@ const TourDetailClient = () => {
                                 : cdnSiteImageUrl(image)
                             }
                             alt={detailQuery.data?.package.title}
-                            className='h-full w-full rounded object-cover shadow-lg'
+                            className='h-full w-full hover:scale-101 transition-all duration-300 rounded-md shadow-lg object-cover'
                           />
                         </figure>
                         {imageIndex === 2 && (

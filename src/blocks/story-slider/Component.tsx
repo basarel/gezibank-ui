@@ -59,8 +59,6 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
     })
   )
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
-  const [isTouchDevice, setIsTouchDevice] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
   const [isLargeScreen, setIsLargeScreen] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
 
@@ -70,8 +68,6 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
         'ontouchstart' in window || navigator.maxTouchPoints > 0
       const mobileWidth = window.innerWidth < 768
       const largeScreen = window.innerWidth >= 1024
-      setIsTouchDevice(touchDevice)
-      setIsMobile(touchDevice || mobileWidth)
       setIsLargeScreen(largeScreen)
     }
 
@@ -108,10 +104,12 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
           }}
           emblaOptions={{
             loop: true,
-            align: isLargeScreen ? 'start' : 'center',
-            dragFree: !isLargeScreen, // Büyük ekranlarda dragFree kapalı (touch scroll devre dışı)
+            align: 'start',
+            dragFree: isLargeScreen ? false : true,
+            skipSnaps: false,
+            watchDrag: !isLargeScreen,
           }}
-          plugins={isHovered && isLargeScreen ? [] : [autoplay.current]} // Hover'da autoplay kapalı
+          plugins={isHovered && isLargeScreen ? [] : [autoplay.current]}
           onMouseEnter={() => {
             if (isLargeScreen) {
               setIsHovered(true)
@@ -123,9 +121,6 @@ export const StorySliderBlock: React.FC<StorySliderBlockProps> = ({
               setIsHovered(false)
               autoplay.current?.play()
             }
-          }}
-          style={{
-            touchAction: isLargeScreen ? 'none' : 'auto', // Büyük ekranlarda touch event'leri devre dışı
           }}
         >
           {items.map((item, index) => {
