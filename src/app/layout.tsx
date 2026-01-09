@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: './',
   },
-  icons: [{ rel: 'icon', url: '/favicon.png' }],
+  icons: [{ rel: 'icon', url: '/favicon.ico' }],
 }
 
 export const viewport: Viewport = {

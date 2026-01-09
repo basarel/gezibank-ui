@@ -18,7 +18,9 @@ const scopeCode = isServer
   ? process.env.SCOPE_CODE
   : process.env.NEXT_PUBLIC_SCOPE_CODE
 
-// Development ortamında sertifika doğrulamasını devre dışı bırak
+// Development ortamında self-signed sertifikalar için sertifika doğrulamasını devre dışı bırak
+// Not: Bu yalnızca development ortamında kullanılmalı, production'da asla kullanılmamalı
+// Bu ayar Node.js'in NODE_TLS_REJECT_UNAUTHORIZED uyarısını tetikler, ancak local HTTPS için gereklidir
 const httpsAgent =
   isServer && process.env.NODE_ENV !== 'production'
     ? new https.Agent({

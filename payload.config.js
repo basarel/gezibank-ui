@@ -5,6 +5,7 @@ import { s3Storage } from '@payloadcms/storage-s3'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
+import { Resend } from 'resend'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
