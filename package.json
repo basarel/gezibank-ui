@@ -4,8 +4,10 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "dev": "next dev --turbopack -p 3000",
-    "dev-https": "next dev --experimental-https -p 3000",
+    "dev": "next dev --webpack -p 3000",
+    "dev:turbo": "next dev --turbopack -p 3000",
+    "dev-https": "next dev --webpack --experimental-https -p 3000",
+    "dev-https:turbo": "next dev --turbopack --experimental-https -p 3000",
     "build": "next build --webpack",
     "start": "next start -p 3000",
     "prepare": "pnpm run theme && pnpm run generate:importmap",

@@ -11,8 +11,7 @@ const NEXT_PUBLIC_SERVER_URL =
 
 const nextConfig: NextConfig = {
   typedRoutes: true,
-  output: 'standalone', // Windows'ta symlink hatası veriyor, kapatıldı
-  // Production deployment için gerekirse açılabilir (Linux/Mac'te çalışır)
+  output: 'standalone',
   experimental: {
     optimizePackageImports: [
       '@mantine/core',

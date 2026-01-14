@@ -1,9 +1,8 @@
-// postcss.config.mjs
-const config = {
+export default {
   plugins: {
     '@tailwindcss/postcss': {},
     'postcss-preset-mantine': {
-      autoRem: true,
+      autoRem: false,
       lightDarkFunction: false,
     },
     'postcss-simple-vars': {
@@ -18,5 +17,3 @@ const config = {
     },
   },
 }
-
-export default config

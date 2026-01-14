@@ -1,5 +1,3 @@
-'use client'
-
 import {
   DEFAULT_THEME,
   mergeMantineTheme,
@@ -68,3 +66,5 @@ const mantineTheme = mergeMantineTheme(
 )
 
 export { mantineTheme }
+export const theme = mantineTheme
+export default mantineTheme
