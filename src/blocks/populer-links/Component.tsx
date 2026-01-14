@@ -12,7 +12,7 @@ import {
 } from '@mantine/core'
 import { Link } from 'next-view-transitions'
 import { Route } from 'next'
-import populerDestinationClasses from '@/styles/OutlineTabs.module.css'
+import populerDestinationClasses from '@/app/(frontend)/styles/OutlineTabs.module.css'
 
 type MenuItem = {
   id: string

@@ -1,10 +1,10 @@
 'use client'
 
 import { Menu, UnstyledButton, Image, Skeleton } from '@mantine/core'
-import { useMounted } from '@mantine/hooks'
+import { useEffect, useState } from 'react'
 import { Link } from 'next-view-transitions'
 import { Route } from 'next'
-import classes from '../styles/headerMenu.module.css'
+import classes from '@/app/(frontend)/styles/headerMenu.module.css'
 import { BiChevronDown } from 'react-icons/bi'
 import type { HeaderMenuItem } from '@/libs/payload'
 type HeaderMenuProps = {
@@ -12,7 +12,12 @@ type HeaderMenuProps = {
 }
 
 export const HeaderMenu: React.FC<HeaderMenuProps> = ({ menuItems = [] }) => {
-  const isMounted = useMounted()
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
   if (!isMounted || !menuItems || menuItems.length === 0) {
     return (
       <div className='flex items-center gap-4 px-3'>

@@ -27,6 +27,11 @@ body {
   @apply h-full;
 }
 
+/* Frontend için özel stiller - .frontend-app wrapper'ı içinde */
+.frontend-app {
+  @apply h-full;
+}
+
 .iti__selected-dial-code {
   @apply text-sm;
 }
