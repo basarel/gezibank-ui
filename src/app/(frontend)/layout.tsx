@@ -52,13 +52,6 @@ export default async function RootLayout({
   return (
     <html lang='tr' {...mantineHtmlProps} suppressHydrationWarning>
       <head>
-        {process.env.NODE_ENV === 'production' && (
-          <Script
-            src='https://cdn.onesignal.com/sdks/OneSignalSDK.js'
-            strategy='afterInteractive'
-            async
-          />
-        )}
         {gtmId && (
           <Script id='gtm-script' strategy='afterInteractive'>
             {`

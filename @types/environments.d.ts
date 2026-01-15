@@ -17,9 +17,6 @@ namespace NodeJS {
     NEXT_PUBLIC_CMS_CDN: string
     NEXT_PUBLIC_CMS_SITE_CDN: string
     NEXT_PUBLIC_GTM_ID: string
-    NEXT_PUBLIC_ONESIGNAL_APP_ID: string
-    NEXT_PUBLIC_ONESIGNAL_APP_ID_PREPROD: string
-    NEXT_PUBLIC_ONESIGNAL_APP_ID_PROD: string
     NEXT_PUBLIC_ENVIRONMENT: string
     // server envs
     CMS_CDN: string

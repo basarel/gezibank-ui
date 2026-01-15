@@ -1,16 +1,7 @@
-import {
-  DEFAULT_THEME,
-  mergeMantineTheme,
-  Modal,
-  rem,
-  TextInput,
-  Input,
-  CloseButton,
-} from '@mantine/core'
+import { DEFAULT_THEME, mergeMantineTheme, rem } from '@mantine/core'
 
 import { fonts } from './fonts'
 import { colors } from './colors'
-import { DatePicker } from '@mantine/dates'
 
 const mantineTheme = mergeMantineTheme(
   DEFAULT_THEME,
@@ -24,43 +15,43 @@ const mantineTheme = mergeMantineTheme(
           size: rem(1200),
         },
       },
-      Modal: Modal.extend({
+      Modal: {
         styles: {
           title: {
             fontWeight: 600,
           },
         },
-      }),
-      DatePicker: DatePicker.extend({
+      },
+      DatePicker: {
         defaultProps: {
           withCellSpacing: false,
         },
-      }),
+      },
       Switch: {
         defaultProps: {
           withThumbIndicator: false,
         },
       },
-      TextInput: TextInput.extend({
+      TextInput: {
         defaultProps: {
           size: 'md',
           labelProps: {
             fw: 400,
           },
         },
-      }),
-      InputLabel: Input.Label.extend({
+      },
+      InputLabel: {
         defaultProps: {
           size: 'md',
           fz: 'md',
           fw: 400,
         },
-      }),
-      CloseButton: CloseButton.extend({
+      },
+      CloseButton: {
         defaultProps: {
           size: rem(45),
         },
-      }),
+      },
     },
   }
 )
