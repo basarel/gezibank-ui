@@ -15,7 +15,7 @@ export function SearchResultsLoadingSkeleton({
 }: SearchResultsLoadingSkeletonProps) {
   return (
     <Container>
-      <div className='flex flex-col gap-4 px-0 py-5 sm:px-4 md:gap-6 md:py-6'>
+      <div className='flex flex-col gap-4 px-0 py-5 sm:px-3 md:gap-6 md:py-6'>
         <div className='grid grid-cols-1 gap-6 lg:grid-cols-12'>
           {showFilterSkeleton && (
             <div className={filterColumnClassName}>
